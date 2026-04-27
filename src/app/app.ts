@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { GpsService } from './services/gps.service';
+import { MapComponent } from "./components/map/map.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MapComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -52,7 +53,7 @@ target = {
       this.isInZone = true;
 
       console.log('🎉 You reached the location!');
-      alert('Question: What is 2 + 2 ?');
+
     }
 
     if (distance >= this.target.radius) {
