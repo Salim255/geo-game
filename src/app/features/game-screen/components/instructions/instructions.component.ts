@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 
 @Component({
-  selector: "app-InstructionsComponent",
+  selector: "app-instructions",
   templateUrl: "./instructions.component.html",
   styleUrl: "./instructions.component.scss",
   standalone: false

@@ -1,72 +1,76 @@
 .header {
-  height: 64px;
+  height: 60px;
   width: 100%;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  padding: 0 24px;
+  padding: 0 20px;
 
-  background: #0b0f19; // dark professional tone
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
 
   font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
 
-  // LEFT
-  &__left {
-    display: flex;
-    align-items: center;
+.header__left {
+  display: flex;
+  align-items: center;
+}
+
+.header__logo {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: 0.5px;
+}
+
+.header__center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.header__status {
+  font-size: 12px;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+}
+
+.header__right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.header__btn {
+  font-size: 13px;
+  font-weight: 600;
+
+  padding: 8px 12px;
+  border-radius: 8px;
+
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #0f172a;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+
+  &:hover {
+    background: #f8fafc;
   }
+}
 
-  &__logo {
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: #ffffff;
-  }
+.header__btn--ghost {
+  background: transparent;
+  border: 1px dashed #cbd5e1;
 
-  // CENTER
-  &__center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  &__title {
-    font-size: 15px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.85);
-    letter-spacing: 0.5px;
-  }
-
-  // RIGHT
-  &__right {
-    display: flex;
-    align-items: center;
-  }
-
-  &__btn {
-    background: #3b82f6;
-    color: white;
-
-    border: none;
-    padding: 8px 14px;
-    border-radius: 6px;
-
-    font-size: 13px;
-    font-weight: 600;
-
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background: #2563eb;
-      transform: translateY(-1px);
-    }
-
-    &:active {
-      transform: translateY(0);
-    }
+  &:hover {
+    border-color: #94a3b8;
   }
 }

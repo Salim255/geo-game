@@ -15,6 +15,11 @@ const routes: Routes = [
       {
         path: "home",
         loadChildren: () => import("../features/home/home.module").then(m => m.HomeModule)
+      },
+      {
+        path: "game-screen",
+        loadChildren: () => import("../features/game-screen/game-screen.module")
+        .then(m => m.GameScreenModule)
       }
     ]
   }
