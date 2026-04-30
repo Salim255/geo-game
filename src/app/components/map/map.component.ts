@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import { GpsService } from '../../services/gps.service';
+import { GpsService } from '../../features/game-screen/services/gps.service';
 
 @Component({
   selector: 'app-map',

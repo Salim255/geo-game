@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { GpsService } from './services/gps.service';
+import { GpsService } from './features/game-screen/services/gps.service';
 import { MapComponent } from "./components/map/map.component";
 
 @Component({
