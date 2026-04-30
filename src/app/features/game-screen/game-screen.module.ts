@@ -3,16 +3,21 @@ import { GameScreenRoutingModule } from "./game-screen-routing.module";
 import { InstructionsComponent } from "./components/instructions/instructions.component";
 import { GameScreenPage } from "./game-screen.page";
 import { CommonModule } from "@angular/common";
+import { FormsModule } from '@angular/forms';
 import { MapComponent } from "./components/map/map.component";
+import { QuestionScreenComponent } from "./components/question-screen/question-screen.component";
 
 @NgModule({
   declarations: [
+    QuestionScreenComponent,
     MapComponent,
     InstructionsComponent,
     GameScreenPage
   ],
   imports: [
+    FormsModule,
     CommonModule,
-    GameScreenRoutingModule]
+    GameScreenRoutingModule,
+  ]
 })
 export class GameScreenModule {}

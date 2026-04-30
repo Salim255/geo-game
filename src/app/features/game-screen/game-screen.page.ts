@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, signal } from "@angular/core";
 import { GpsService } from "./services/gps.service";
 import { InstructionService } from "./services/instructions.service";
+import { ScreenGameService } from "./services/screen-game.service";
 
 @Component({
   selector: "app-game-screen",
@@ -23,6 +24,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
   lng = signal<number>(0);
 
   constructor(
+    private screenGameService: ScreenGameService,
     private inst: InstructionService,
     private gps: GpsService,
   ) {}
@@ -65,8 +67,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
   }
 
   private onEnterZone() {
-    // 🎮 unlock next challenge
-    this.inst.openInstructions();
+    this.screenGameService.openInstructions();
   }
 
   private onLeaveZone() {

@@ -1,40 +1,62 @@
 <div class="question-screen">
 
-  <!-- Header -->
-  <div class="question-screen__header">
-    <span class="question-screen__badge">Checkpoint</span>
-    <h2 class="question-screen__title">Solve the challenge</h2>
+  <!-- TOP BAR -->
+  <header class="question-screen__header">
+    <span class="question-screen__tag">Checkpoint</span>
+
+    <h1 class="question-screen__title">
+      Mission briefing
+    </h1>
+
     <p class="question-screen__subtitle">
-      Answer correctly to unlock the next location
+      Read carefully before answering
     </p>
-  </div>
+  </header>
 
-  <!-- Question box -->
-  <div class="question-screen__card">
+  <!-- STORY BLOCK -->
+  <section class="question-screen__block">
+
+    <h2 class="question-screen__block-title">Context</h2>
+
+    <p class="question-screen__text">
+      In the center of the old district, there is a place not marked on any map.
+      Every morning before sunrise, a silent gathering happens there.
+
+      A note was found nearby:
+
+      “The answer is not where noise is the loudest, but where silence is shared.
+      Count the steps between the river and the clock tower.”
+    </p>
+
+  </section>
+
+  <!-- QUESTION BLOCK -->
+  <section class="question-screen__block">
+
+    <h2 class="question-screen__block-title">Question</h2>
+
     <p class="question-screen__question">
-      {{ question }}
+      What does the message refer to?
     </p>
 
-    <div class="question-screen__options">
-      <button
-        class="question-screen__option"
-        *ngFor="let option of options"
-        (click)="selectAnswer(option)"
-      >
-        {{ option }}
-      </button>
+    <!-- INPUT -->
+    <div class="question-screen__input-wrapper">
+
+      <input
+        type="text"
+        class="question-screen__input"
+        placeholder="Type your answer..."
+        [(ngModel)]="userAnswer"
+      />
+
     </div>
-  </div>
 
-  <!-- Footer actions -->
-  <div class="question-screen__footer">
-    <button class="btn btn-secondary" (click)="close()">
-      Skip
-    </button>
+  </section>
 
+  <!-- ACTIONS -->
+  <footer class="question-screen__actions">
     <button class="btn btn-primary" (click)="validate()">
-      Validate
+      Submit
     </button>
-  </div>
-
+  </footer>
 </div>

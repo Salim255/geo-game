@@ -8,7 +8,7 @@ export class ScreenGameService {
   constructor(private modalCtr:  MatDialog ){}
    openInstructions() {
       this.modalCtr.open(QuestionScreenComponent, {
-        disableClose: false,
+        disableClose: true,
         data: {
           title: 'Game Instructions'
         }
