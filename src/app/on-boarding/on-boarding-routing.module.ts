@@ -5,7 +5,18 @@ import { NgModule } from "@angular/core";
 const routes: Routes = [
   {
     path: "",
-    component: OnBoardingPage
+    component: OnBoardingPage,
+    children: [
+      {
+        path: "",
+        redirectTo: "home",
+        pathMatch: "full"
+      },
+      {
+        path: "home",
+        loadChildren: () => import("../features/home/home.module").then(m => m.HomeModule)
+      }
+    ]
   }
 ]
 
