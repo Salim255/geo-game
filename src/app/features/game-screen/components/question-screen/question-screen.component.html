@@ -1,0 +1,40 @@
+<div class="question-screen">
+
+  <!-- Header -->
+  <div class="question-screen__header">
+    <span class="question-screen__badge">Checkpoint</span>
+    <h2 class="question-screen__title">Solve the challenge</h2>
+    <p class="question-screen__subtitle">
+      Answer correctly to unlock the next location
+    </p>
+  </div>
+
+  <!-- Question box -->
+  <div class="question-screen__card">
+    <p class="question-screen__question">
+      {{ question }}
+    </p>
+
+    <div class="question-screen__options">
+      <button
+        class="question-screen__option"
+        *ngFor="let option of options"
+        (click)="selectAnswer(option)"
+      >
+        {{ option }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer actions -->
+  <div class="question-screen__footer">
+    <button class="btn btn-secondary" (click)="close()">
+      Skip
+    </button>
+
+    <button class="btn btn-primary" (click)="validate()">
+      Validate
+    </button>
+  </div>
+
+</div>

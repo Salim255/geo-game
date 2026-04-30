@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, signal } from "@angular/core";
 import { GpsService } from "./services/gps.service";
+import { InstructionService } from "./services/instructions.service";
 
 @Component({
   selector: "app-game-screen",
@@ -21,7 +22,10 @@ export class GameScreenPage implements OnInit, OnDestroy {
   lat = signal<number>(0);
   lng = signal<number>(0);
 
-  constructor(private gps: GpsService) {}
+  constructor(
+    private inst: InstructionService,
+    private gps: GpsService,
+  ) {}
 
   ngOnInit() {
     console.log("game screen")
@@ -62,7 +66,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
   private onEnterZone() {
     // 🎮 unlock next challenge
-
+    this.inst.openInstructions();
   }
 
   private onLeaveZone() {
