@@ -35,4 +35,8 @@ export class GameDataService{
   setGame(game: GameConfig) {
     this.game = game;
   }
+
+  getGame(): GameConfig {
+    return this.game;
+  }
 }
