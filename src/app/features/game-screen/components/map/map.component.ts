@@ -95,6 +95,13 @@ export class MapComponent implements OnInit, OnDestroy {
     }, 150);
   }
 
+  private showTargetPopup() {
+    L.popup()
+      .setLatLng([this.target.lat, this.target.lng])
+      .setContent("🎉 You reached the target!")
+      .openOn(this.map);
+  }
+
   // ================= GPS =================
   private startTracking() {
     const userIcon = this.createUserIcon();
