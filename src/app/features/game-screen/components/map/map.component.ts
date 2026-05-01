@@ -16,6 +16,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private userMarker!: L.Marker;
   private targetCircle!: L.Circle;
   isInZone = false;
+  private currentTargetIndex = 0;
 
   // 🎯 Active target
   target: LatLng & { radius: number } = {
@@ -39,6 +40,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   // ================= INIT =================
   ngOnInit() {
+    this.unlockAudio();
     this.initMap();
     this.renderTargets();
     this.renderTargetZone();
@@ -74,25 +76,27 @@ export class MapComponent implements OnInit, OnDestroy {
     this.targetCircle = L.circle([this.target.lat, this.target.lng], {
       radius: this.target.radius,
       color: 'red',
-      fillOpacity: 0.1
+      fillOpacity: 0.2
     }).addTo(this.map);
   }
 
   private animateTargetZone() {
-    let scale = 1;
+    let step = 0;
 
     const interval = setInterval(() => {
-      scale += 0.2;
+      step++;
 
-      this.targetCircle.setStyle({
-        fillOpacity: 0.1 * scale
-      });
+      // pulse radius instead of opacity (much more visible)
+      const newRadius = this.target.radius + step * 10;
 
-      if (scale > 2) {
+      this.targetCircle.setRadius(newRadius);
+
+      if (step > 6) {
         clearInterval(interval);
-        this.targetCircle.setStyle({ fillOpacity: 0.1 });
+        this.targetCircle.setRadius(this.target.radius); // reset
       }
-    }, 150);
+
+    }, 100);
   }
 
   private showTargetPopup() {
@@ -100,6 +104,39 @@ export class MapComponent implements OnInit, OnDestroy {
       .setLatLng([this.target.lat, this.target.lng])
       .setContent("🎉 You reached the target!")
       .openOn(this.map);
+  }
+
+  private playSuccessSound() {
+    const audio = new Audio('assets/sounds/success.mp3'); // put file here
+    audio.play().catch(() => {});
+  }
+
+  private unlockAudio() {
+    const unlock = () => {
+      const utterance = new SpeechSynthesisUtterance('');
+      speechSynthesis.speak(utterance);
+
+      document.removeEventListener('click', unlock);
+    };
+
+    document.addEventListener('click', unlock);
+  }
+
+  private speak(text: string) {
+
+    const voices = speechSynthesis.getVoices();
+
+    const frenchVoice = voices.find(v => v.lang === 'fr-FR');
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    if (frenchVoice) {
+      utterance.voice = frenchVoice;
+    }
+
+    utterance.lang = 'fr-FR';
+
+    speechSynthesis.speak(utterance);
   }
 
   // ================= GPS =================
@@ -210,7 +247,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   private createTargetIcon(): L.Icon {
-    L.icon({
+    return L.icon({
       iconUrl:
         'data:image/svg+xml;charset=UTF-8,' +
         encodeURIComponent(`
@@ -229,9 +266,36 @@ export class MapComponent implements OnInit, OnDestroy {
     this.showTargetPopup();
     this.animateTargetZone();
     this.playSuccessSound();
-    this.speak("Target reached. Well done!");
+    this.speak("Objectif atteint. Bravo !");
+    this.goToNextTarget();
+    //this.speak("Target reached. Well done!");
   }
 
+  private goToNextTarget() {
+    this.currentTargetIndex++;
+
+    if (this.currentTargetIndex >= this.targets.length) {
+      console.log('🏁 All targets completed');
+      return;
+    }
+
+    const next = this.targets[this.currentTargetIndex];
+
+    this.target = {
+      lat: next.lat,
+      lng: next.lng,
+      radius: 50
+    };
+
+    // ✅ update circle position
+    this.updateTargetZone();
+
+    console.log('➡️ New target:', this.target);
+  }
+  private updateTargetZone() {
+    this.targetCircle.setLatLng([this.target.lat, this.target.lng]);
+    this.targetCircle.setRadius(this.target.radius);
+  }
   // ================= CLEANUP =================
   ngOnDestroy() {
     this.gps.stopTracking();
