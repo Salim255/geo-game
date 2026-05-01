@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, tap } from "rxjs";
+
 export interface GameTarget {
   id: number;
   order: number;
@@ -29,7 +30,12 @@ export class GameDataService{
   constructor(private http: HttpClient) {}
 
   loadGame(): Observable<GameConfig> {
-    return this.http.get<GameConfig>('assets/games/lille-hunt.json');
+    return this.http.get<GameConfig>('games/lille-hunt.json').pipe(
+      tap((data: GameConfig) => {
+        console.log(data);
+        this.setGame(data);
+      })
+    );
   }
 
   setGame(data: GameConfig) {

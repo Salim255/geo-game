@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import * as L from 'leaflet';
 import { GpsService } from '../../services/gps.service';
+import { GameScreenService } from '../../services/game-screen.service';
+import { InstructionService } from '../../services/instructions.service';
 import { Subscription } from 'rxjs';
+import { GameConfig, GameDataService, GameTarget } from '../../services/game-data.service';
 
-type LatLng = { lat: number; lng: number };
 
 @Component({
   selector: 'app-map',
@@ -13,37 +15,65 @@ type LatLng = { lat: number; lng: number };
 })
 export class MapComponent implements OnInit, OnDestroy {
 
+  private gameDataSubscription!: Subscription;
+  // ================= MAP =================
   private map!: L.Map;
   private userMarker!: L.Marker;
   private targetCircle!: L.Circle;
 
-  private pulseInterval: any;
-  private gpsSub!: Subscription;
+  private isInZone = false;
+  private gameData: GameConfig | null = null;
+  // ================= GAME INPUT =================
+  private target!: GameTarget;
+  private targets: Array< GameTarget> = [];
 
-  // 🎯 INPUTS from GameScreen or GameService
-  @Input() target!: LatLng & { radius: number };
-  @Input() targets: any[] = [];
+  private currentTargetIndex = 0;
 
-  constructor(private gps: GpsService) {}
+  constructor(
+    private data: GameDataService,
+    private gps: GpsService,
+    private inst: InstructionService,
+    private game: GameScreenService
+  ) {}
 
   // ================= INIT =================
   ngOnInit() {
-    this.initMap();
-    this.renderTargets();
-    this.renderTargetZone();
-    this.startTracking();
+    this.data.loadGame().subscribe();
+    this.subscribeToGameData();
+  }
+
+  setGameData(gameData: GameConfig | null){
+    this.gameData = gameData;
+    this.targets = this.gameData?.targets ?? [];
+  }
+
+  private subscribeToGameData(){
+    this.gameDataSubscription = this.data.getGame$.subscribe(game=> {
+      this.setGameData(game);
+      if (!this.targets.length) return;
+
+      this.target = this.targets[0]; // IMPORTANT
+
+      this.initMap();
+      this.renderTargets();
+      this.renderTargetZone();
+      this.startTracking();
+    })
   }
 
   // ================= MAP =================
   private initMap() {
+
     this.map = L.map('map').setView(
-      [this.target.lat, this.target.lng],
+      [this.target.location.lat, this.target.location.lng],
       15
     );
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap'
     }).addTo(this.map);
+
+    console.log("Map init👹👹", this.map)
   }
 
   // ================= TARGETS =================
@@ -51,41 +81,59 @@ export class MapComponent implements OnInit, OnDestroy {
     const icon = this.createTargetIcon();
 
     this.targets.forEach(t => {
-      L.marker([t.lat, t.lng], { icon })
+      L.marker([t.location.lat, t.location.lng], { icon })
         .addTo(this.map)
         .bindPopup(`🎯 Target ${t.id}`);
     });
   }
 
   private renderTargetZone() {
-    this.targetCircle = L.circle([this.target.lat, this.target.lng], {
-      radius: this.target.radius,
-      color: 'red',
-      fillOpacity: 0.2
-    }).addTo(this.map);
+    this.targetCircle = L.circle(
+      [this.target.location.lat, this.target.location.lng],
+      {
+        radius: this.target.location.radius,
+        color: 'red',
+        fillOpacity: 0.2
+      }
+    ).addTo(this.map);
+  }
+
+  private updateTargetZone() {
+    this.targetCircle.setLatLng([this.target.location.lat, this.target.location.lng]);
+    this.targetCircle.setRadius(this.target.location.radius);
   }
 
   // ================= GPS =================
   private startTracking() {
+
     const userIcon = this.createUserIcon();
 
+    // 🧪 DEV MODE
     this.gps.startFakeTracking(
       50.632615310744754,
       3.013675532644488,
-      (pos) => this.updateUser(pos, userIcon)
+      (pos) => this.handlePosition(pos, userIcon)
     );
 
-    // REAL GPS
+    // 📍 PROD MODE
     /*
     this.gps.startTracking((pos) =>
-      this.updateUser(pos, userIcon)
+      this.handlePosition(pos, userIcon)
     );
     */
   }
 
-  private updateUser(pos: GeolocationPosition, icon: L.Icon) {
+  private handlePosition(pos: GeolocationPosition, icon: L.Icon) {
+
     const lat = pos.coords.latitude;
     const lng = pos.coords.longitude;
+
+    this.updateUserMarker(lat, lng, icon);
+    this.checkZone(lat, lng);
+  }
+
+  // ================= USER =================
+  private updateUserMarker(lat: number, lng: number, icon: L.Icon) {
 
     if (!this.userMarker) {
       this.userMarker = L.marker([lat, lng], { icon })
@@ -98,26 +146,90 @@ export class MapComponent implements OnInit, OnDestroy {
     this.map.panTo([lat, lng]);
   }
 
-  // ================= VISUAL EFFECT =================
-  public pulseTarget() {
+  // ================= GAME LOGIC =================
+  private checkZone(lat: number, lng: number) {
+
+    const distance = this.gps.getDistance(
+      lat,
+      lng,
+      this.target.location.lat,
+      this.target.location.lng
+    );
+
+    if (distance < this.target.location.radius && !this.isInZone) {
+      this.isInZone = true;
+      this.onEnterZone();
+    }
+
+    if (distance >= this.target.location.radius && this.isInZone) {
+      this.isInZone = false;
+    }
+  }
+
+  // ================= GAME EVENT =================
+  private onEnterZone() {
+
+    console.log('🎉 TARGET REACHED');
+
+    // 🔥 visual + audio feedback handled in service
+    this.inst.openQuestionDialog();
+    this.game.moveTargetAlongPath([], () => {}, () => {});
+
+    this.animateTarget();
+    this.speak("Target reached. Well done!");
+
+    this.goToNextTarget();
+  }
+
+  // ================= NEXT TARGET =================
+  private goToNextTarget() {
+
+    this.currentTargetIndex++;
+
+    if (this.currentTargetIndex >= this.targets.length) {
+      console.log('🏁 GAME COMPLETE');
+      return;
+    }
+
+    const next = this.targets[this.currentTargetIndex];
+
+    this.target.location = {
+      lat: next.location.lat,
+      lng: next.location.lng,
+      radius: 50
+    }
+
+
+    this.updateTargetZone();
+
+    console.log('➡️ Next target:', this.target);
+  }
+
+  // ================= VISUAL =================
+  private animateTarget() {
+
     let step = 0;
 
     const interval = setInterval(() => {
+
       step++;
 
-      const newRadius = this.target.radius + step * 10;
-      this.targetCircle.setRadius(newRadius);
+      this.targetCircle.setRadius(
+        this.target.location.radius + step * 8
+      );
 
       if (step > 6) {
         clearInterval(interval);
-        this.targetCircle.setRadius(this.target.radius);
+        this.targetCircle.setRadius(this.target.location.radius);
       }
 
-    }, 100);
+    }, 80);
   }
 
-  public moveTarget(lat: number, lng: number) {
-    this.targetCircle.setLatLng([lat, lng]);
+  private speak(text: string) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US'; // or fr-FR
+    speechSynthesis.speak(utterance);
   }
 
   // ================= ICONS =================
@@ -153,7 +265,6 @@ export class MapComponent implements OnInit, OnDestroy {
   // ================= CLEANUP =================
   ngOnDestroy() {
     this.gps.stopTracking();
-    if (this.pulseInterval) clearInterval(this.pulseInterval);
-    this.gpsSub?.unsubscribe();
+    this.gameDataSubscription?.unsubscribe();
   }
 }
