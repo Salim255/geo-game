@@ -14,5 +14,13 @@ export interface GameTarget {
   nextTargetId: number | null;
 }
 
+export interface GameConfig {
+  id: string;
+  title: string;
+  description: string;
+  targets: GameTarget[];
+}
+
+
 @Injectable({providedIn: "root"})
 export class GameDataService{}
