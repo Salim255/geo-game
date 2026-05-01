@@ -1,4 +1,6 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 export interface GameTarget {
   id: number;
   order: number;
@@ -21,6 +23,12 @@ export interface GameConfig {
   targets: GameTarget[];
 }
 
-
 @Injectable({providedIn: "root"})
-export class GameDataService{}
+export class GameDataService{
+  private game!: GameConfig;
+  constructor(private http: HttpClient) {}
+
+  loadGame(): Observable<GameConfig> {
+    return this.http.get<GameConfig>('assets/games/lille-hunt.json');
+  }
+}
