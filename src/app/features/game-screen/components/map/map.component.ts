@@ -14,7 +14,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   private map!: L.Map;
   private userMarker!: L.Marker;
-
+  private targetCircle!: L.Circle;
   isInZone = false;
 
   // 🎯 Active target
@@ -71,11 +71,28 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   private renderTargetZone() {
-    L.circle([this.target.lat, this.target.lng], {
+    this.targetCircle = L.circle([this.target.lat, this.target.lng], {
       radius: this.target.radius,
       color: 'red',
       fillOpacity: 0.1
     }).addTo(this.map);
+  }
+
+  private animateTargetZone() {
+    let scale = 1;
+
+    const interval = setInterval(() => {
+      scale += 0.2;
+
+      this.targetCircle.setStyle({
+        fillOpacity: 0.1 * scale
+      });
+
+      if (scale > 2) {
+        clearInterval(interval);
+        this.targetCircle.setStyle({ fillOpacity: 0.1 });
+      }
+    }, 150);
   }
 
   // ================= GPS =================
@@ -140,6 +157,26 @@ export class MapComponent implements OnInit, OnDestroy {
 
     if (distance < this.target.radius && !this.isInZone) {
       this.isInZone = true;
+      this.onEnterZone(); // ✅ trigger reaction
+    }
+
+    if (distance >= this.target.radius && this.isInZone) {
+      this.isInZone = false;
+      //this.onLeaveZone();
+    }
+  }
+  private checkZone1(lat: number, lng: number) {
+    const distance = this.gps.getDistance(
+      lat,
+      lng,
+      this.target.lat,
+      this.target.lng
+    );
+
+    console.log('📏 Distance:', distance);
+
+    if (distance < this.target.radius && !this.isInZone) {
+      this.isInZone = true;
       console.log('🎉 ENTER ZONE');
     }
 
@@ -166,7 +203,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   private createTargetIcon(): L.Icon {
-    return L.icon({
+    L.icon({
       iconUrl:
         'data:image/svg+xml;charset=UTF-8,' +
         encodeURIComponent(`
@@ -177,6 +214,15 @@ export class MapComponent implements OnInit, OnDestroy {
       iconSize: [32, 32],
       iconAnchor: [16, 16],
     });
+  }
+
+  private onEnterZone() {
+    console.log('🎉 TARGET REACHED');
+
+    this.showTargetPopup();
+    this.animateTargetZone();
+    this.playSuccessSound();
+    this.speak("Target reached. Well done!");
   }
 
   // ================= CLEANUP =================
