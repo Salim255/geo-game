@@ -12,6 +12,7 @@ type LatLng = { lat: number; lng: number };
 })
 export class MapComponent implements OnInit, OnDestroy {
 
+  private pulseInterval: any;
   private map!: L.Map;
   private userMarker!: L.Marker;
   private targetCircle!: L.Circle;
@@ -44,6 +45,7 @@ export class MapComponent implements OnInit, OnDestroy {
     this.initMap();
     this.renderTargets();
     this.renderTargetZone();
+    this.startTargetPulse(); // 💓 start beating
     this.startTracking();
 
     console.log('🗺️ Map initialized');
@@ -271,6 +273,30 @@ export class MapComponent implements OnInit, OnDestroy {
     //this.speak("Target reached. Well done!");
   }
 
+  private startTargetPulse() {
+    let growing = true;
+    let radius = this.target.radius;
+
+    this.pulseInterval = setInterval(() => {
+
+      if (growing) {
+        radius += 3;
+        if (radius >= this.target.radius + 20) growing = false;
+      } else {
+        radius -= 3;
+        if (radius <= this.target.radius) growing = true;
+      }
+
+      this.targetCircle.setRadius(radius);
+
+    }, 100);
+  }
+
+  private stopTargetPulse() {
+    if (this.pulseInterval) {
+      clearInterval(this.pulseInterval);
+    }
+  }
   private goToNextTarget() {
     this.currentTargetIndex++;
 
