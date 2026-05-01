@@ -1,0 +1,159 @@
+{
+  "id": "lille-hunt",
+  "title": "Lille Treasure Hunt",
+  "description": "Follow the clues across Lille, solve each challenge, and unlock the final secret.",
+  "version": 1,
+
+  "settings": {
+    "allowSkipping": false,
+    "showDistanceHint": true,
+    "voiceEnabled": true
+  },
+
+  "targets": [
+    {
+      "id": 1,
+      "order": 1,
+      "location": {
+        "lat": 50.6329,
+        "lng": 3.0138,
+        "radius": 50
+      },
+      "story": {
+        "intro": "You stand in front of an old monument in the heart of Lille. The air feels heavy with history.",
+        "clue": "A number is carved into the stone base.",
+        "hint": "Look carefully at the engraving near the bottom."
+      },
+      "question": {
+        "text": "What year is engraved on the monument?",
+        "type": "text",
+        "answers": ["1830", "1830.", "the year 1830"]
+      },
+      "success": {
+        "message": "Correct. The first path opens.",
+        "voice": "Well done. You found the first clue."
+      },
+      "failure": {
+        "message": "Not quite. Try reading the base again.",
+        "retryAllowed": true
+      },
+      "nextTargetId": 2
+    },
+
+    {
+      "id": 2,
+      "order": 2,
+      "location": {
+        "lat": 50.6335,
+        "lng": 3.0150,
+        "radius": 50
+      },
+      "story": {
+        "intro": "You arrive at a quiet street with old brick buildings.",
+        "clue": "Above a door, something is written in faded letters.",
+        "hint": "Focus on the top of the entrance."
+      },
+      "question": {
+        "text": "What word is written above the door?",
+        "type": "text",
+        "answers": ["liberté", "liberte", "LIBERTE"]
+      },
+      "success": {
+        "message": "Good. The second clue is solved.",
+        "voice": "You are doing great."
+      },
+      "failure": {
+        "message": "Look higher above the entrance.",
+        "retryAllowed": true
+      },
+      "nextTargetId": 3
+    },
+
+    {
+      "id": 3,
+      "order": 3,
+      "location": {
+        "lat": 50.6342,
+        "lng": 3.0162,
+        "radius": 50
+      },
+      "story": {
+        "intro": "A small square opens in front of you. People pass without noticing the secret hidden here.",
+        "clue": "Count the statues surrounding the fountain.",
+        "hint": "There are fewer than 10."
+      },
+      "question": {
+        "text": "How many statues are around the fountain?",
+        "type": "number",
+        "answers": ["4", "four"]
+      },
+      "success": {
+        "message": "Correct. You are getting closer.",
+        "voice": "Excellent observation."
+      },
+      "failure": {
+        "message": "Count again carefully.",
+        "retryAllowed": true
+      },
+      "nextTargetId": 4
+    },
+
+    {
+      "id": 4,
+      "order": 4,
+      "location": {
+        "lat": 50.6351,
+        "lng": 3.0174,
+        "radius": 50
+      },
+      "story": {
+        "intro": "You reach a bridge overlooking the city streets.",
+        "clue": "A plaque tells the story of this place.",
+        "hint": "Look for the founding date."
+      },
+      "question": {
+        "text": "What year is mentioned on the plaque?",
+        "type": "text",
+        "answers": ["1892"]
+      },
+      "success": {
+        "message": "You solved it. Only one step remains.",
+        "voice": "Almost there."
+      },
+      "failure": {
+        "message": "Check the plaque text again.",
+        "retryAllowed": true
+      },
+      "nextTargetId": 5
+    },
+
+    {
+      "id": 5,
+      "order": 5,
+      "location": {
+        "lat": 50.6360,
+        "lng": 3.0185,
+        "radius": 50
+      },
+      "story": {
+        "intro": "You arrive at the final destination. A quiet place overlooking the city.",
+        "clue": "This is where everything connects.",
+        "hint": "There is no trick — just reflection."
+      },
+      "question": {
+        "text": "What is the name of the city you are exploring?",
+        "type": "text",
+        "answers": ["Lille", "lille"]
+      },
+      "success": {
+        "message": "Congratulations! You completed the treasure hunt.",
+        "voice": "You have finished the mission. Well done."
+      },
+      "failure": {
+        "message": "Think about where you are.",
+        "retryAllowed": true
+      },
+      "nextTargetId": null
+    }
+  ]
+}
