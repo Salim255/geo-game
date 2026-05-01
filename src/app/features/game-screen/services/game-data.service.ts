@@ -36,11 +36,12 @@ export class GameDataService{
     this.gameDataSubject.next(data)
   }
 
-  get getGame$(): Observable< GameConfig | null> {
+  get getGame$(): Observable< GameConfig  | null> {
     return this.gameDataSubject.asObservable();
   }
 
   getTargetById(id: number): GameTarget | undefined {
-    return this.gameDataSubject.value!.targets.find(t => t.id === id);
+    const data: GameConfig | null = this.gameDataSubject.value;
+    return data ? data.targets.find((t:GameTarget) => t.id === id) : undefined;
   }
 }

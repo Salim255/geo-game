@@ -6,7 +6,7 @@ import { QuestionScreenComponent } from "../components/question-screen/question-
 export class ScreenGameService {
   private interval: any;
   constructor(private modalCtr:  MatDialog ){}
-   openInstructions() {
+   openQuestionDialog() {
     this.modalCtr.open(QuestionScreenComponent, {
       disableClose: true,
       data: {
@@ -49,5 +49,12 @@ export class ScreenGameService {
       i++;
 
     }, 2000);
+  }
+
+
+  stopMovement() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 }

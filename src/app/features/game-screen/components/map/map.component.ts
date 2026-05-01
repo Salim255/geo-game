@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import * as L from 'leaflet';
 import { GpsService } from '../../services/gps.service';
+import { Subscription } from 'rxjs';
 
 type LatLng = { lat: number; lng: number };
 
@@ -8,47 +9,29 @@ type LatLng = { lat: number; lng: number };
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
-  standalone:false
+  standalone: false
 })
 export class MapComponent implements OnInit, OnDestroy {
 
-  private pulseInterval: any;
   private map!: L.Map;
   private userMarker!: L.Marker;
   private targetCircle!: L.Circle;
-  isInZone = false;
-  private currentTargetIndex = 0;
 
-  // 🎯 Active target
-  target: LatLng & { radius: number } = {
-    lat: 50.6329,
-    lng: 3.0138,
-    radius: 50
-  };
+  private pulseInterval: any;
+  private gpsSub!: Subscription;
 
-  // 🎯 Future targets
-  targets: Array<{ id: number } & LatLng> = [
-    { id: 1, lat: 50.6329, lng: 3.0138 },
-    { id: 2, lat: 50.6335, lng: 3.0150 },
-    { id: 3, lat: 50.6342, lng: 3.0162 }
-  ];
-
-  // 📍 reactive state
-  lat = signal<number | null>(null);
-  lng = signal<number | null>(null);
+  // 🎯 INPUTS from GameScreen or GameService
+  @Input() target!: LatLng & { radius: number };
+  @Input() targets: any[] = [];
 
   constructor(private gps: GpsService) {}
 
   // ================= INIT =================
   ngOnInit() {
-    this.unlockAudio();
     this.initMap();
     this.renderTargets();
     this.renderTargetZone();
-    this.startTargetPulse(); // 💓 start beating
     this.startTracking();
-
-    console.log('🗺️ Map initialized');
   }
 
   // ================= MAP =================
@@ -82,102 +65,28 @@ export class MapComponent implements OnInit, OnDestroy {
     }).addTo(this.map);
   }
 
-  private animateTargetZone() {
-    let step = 0;
-
-    const interval = setInterval(() => {
-      step++;
-
-      // pulse radius instead of opacity (much more visible)
-      const newRadius = this.target.radius + step * 10;
-
-      this.targetCircle.setRadius(newRadius);
-
-      if (step > 6) {
-        clearInterval(interval);
-        this.targetCircle.setRadius(this.target.radius); // reset
-      }
-
-    }, 100);
-  }
-
-  private showTargetPopup() {
-    L.popup()
-      .setLatLng([this.target.lat, this.target.lng])
-      .setContent("🎉 You reached the target!")
-      .openOn(this.map);
-  }
-
-  private playSuccessSound() {
-    const audio = new Audio('assets/sounds/success.mp3'); // put file here
-    audio.play().catch(() => {});
-  }
-
-  private unlockAudio() {
-    const unlock = () => {
-      const utterance = new SpeechSynthesisUtterance('');
-      speechSynthesis.speak(utterance);
-
-      document.removeEventListener('click', unlock);
-    };
-
-    document.addEventListener('click', unlock);
-  }
-
-  private speak(text: string) {
-
-    const voices = speechSynthesis.getVoices();
-
-    const frenchVoice = voices.find(v => v.lang === 'fr-FR');
-
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    if (frenchVoice) {
-      utterance.voice = frenchVoice;
-    }
-
-    utterance.lang = 'fr-FR';
-
-    speechSynthesis.speak(utterance);
-  }
-
   // ================= GPS =================
   private startTracking() {
     const userIcon = this.createUserIcon();
 
-    // 🧪 DEV MODE (FAKE GPS)
     this.gps.startFakeTracking(
       50.632615310744754,
       3.013675532644488,
-      (pos) => this.handlePositionUpdate(pos, userIcon)
+      (pos) => this.updateUser(pos, userIcon)
     );
 
-    // 📍 PROD MODE (REAL GPS)
+    // REAL GPS
     /*
     this.gps.startTracking((pos) =>
-      this.handlePositionUpdate(pos, userIcon)
+      this.updateUser(pos, userIcon)
     );
     */
   }
 
-  private handlePositionUpdate(
-    pos: GeolocationPosition,
-    icon: L.Icon
-  ) {
+  private updateUser(pos: GeolocationPosition, icon: L.Icon) {
     const lat = pos.coords.latitude;
     const lng = pos.coords.longitude;
 
-    this.lat.set(lat);
-    this.lng.set(lng);
-
-    console.log('📍 User:', lat, lng);
-
-    this.updateUserMarker(lat, lng, icon);
-    this.checkZone(lat, lng);
-  }
-
-  // ================= USER =================
-  private updateUserMarker(lat: number, lng: number, icon: L.Icon) {
     if (!this.userMarker) {
       this.userMarker = L.marker([lat, lng], { icon })
         .addTo(this.map)
@@ -186,50 +95,29 @@ export class MapComponent implements OnInit, OnDestroy {
       this.userMarker.setLatLng([lat, lng]);
     }
 
-    // smooth follow instead of jump
     this.map.panTo([lat, lng]);
   }
 
-  // ================= GAME LOGIC =================
-  private checkZone(lat: number, lng: number) {
-    const distance = this.gps.getDistance(
-      lat,
-      lng,
-      this.target.lat,
-      this.target.lng
-    );
+  // ================= VISUAL EFFECT =================
+  public pulseTarget() {
+    let step = 0;
 
-    console.log('📏 Distance:', distance);
+    const interval = setInterval(() => {
+      step++;
 
-    if (distance < this.target.radius && !this.isInZone) {
-      this.isInZone = true;
-      this.onEnterZone(); // ✅ trigger reaction
-    }
+      const newRadius = this.target.radius + step * 10;
+      this.targetCircle.setRadius(newRadius);
 
-    if (distance >= this.target.radius && this.isInZone) {
-      this.isInZone = false;
-      //this.onLeaveZone();
-    }
+      if (step > 6) {
+        clearInterval(interval);
+        this.targetCircle.setRadius(this.target.radius);
+      }
+
+    }, 100);
   }
-  private checkZone1(lat: number, lng: number) {
-    const distance = this.gps.getDistance(
-      lat,
-      lng,
-      this.target.lat,
-      this.target.lng
-    );
 
-    console.log('📏 Distance:', distance);
-
-    if (distance < this.target.radius && !this.isInZone) {
-      this.isInZone = true;
-      console.log('🎉 ENTER ZONE');
-    }
-
-    if (distance >= this.target.radius && this.isInZone) {
-      this.isInZone = false;
-      console.log('↩️ EXIT ZONE');
-    }
+  public moveTarget(lat: number, lng: number) {
+    this.targetCircle.setLatLng([lat, lng]);
   }
 
   // ================= ICONS =================
@@ -262,68 +150,10 @@ export class MapComponent implements OnInit, OnDestroy {
     });
   }
 
-  private onEnterZone() {
-    console.log('🎉 TARGET REACHED');
-
-    this.showTargetPopup();
-    this.animateTargetZone();
-    this.playSuccessSound();
-    this.speak("Objectif atteint. Bravo !");
-    this.goToNextTarget();
-    //this.speak("Target reached. Well done!");
-  }
-
-  private startTargetPulse() {
-    let growing = true;
-    let radius = this.target.radius;
-
-    this.pulseInterval = setInterval(() => {
-
-      if (growing) {
-        radius += 3;
-        if (radius >= this.target.radius + 20) growing = false;
-      } else {
-        radius -= 3;
-        if (radius <= this.target.radius) growing = true;
-      }
-
-      this.targetCircle.setRadius(radius);
-
-    }, 100);
-  }
-
-  private stopTargetPulse() {
-    if (this.pulseInterval) {
-      clearInterval(this.pulseInterval);
-    }
-  }
-  private goToNextTarget() {
-    this.currentTargetIndex++;
-
-    if (this.currentTargetIndex >= this.targets.length) {
-      console.log('🏁 All targets completed');
-      return;
-    }
-
-    const next = this.targets[this.currentTargetIndex];
-
-    this.target = {
-      lat: next.lat,
-      lng: next.lng,
-      radius: 50
-    };
-
-    // ✅ update circle position
-    this.updateTargetZone();
-
-    console.log('➡️ New target:', this.target);
-  }
-  private updateTargetZone() {
-    this.targetCircle.setLatLng([this.target.lat, this.target.lng]);
-    this.targetCircle.setRadius(this.target.radius);
-  }
   // ================= CLEANUP =================
   ngOnDestroy() {
     this.gps.stopTracking();
+    if (this.pulseInterval) clearInterval(this.pulseInterval);
+    this.gpsSub?.unsubscribe();
   }
 }
