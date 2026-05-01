@@ -39,4 +39,8 @@ export class GameDataService{
   getGame(): GameConfig {
     return this.game;
   }
+
+  getTargetById(id: number): GameTarget | undefined {
+    return this.game.targets.find(t => t.id === id);
+  }
 }
