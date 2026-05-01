@@ -31,4 +31,8 @@ export class GameDataService{
   loadGame(): Observable<GameConfig> {
     return this.http.get<GameConfig>('assets/games/lille-hunt.json');
   }
+
+  setGame(game: GameConfig) {
+    this.game = game;
+  }
 }
