@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 export interface GameTarget {
   id: number;
   order: number;
@@ -25,22 +25,22 @@ export interface GameConfig {
 
 @Injectable({providedIn: "root"})
 export class GameDataService{
-  private game!: GameConfig;
+  private gameDataSubject = new BehaviorSubject<GameConfig | null>(null)
   constructor(private http: HttpClient) {}
 
   loadGame(): Observable<GameConfig> {
     return this.http.get<GameConfig>('assets/games/lille-hunt.json');
   }
 
-  setGame(game: GameConfig) {
-    this.game = game;
+  setGame(data: GameConfig) {
+    this.gameDataSubject.next(data)
   }
 
-  getGame(): GameConfig {
-    return this.game;
+  get getGame$(): Observable< GameConfig | null> {
+    return this.gameDataSubject.asObservable();
   }
 
   getTargetById(id: number): GameTarget | undefined {
-    return this.game.targets.find(t => t.id === id);
+    return this.gameDataSubject.value!.targets.find(t => t.id === id);
   }
 }
