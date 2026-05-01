@@ -8,6 +8,34 @@ export class GpsService {
   private watchId: number | null = null;
   private lastPosition: GeolocationPosition | null = null;
 
+  // 🧪 FAKE GPS SIMULATION (FOR DEV)
+  startFakeTracking(
+    startLat: number,
+    startLng: number,
+    callback: (pos: GeolocationPosition) => void
+  ) {
+    let lat = startLat;
+    let lng = startLng;
+
+    this.watchId = setInterval(() => {
+
+      // 👉 simulate movement (small steps)
+      lat += 0.0001;
+      lng += 0.0001;
+
+      const fakePosition = {
+        coords: {
+          latitude: lat,
+          longitude: lng
+        }
+      } as GeolocationPosition;
+
+      callback(fakePosition);
+
+    }, 1500);
+  }
+
+
   startTracking(callback: (pos: GeolocationPosition) => void) {
     if (!navigator.geolocation) {
       console.error('Geolocation not supported');

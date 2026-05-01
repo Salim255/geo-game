@@ -1,7 +1,5 @@
 import { Component, OnInit, OnDestroy, signal } from "@angular/core";
 import { GpsService } from "./services/gps.service";
-import { InstructionService } from "./services/instructions.service";
-import { ScreenGameService } from "./services/screen-game.service";
 
 @Component({
   selector: "app-game-screen",
@@ -10,7 +8,6 @@ import { ScreenGameService } from "./services/screen-game.service";
   standalone: false
 })
 export class GameScreenPage implements OnInit, OnDestroy {
-
 
   isInZone = false;
 
@@ -23,15 +20,13 @@ export class GameScreenPage implements OnInit, OnDestroy {
   lat = signal<number>(0);
   lng = signal<number>(0);
 
-  constructor(
-    private screenGameService: ScreenGameService,
-    private inst: InstructionService,
-    private gps: GpsService,
-  ) {}
+  constructor(private gps: GpsService) {}
 
   ngOnInit() {
-    console.log("game screen")
-    this.gps.startTracking((pos) => {
+
+    console.log("🎮 Game started");
+
+/*     this.gps.startTracking((pos) => {
 
       const currentLat = pos.coords.latitude;
       const currentLng = pos.coords.longitude;
@@ -39,7 +34,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
       this.lat.set(currentLat);
       this.lng.set(currentLng);
 
-      console.log('📍 Position:', currentLat, currentLng);
+      console.log("📍 User:", currentLat, currentLng);
 
       const distance = this.gps.getDistance(
         currentLat,
@@ -48,33 +43,32 @@ export class GameScreenPage implements OnInit, OnDestroy {
         this.target.lng
       );
 
-      console.log('📏 Distance:', distance);
+      console.log("📏 Distance:", distance);
 
-      // ✅ Enter zone
+
       if (distance < this.target.radius && !this.isInZone) {
         this.isInZone = true;
-        this.onEnterZone()
-        console.log('🎉 You reached the location!');
+        this.onEnterZone();
+        console.log("🎉 Target reached!");
       }
 
-      // ✅ Exit zone
+
       if (distance >= this.target.radius && this.isInZone) {
         this.isInZone = false;
-        console.log('↩️ You left the zone');
         this.onLeaveZone();
+        console.log("↩️ Left zone");
       }
-    });
+    }); */
   }
 
   private onEnterZone() {
-    this.screenGameService.openInstructions();
+    // open question modal
+    // this.screenGameService.openInstructions();
   }
 
-  private onLeaveZone() {
-    // optional UI reset
-  }
+  private onLeaveZone() {}
 
   ngOnDestroy() {
-    this.gps.stopTracking(); // ✅ VERY IMPORTANT
+    this.gps.stopTracking();
   }
 }
