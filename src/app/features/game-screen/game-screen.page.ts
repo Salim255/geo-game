@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, signal } from "@angular/core";
 import { GpsService } from "./services/gps.service";
 import { GameDataService } from "./services/game-data.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-game-screen",
@@ -21,6 +22,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
   lat = signal<number>(0);
   lng = signal<number>(0);
 
+  private gameDataSubscription!: Subscription;
   constructor(
     private gameData: GameDataService,
     private gps: GpsService,
@@ -74,5 +76,6 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.gps.stopTracking();
+    this.gameDataSubscription?.unsubscribe();
   }
 }
