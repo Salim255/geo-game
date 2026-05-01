@@ -1,21 +1,12 @@
 import { Injectable } from "@angular/core";
-import { MatDialog } from '@angular/material/dialog';
-import { QuestionScreenComponent } from "../components/question-screen/question-screen.component";
 
-@Injectable({providedIn: "root"})
-export class ScreenGameService {
+@Injectable({ providedIn: "root" })
+export class GameService {
+
   private interval: any;
-  constructor(private modalCtr:  MatDialog ){}
-   openQuestionDialog() {
-    this.modalCtr.open(QuestionScreenComponent, {
-      disableClose: true,
-      data: {
-        title: 'Game Instructions'
-      }
-    });
-  }
 
- createPath(start: any, end: any, steps: number) {
+  // 🎯 create movement path
+  createPath(start: any, end: any, steps: number) {
     const path = [];
 
     for (let i = 1; i <= steps; i++) {
@@ -30,6 +21,7 @@ export class ScreenGameService {
     return path;
   }
 
+  // 🎯 animate target movement
   moveTargetAlongPath(
     path: any[],
     onUpdate: (point: any) => void,
@@ -50,7 +42,6 @@ export class ScreenGameService {
 
     }, 2000);
   }
-
 
   stopMovement() {
     if (this.interval) {
