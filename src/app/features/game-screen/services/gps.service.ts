@@ -21,7 +21,7 @@ export class GpsService {
 
       // 👉 simulate movement (small steps)
       lat += 0.0001;
-      lng += 0.0001;
+      lng += 0.00015;
 
       const fakePosition = {
         coords: {

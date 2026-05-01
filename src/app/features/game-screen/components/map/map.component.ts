@@ -72,8 +72,6 @@ export class MapComponent implements OnInit, OnDestroy {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap'
     }).addTo(this.map);
-
-    console.log("Map init👹👹", this.map)
   }
 
   // ================= TARGETS =================
@@ -172,7 +170,7 @@ export class MapComponent implements OnInit, OnDestroy {
     console.log('🎉 TARGET REACHED');
 
     // 🔥 visual + audio feedback handled in service
-    this.inst.openQuestionDialog();
+    this.inst.openQuestionDialog(this.target);
     this.game.moveTargetAlongPath([], () => {}, () => {});
 
     this.animateTarget();

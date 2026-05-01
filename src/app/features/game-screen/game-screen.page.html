@@ -1,1 +1,7 @@
-<app-map></app-map>
+@if(!toPlay()) {
+  <app-map></app-map>
+}
+@else {
+  <app-instructions></app-instructions>
+}
+

@@ -15,8 +15,8 @@
       "id": 1,
       "order": 1,
       "location": {
-        "lat": 50.6329,
-        "lng": 3.0138,
+        "lat": 50.6406,
+        "lng": 3.0618,
         "radius": 50
       },
       "story": {
@@ -44,8 +44,8 @@
       "id": 2,
       "order": 2,
       "location": {
-        "lat": 50.6335,
-        "lng": 3.0150,
+        "lat": 50.6366,
+        "lng": 3.0635,
         "radius": 50
       },
       "story": {
@@ -73,8 +73,8 @@
       "id": 3,
       "order": 3,
       "location": {
-        "lat": 50.6342,
-        "lng": 3.0162,
+        "lat": 50.6339,
+        "lng": 3.0573,
         "radius": 50
       },
       "story": {
@@ -102,8 +102,8 @@
       "id": 4,
       "order": 4,
       "location": {
-        "lat": 50.6351,
-        "lng": 3.0174,
+        "lat": 50.6369,
+        "lng": 3.0612,
         "radius": 50
       },
       "story": {
@@ -131,8 +131,8 @@
       "id": 5,
       "order": 5,
       "location": {
-        "lat": 50.6360,
-        "lng": 3.0185,
+        "lat": 50.6319,
+        "lng": 3.0497,
         "radius": 50
       },
       "story": {

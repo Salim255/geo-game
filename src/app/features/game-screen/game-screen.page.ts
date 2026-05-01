@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, signal } from "@angular/core";
 
 @Component({
   selector: "app-game-screen",
@@ -7,10 +7,7 @@ import { Component, OnInit } from "@angular/core";
   standalone: false
 })
 export class GameScreenPage implements OnInit {
-
+  toPlay = signal<boolean>(false);
   constructor() {}
-
   ngOnInit() {}
-
-
 }
