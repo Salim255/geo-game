@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, signal } from "@angular/core";
+import { GameDataService } from "../../../game-screen/services/game-data.service";
 
 @Component({
   selector: "app-introduction",
@@ -7,4 +8,9 @@ import { Component } from "@angular/core";
   standalone: false
 })
 
-export class IntroductionComponent{}
+export class IntroductionComponent {
+  instructions = signal< string[]>([]);
+  constructor(private data: GameDataService){
+    this.instructions.set(data)
+  }
+}

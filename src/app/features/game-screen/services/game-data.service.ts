@@ -21,6 +21,7 @@ export interface GameConfig {
   id: string;
   title: string;
   description: string;
+  introductions: string[];
   targets: GameTarget[];
 }
 
@@ -44,6 +45,10 @@ export class GameDataService{
 
   get getGame$(): Observable< GameConfig  | null> {
     return this.gameDataSubject.asObservable();
+  }
+
+  getIntroductionsData(): string []{
+    return this.gameDataSubject.value?.introductions ?? [];
   }
 
   getTargetById(id: number): GameTarget | undefined {
