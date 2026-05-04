@@ -10,6 +10,6 @@ import { Router } from "@angular/router";
 export class HomePage {
   constructor(private router: Router){}
   startGame(){
-    this.router.navigate(['/game-screen'])
+    this.router.navigate(['/start-screen'])
   }
 }
