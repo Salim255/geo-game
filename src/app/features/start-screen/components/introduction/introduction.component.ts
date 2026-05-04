@@ -1,6 +1,7 @@
 import { Component, signal } from "@angular/core";
 import { GameDataService } from "../../../game-screen/services/game-data.service";
 import { Subscription } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-introduction",
@@ -18,7 +19,10 @@ export class IntroductionComponent {
   // USER INPUT
   warCry = '';
 
-  constructor(private data: GameDataService){}
+  constructor(
+    private router: Router,
+    private data: GameDataService
+  ){}
 
   ngOnInit(): void {
     this.data.loadGame().subscribe();
@@ -43,7 +47,7 @@ export class IntroductionComponent {
 
   startGame() {
     // Navigate to next screen
-    // this.router.navigate(['/game']);
+    this.router.navigate(['/game-screen']);
   }
   ngOnDestroy(): void {
     this.introductionSubscription?.unsubscribe();
