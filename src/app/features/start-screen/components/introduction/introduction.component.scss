@@ -13,8 +13,9 @@
 
   &__content {
     max-width: 720px;
+    width: 100%;
     background: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
     border-radius: 18px;
     padding: 2.5rem 2rem;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
@@ -30,6 +31,8 @@
   }
 
   &__paragraphs {
+    margin-bottom: 2rem;
+
     p {
       margin-bottom: 1.2rem;
       line-height: 1.55;
@@ -40,6 +43,52 @@
         margin-bottom: 2.2rem;
       }
     }
+  }
+
+  &__context {
+    font-size: 1.15rem;
+    line-height: 1.55;
+    margin-bottom: 2rem;
+    color: #4a3d5c;
+  }
+
+  &__label {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+    color: #3a2e4d;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    border: 1px solid #cfc2e8;
+    background: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+    margin-bottom: 1.8rem;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #7c5ee0;
+    }
+  }
+
+  &__action-text {
+    font-size: 1.3rem;
+    text-align: center;
+    margin-bottom: 1.2rem;
+    color: #3a2e4d;
+  }
+
+  &__war-cry {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #6a4bc4;
+    margin-bottom: 2rem;
+    animation: popIn 0.5s ease-out;
   }
 
   &__button {
@@ -69,6 +118,7 @@
   }
 }
 
+/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -77,4 +127,9 @@
 @keyframes slideUp {
   from { transform: translateY(20px); opacity: 0; }
   to   { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes popIn {
+  0%   { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }

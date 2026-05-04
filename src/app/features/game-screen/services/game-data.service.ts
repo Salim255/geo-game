@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, tap } from "rxjs";
+import { BehaviorSubject, map, Observable, of, switchMap, tap } from "rxjs";
 
 export interface GameTarget {
   id: number;
@@ -17,11 +17,15 @@ export interface GameTarget {
   nextTargetId: number | null;
 }
 
+export interface Introduction {
+  paragraphs: string []
+}
+
 export interface GameConfig {
   id: string;
   title: string;
   description: string;
-  introductions: string[];
+  introduction: Introduction;
   targets: GameTarget[];
 }
 
@@ -47,8 +51,13 @@ export class GameDataService{
     return this.gameDataSubject.asObservable();
   }
 
-  getIntroductionsData(): string []{
-    return this.gameDataSubject.value?.introductions ?? [];
+  get instruction$(): Observable<string[]>{
+    return this.getGame$.pipe(
+      map((data: GameConfig | null) => {
+        return data?.introduction.paragraphs ?? [];
+      }
+    )
+    )
   }
 
   getTargetById(id: number): GameTarget | undefined {
