@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { InstructionService } from "../../../features/game-screen/services/instructions.service";
+import { ActionService } from "../../../features/game-screen/services/action.service";
 
 @Component({
   selector: "app-header",
@@ -11,6 +12,7 @@ import { InstructionService } from "../../../features/game-screen/services/instr
 export class HeaderComponent {
 
   constructor(
+    private actionService: ActionService,
     private instructionService: InstructionService,
     private router: Router,
   ){}
@@ -20,6 +22,7 @@ export class HeaderComponent {
   }
 
   onInstruction(){
-    this.instructionService.openInstructions();
+    this.actionService.openActionModal();
+    //this.instructionService.openInstructions();
   }
 }
