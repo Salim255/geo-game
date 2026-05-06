@@ -7,9 +7,11 @@ import { FormsModule } from '@angular/forms';
 import { MapComponent } from "./components/map/map.component";
 import { QuestionScreenComponent } from "./components/question-screen/question-screen.component";
 import { SharedModule } from "../../shared/shared.module";
+import { ActionScreenComponent } from "./components/action-screen/action-screen.component";
 
 @NgModule({
   declarations: [
+    ActionScreenComponent,
     QuestionScreenComponent,
     MapComponent,
     InstructionsComponent,
