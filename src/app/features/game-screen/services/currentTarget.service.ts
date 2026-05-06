@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { GameTarget } from "./game-data.service";
 
 @Injectable({providedIn: "root"})
@@ -9,5 +9,9 @@ export class CurrentTargetService {
 
   setCurrentTarget(target: GameTarget | null): void{
     this.currentTargetSubject.next(target);
+  }
+
+  get getCurrentTarget$(): Observable<GameTarget | null>{
+    return this.currentTargetSubject.asObservable();
   }
 }
