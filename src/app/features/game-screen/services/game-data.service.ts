@@ -1,10 +1,12 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, map, Observable, of, switchMap, tap } from "rxjs";
+import { NextTargetService } from "./next-target-service";
 
 export interface GameTarget {
   id: number;
   order: number;
+  name: string;
   location: {
     lat: number;
     lng: number;
@@ -31,8 +33,12 @@ export interface GameConfig {
 
 @Injectable({providedIn: "root"})
 export class GameDataService{
-  private gameDataSubject = new BehaviorSubject<GameConfig | null>(null)
-  constructor(private http: HttpClient) {}
+  private gameDataSubject = new BehaviorSubject<GameConfig | null>(null);
+
+  constructor(
+    private http: HttpClient,
+    private nextTarget: NextTargetService,
+  ) {}
 
   loadGame(): Observable<GameConfig> {
     return this.http.get<GameConfig>('games/lille-hunt.json').pipe(
@@ -43,6 +49,9 @@ export class GameDataService{
     );
   }
 
+  setCurrentTarget(targetId: number): void{
+    this.nextTarget.setNextTarget();
+  }
   setGame(data: GameConfig) {
     this.gameDataSubject.next(data)
   }
@@ -60,6 +69,10 @@ export class GameDataService{
     )
   }
 
+  getFirstTarget(): GameTarget | null{
+      const data: GameConfig | null = this.gameDataSubject.value;
+    return  data ? data.targets[0] : null;
+  }
   getTargetById(id: number): GameTarget | undefined {
     const data: GameConfig | null = this.gameDataSubject.value;
     return data ? data.targets.find((t:GameTarget) => t.id === id) : undefined;

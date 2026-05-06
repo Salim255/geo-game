@@ -1,4 +1,6 @@
-import { Component, OnInit, signal } from "@angular/core";
+import { Component, OnDestroy, OnInit, signal } from "@angular/core";
+import { Subscription } from "rxjs";
+import { GameDataService } from "./services/game-data.service";
 
 @Component({
   selector: "app-game-screen",
@@ -6,8 +8,15 @@ import { Component, OnInit, signal } from "@angular/core";
   styleUrl: "./game-screen.page.scss",
   standalone: false
 })
-export class GameScreenPage implements OnInit {
+export class GameScreenPage implements OnInit, OnDestroy {
+  private nextTargetSubscription!: Subscription;
   toPlay = signal<boolean>(false);
-  constructor() {}
+
+  constructor(private data: GameDataService) {}
+
   ngOnInit() {}
+
+  ngOnDestroy(): void {
+
+  }
 }

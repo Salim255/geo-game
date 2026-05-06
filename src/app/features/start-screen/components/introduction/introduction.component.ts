@@ -1,8 +1,8 @@
 import { Component, signal } from "@angular/core";
-import { GameDataService } from "../../../game-screen/services/game-data.service";
+import { GameDataService, GameTarget } from "../../../game-screen/services/game-data.service";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
-import { CurrentTargetService } from "../../../game-screen/services/current-target-service";
+import { NextTargetService, NextTargetState } from "../../../game-screen/services/next-target-service";
 
 @Component({
   selector: "app-introduction",
@@ -13,6 +13,7 @@ import { CurrentTargetService } from "../../../game-screen/services/current-targ
 
 export class IntroductionComponent {
   introductionSubscription!: Subscription;
+
   instructions = signal< string[]>([]);
   // STEP MANAGEMENT
   currentStep = signal<'intro' | 'question' | 'action'>('intro');
@@ -23,7 +24,7 @@ export class IntroductionComponent {
   constructor(
     private router: Router,
     private data: GameDataService,
-    private currentTargetService: CurrentTargetService,
+    private nextTargetService: NextTargetService,
   ){}
 
   ngOnInit(): void {
@@ -49,9 +50,14 @@ export class IntroductionComponent {
 
   startGame() {
     // Navigate to next screen
-    this. currentTargetService.saveCurrentTargetId(1);
+    const firstTarget: GameTarget | null  =  this.data.getFirstTarget();
+    if (!firstTarget) return;
+    const nextTarget: NextTargetState = { id: firstTarget.id, name: firstTarget.name, reached: true };
+    this.nextTargetService.clearCurrentTargetId();
+    this.nextTargetService.setNextTarget(nextTarget);
     this.router.navigate(['/game-screen']);
   }
+
   ngOnDestroy(): void {
     this.introductionSubscription?.unsubscribe();
   }
