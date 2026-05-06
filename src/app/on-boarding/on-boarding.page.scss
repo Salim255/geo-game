@@ -1,1 +1,7 @@
-.on-boarding {}
+.on-boarding {
+  &__header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+}

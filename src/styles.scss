@@ -41,3 +41,9 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+
+.dialog-wide {
+  --mat-dialog-container-max-width: 100%!important;
+  margin: 4rem;
+}
+
