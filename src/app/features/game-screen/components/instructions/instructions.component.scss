@@ -1,12 +1,10 @@
 .instructions {
   display: flex;
   justify-content: center;
-  padding: 32px 16px;
   overflow-y: auto;
   height: 100vh;
-  background-color: transparent;
   &__card {
-    padding: 40px 48px;
+    //padding: 40px 48px;
     width: 80%;
     display: flex;
     flex-direction: column;

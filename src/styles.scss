@@ -43,7 +43,13 @@ body {
 }
 
 .dialog-wide {
-  --mat-dialog-container-max-width: 100%!important;
-  margin: 4rem;
+
+  .mat-mdc-dialog-surface {
+    border-radius: .5rem;
+    padding: 2rem;
+  }
+  .mat-mdc-dialog-container {
+   // padding-bottom: 10rem;
+  }
 }
 

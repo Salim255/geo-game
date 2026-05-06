@@ -24,6 +24,8 @@ export class InstructionService {
     this.modalCtr.open(InstructionsComponent, {
       disableClose: false,
       panelClass: 'dialog-wide',
+      maxWidth: "96vw",
+      maxHeight: "96vh",
       data: {
         title: 'Game Instructions'
       }
