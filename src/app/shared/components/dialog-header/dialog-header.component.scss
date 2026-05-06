@@ -1,0 +1,40 @@
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+  background: #ffffff;
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: #111;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.close-btn {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+
+.close-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+mat-icon {
+  font-size: 20px;
+  color: #111;
+}
