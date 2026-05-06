@@ -49,9 +49,8 @@ export class GameDataService{
     );
   }
 
-  setCurrentTarget(): void{
-    const currentTargetId = 1;
-    const currentTarget = this. getTargetById(currentTargetId);
+  setCurrentTarget(targetId: number): void{
+    const currentTarget = this.getTargetById(targetId);
     this.currentTarget.setCurrentTarget(currentTarget);
   }
 
