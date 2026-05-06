@@ -13,7 +13,6 @@ export interface NextTargetState {
 
 @Injectable({providedIn: "root"})
 export class NextTargetService {
-  private currentTargetSubject = new BehaviorSubject< GameTarget | null>(null);
 
   private STORAGE_KEY = 'lille-hunt-current-target';
 
