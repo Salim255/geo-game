@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, map, Observable, of, switchMap, tap } from "rxjs";
-import { NextTargetService } from "./next-target-service";
+import { BehaviorSubject, map, Observable,tap } from "rxjs";
+import { CurrentTargetService } from "./currentTarget.service";
 
 export interface GameTarget {
   id: number;
@@ -37,7 +37,7 @@ export class GameDataService{
 
   constructor(
     private http: HttpClient,
-    private nextTarget: NextTargetService,
+    private currentTarget: CurrentTargetService,
   ) {}
 
   loadGame(): Observable<GameConfig> {
@@ -49,9 +49,12 @@ export class GameDataService{
     );
   }
 
-  setCurrentTarget(targetId: number): void{
-    this.nextTarget.setNextTarget();
+  setCurrentTarget(): void{
+    const currentTargetId = 1;
+    const currentTarget = this. getTargetById(currentTargetId);
+    this.currentTarget.setCurrentTarget(currentTarget);
   }
+
   setGame(data: GameConfig) {
     this.gameDataSubject.next(data)
   }
@@ -70,11 +73,14 @@ export class GameDataService{
   }
 
   getFirstTarget(): GameTarget | null{
-      const data: GameConfig | null = this.gameDataSubject.value;
+    const data: GameConfig | null = this.gameDataSubject.value;
     return  data ? data.targets[0] : null;
   }
-  getTargetById(id: number): GameTarget | undefined {
+
+  getTargetById(id: number): GameTarget | null {
     const data: GameConfig | null = this.gameDataSubject.value;
-    return data ? data.targets.find((t:GameTarget) => t.id === id) : undefined;
+    if (!data) return null;
+    const target = data.targets.find((t:GameTarget) => t.id === id)
+    return target ? target : null;
   }
 }
