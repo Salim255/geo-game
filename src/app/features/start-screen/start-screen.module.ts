@@ -3,9 +3,11 @@ import { StartScreenRoutingModule } from "./start-screen-routing.module";
 import { StartScreenPage } from "./start-screen.page";
 import { IntroductionComponent } from "./components/introduction/introduction.component";
 import { FormsModule } from "@angular/forms";
+import { SharedModule } from "../../shared/shared.module";
 
 @NgModule({
   imports: [
+    SharedModule,
     FormsModule,
     StartScreenRoutingModule,
   ],

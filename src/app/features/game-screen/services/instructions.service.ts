@@ -49,4 +49,8 @@ export class InstructionService {
       }
     });
   }
+
+  onClose(){
+    this.modalCtr.closeAll();
+  }
 }
