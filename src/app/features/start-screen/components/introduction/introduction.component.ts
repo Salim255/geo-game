@@ -2,6 +2,7 @@ import { Component, signal } from "@angular/core";
 import { GameDataService } from "../../../game-screen/services/game-data.service";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
+import { CurrentTargetService } from "../../../game-screen/services/current-target-service";
 
 @Component({
   selector: "app-introduction",
@@ -21,7 +22,8 @@ export class IntroductionComponent {
 
   constructor(
     private router: Router,
-    private data: GameDataService
+    private data: GameDataService,
+    private currentTargetService: CurrentTargetService,
   ){}
 
   ngOnInit(): void {
@@ -47,6 +49,7 @@ export class IntroductionComponent {
 
   startGame() {
     // Navigate to next screen
+    this. currentTargetService.saveCurrentTargetId(1);
     this.router.navigate(['/game-screen']);
   }
   ngOnDestroy(): void {

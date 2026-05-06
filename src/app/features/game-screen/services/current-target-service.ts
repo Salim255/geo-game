@@ -2,6 +2,13 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { GameTarget } from "./game-data.service";
 
+export interface NextTargetState {
+  id: number;
+  name: string;
+  distance: number;
+  reached: boolean;
+}
+
 @Injectable({providedIn: "root"})
 export class CurrentTargetService {
   currentTargetSubject = new BehaviorSubject< GameTarget | null>(null);
