@@ -9,7 +9,9 @@ export interface NextTargetState {
   reached: boolean;
   startedAt?: number;
   attempts?: number;
+  currentActionIndex?: number;
 }
+
 
 @Injectable({providedIn: "root"})
 export class NextTargetService {

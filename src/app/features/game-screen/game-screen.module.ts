@@ -10,9 +10,11 @@ import { SharedModule } from "../../shared/shared.module";
 import { ActionScreenComponent } from "./components/action-screen/action-screen.component";
 import { ActionCountdownComponent } from "./components/action-countdown/action-countdown.component";
 import { ActionStandardComponent } from "./components/action-standard/action-standard.component";
+import { PuzzleInstructionComponent } from "./components/puzzle-instruction/puzzle-instruction.component";
 
 @NgModule({
   declarations: [
+    PuzzleInstructionComponent,
     ActionStandardComponent,
     ActionCountdownComponent,
     ActionScreenComponent,
