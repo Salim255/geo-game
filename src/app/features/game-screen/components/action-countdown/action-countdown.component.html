@@ -1,0 +1,37 @@
+<div class="action-countdown">
+
+  <div class="top-zone">
+    <h2 class="action-header">Action à réaliser</h2>
+    <div class="action-message">{{ actionText }}</div>
+  </div>
+
+  <div class="action-zone">
+
+    @if (showReady()) {
+      <div class="action-buttons">
+        <button class="btn btn-primary" (click)="startCountdown()">Je suis prêt</button>
+      </div>
+    }
+
+    @if (!showReady() && !showConfirmation()) {
+      <div class="countdown">{{ countdownValue() }}</div>
+    }
+
+    @if (showConfirmation()) {
+      <div class="confirmation">
+        <p class="confirmation-text">Avez-vous bien réalisé l’action ?</p>
+
+        <div class="confirmation-buttons">
+          <button class="btn btn-primary" (click)="confirmSuccess()">Oui</button>
+          <button class="btn btn-ghost" (click)="retry()">Non</button>
+        </div>
+      </div>
+    }
+
+  </div>
+
+  <div class="bottom-zone">
+    <!-- Optional footer -->
+  </div>
+
+</div>
