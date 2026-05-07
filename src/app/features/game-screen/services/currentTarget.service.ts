@@ -17,7 +17,11 @@ export class CurrentTargetService {
     return this.currentTargetStateSubject.asObservable();
   }
 
-   setCurrentTarget(target: GameTarget | null): void{
+  setCurrentTarget(target: GameTarget | null): void{
+    if(!target) return;
+    const currentTargeState = new CurrentTargetState();
+    currentTargeState.buildFromTarget(target);
+    this.setCurrentTargetState(currentTargeState);
     this.currentTargetSubject.next(target);
   }
 

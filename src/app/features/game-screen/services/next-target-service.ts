@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import { GameDataService } from "./game-data.service";
+import { CurrentTargetService } from "./currentTarget.service";
+import { CurrentTargetState } from "../interfaces/game.interface";
 
 export interface NextTargetState {
   id: number;

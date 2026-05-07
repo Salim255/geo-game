@@ -11,12 +11,11 @@ import { CurrentTargetService } from "./services/currentTarget.service";
 })
 export class GameScreenPage implements OnInit, OnDestroy {
   private nextTargetSubscription!: Subscription;
+  private currentTargetStatSubscription!: Subscription;
+
   toPlay = signal<boolean>(false);
 
-  constructor(
-    private currentTarget: CurrentTargetService,
-    private data: GameDataService
-  ) {}
+  constructor(private currentTarget: CurrentTargetService) {}
 
   // 1 We get the target
   // 2 We determine if the target contents
@@ -27,8 +26,15 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscribeToNextTarget();
+    this.subscribeToTargetStat();
   }
 
+  subscribeToTargetStat(){
+    this.currentTargetStatSubscription = this.currentTarget
+    .getCurrentTargetState$.subscribe((target => {
+      console.log(target);
+    }))
+  }
   subscribeToNextTarget() {
     this.nextTargetSubscription = this.currentTarget.getCurrentTarget$.subscribe(target=> {
       console.log(target);
@@ -37,5 +43,6 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.nextTargetSubscription?.unsubscribe();
+    this.currentTargetStatSubscription?.unsubscribe();
   }
 }

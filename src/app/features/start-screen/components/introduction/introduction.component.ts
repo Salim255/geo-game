@@ -4,6 +4,7 @@ import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 import { NextTargetService, NextTargetState } from "../../../game-screen/services/next-target-service";
 import { GameTarget } from "../../../game-screen/interfaces/game.interface";
+import { CurrentTargetService } from "../../../game-screen/services/currentTarget.service";
 
 @Component({
   selector: "app-introduction",
@@ -23,6 +24,7 @@ export class IntroductionComponent {
   warCry = '';
 
   constructor(
+    private currentTargetService: CurrentTargetService,
     private router: Router,
     private data: GameDataService,
     private nextTargetService: NextTargetService,
@@ -59,7 +61,6 @@ export class IntroductionComponent {
       reached: true,
       currentActionIndex: 0
      };
-    this.nextTargetService.clearCurrentTargetId();
     this.nextTargetService.setNextTarget(nextTarget);
     this.router.navigate(['/game-screen']);
   }
