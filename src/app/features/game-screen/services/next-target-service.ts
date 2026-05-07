@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-import { GameDataService, GameTarget } from "./game-data.service";
+import { GameDataService } from "./game-data.service";
 
 export interface NextTargetState {
   id: number;

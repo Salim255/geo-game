@@ -4,7 +4,8 @@ import { GpsService } from '../../services/gps.service';
 import { GameScreenService } from '../../services/game-screen.service';
 import { InstructionService } from '../../services/instructions.service';
 import { Subscription } from 'rxjs';
-import { GameConfig, GameDataService, GameTarget } from '../../services/game-data.service';
+import { GameDataService } from '../../services/game-data.service';
+import { GameConfig, GameTarget } from '../../interfaces/game.interface';
 
 
 @Component({

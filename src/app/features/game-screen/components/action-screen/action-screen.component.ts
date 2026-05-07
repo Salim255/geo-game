@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, signal } from "@angular/core";
 import { CurrentTargetService } from "../../services/currentTarget.service";
 import { Subscription } from "rxjs";
-import { GameTarget } from "../../services/game-data.service";
+import { GameTarget } from "../../interfaces/game.interface";
 
 export enum ActionType {
   STANDARD='standard',

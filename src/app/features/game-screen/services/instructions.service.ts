@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { MatDialog } from '@angular/material/dialog';
 import { InstructionsComponent } from "../components/instructions/instructions.component";
 import { QuestionScreenComponent } from "../components/question-screen/question-screen.component";
-import { GameTarget } from "./game-data.service";
+import { GameTarget } from "../interfaces/game.interface";
 
 @Injectable({providedIn: "root"})
 export class InstructionService {

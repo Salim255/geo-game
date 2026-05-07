@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
-import { GameTarget } from "./game-data.service";
+import { GameTarget } from "../interfaces/game.interface";
+
 
 @Injectable({providedIn: "root"})
 export class CurrentTargetService {

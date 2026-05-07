@@ -1,8 +1,9 @@
 import { Component, signal } from "@angular/core";
-import { GameDataService, GameTarget } from "../../../game-screen/services/game-data.service";
+import { GameDataService } from "../../../game-screen/services/game-data.service";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 import { NextTargetService, NextTargetState } from "../../../game-screen/services/next-target-service";
+import { GameTarget } from "../../../game-screen/interfaces/game.interface";
 
 @Component({
   selector: "app-introduction",
@@ -52,7 +53,12 @@ export class IntroductionComponent {
     // Navigate to next screen
     const firstTarget: GameTarget | null  =  this.data.getFirstTarget();
     if (!firstTarget) return;
-    const nextTarget: NextTargetState = { id: firstTarget.id, name: firstTarget.name, reached: true };
+    const nextTarget: NextTargetState = {
+      id: firstTarget.id,
+      name: firstTarget.name,
+      reached: true,
+      currentActionIndex: 0
+     };
     this.nextTargetService.clearCurrentTargetId();
     this.nextTargetService.setNextTarget(nextTarget);
     this.router.navigate(['/game-screen']);
