@@ -1,29 +1,108 @@
-export interface CurrentTargetState {
-  target: GameTarget | null;
+export class CurrentTargetState {
+  private targetId?: number;
+  private targetName?: string;
+  private challengeCount?: number;
+  private currentChallengeIndex?: number;
 
-  // The active challenge inside this target
-  currentChallenge: GameChallenge | null;
+  private hasActions?: boolean;
+  private actionCount?: number;
+  private currentActionIndex?: number;
 
-  // Story context (array of paragraphs)
-  storyContext: string[];
+  private nextTargetId?: number | null;
 
-  // Question details
-  questionText: string[];
-  questionType: string;
-  expectedAnswer: string;
+  constructor() {}
 
-  // Clean list of actions (already transformed)
-  actions: ChallengeAction[];
+  // ------------------------------------
+  // BUILD STATE FROM TARGET (uses setters)
+  // ------------------------------------
+  buildFromTarget(target: GameTarget, challengeIndex: number = 0) {
+    const challenge = target.challenges[challengeIndex];
 
-  // Instructions (derived from story + question + actions)
-  instructions: string[];
+    this.setTargetId(target.id);
+    this.setTargetName(target.name);
+    this.setNextTargetId(target.nextTargetId);
 
-  // Success / failure
-  successMessage?: string;
-  successVoice?: string;
-  failureMessage?: string;
-  retryAllowed?: boolean;
+    this.setChallengeCount(target.challenges.length);
+    this.setCurrentChallengeIndex(challengeIndex);
+
+    this.setHasActions(!!challenge.actions?.length);
+    this.setActionCount(challenge.actions?.length ?? 0);
+    this.setCurrentActionIndex(0);
+  }
+
+  // ------------------------------------
+  // SETTERS
+  // ------------------------------------
+
+  setTargetId(id: number) {
+    this.targetId = id;
+  }
+
+  setTargetName(name: string) {
+    this.targetName = name;
+  }
+
+  setChallengeCount(count: number) {
+    this.challengeCount = count;
+  }
+
+  setCurrentChallengeIndex(index: number) {
+    this.currentChallengeIndex = index;
+  }
+
+  setHasActions(has: boolean) {
+    this.hasActions = has;
+  }
+
+  setActionCount(count: number) {
+    this.actionCount = count;
+  }
+
+  setCurrentActionIndex(index: number) {
+    this.currentActionIndex = index;
+  }
+
+  setNextTargetId(id: number | null) {
+    this.nextTargetId = id;
+  }
+
+  // ------------------------------------
+  // GETTERS
+  // ------------------------------------
+
+  getTargetId() {
+    return this.targetId;
+  }
+
+  getTargetName() {
+    return this.targetName;
+  }
+
+  getChallengeCount() {
+    return this.challengeCount;
+  }
+
+  getCurrentChallengeIndex() {
+    return this.currentChallengeIndex;
+  }
+
+  getHasActions() {
+    return this.hasActions;
+  }
+
+  getActionCount() {
+    return this.actionCount;
+  }
+
+  getCurrentActionIndex() {
+    return this.currentActionIndex;
+  }
+
+  getNextTargetId() {
+    return this.nextTargetId;
+  }
 }
+
 
 
 export interface GameTarget {
