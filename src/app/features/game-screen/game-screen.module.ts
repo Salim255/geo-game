@@ -8,9 +8,13 @@ import { MapComponent } from "./components/map/map.component";
 import { QuestionScreenComponent } from "./components/question-screen/question-screen.component";
 import { SharedModule } from "../../shared/shared.module";
 import { ActionScreenComponent } from "./components/action-screen/action-screen.component";
+import { ActionCountdownComponent } from "./components/action-countdown/action-countdown.component";
+import { ActionStandardComponent } from "./components/action-standard/action-standard.component";
 
 @NgModule({
   declarations: [
+    ActionStandardComponent,
+    ActionCountdownComponent,
     ActionScreenComponent,
     QuestionScreenComponent,
     MapComponent,

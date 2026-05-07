@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 
 @Component({
   selector: 'app-acton-standard',
@@ -8,8 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class ActionStandardComponent implements OnInit {
-  constructor() { }
+ // The action object (acheter, photo, etc.)
+  @Input() action: any;
 
-  ngOnInit() { }
+  // Optional: track if user validated the action
+  validated = signal<boolean>(false);
+
+  ngOnInit(): void {
+
+  }
+  confirm() {
+    this.validated.set(true);
+    console.log("Action simple validée → étape suivante");
+    // Here you can close the modal or notify parent if needed
+  }
 }
 

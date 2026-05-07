@@ -6,7 +6,7 @@
 
   <div class="content-zone">
 
-    @if (action.acheter) {
+    @if (action?.acheter) {
       <div class="standard-block">
         <h3 class="standard-title">{{ action.acheter.header }}</h3>
 
@@ -16,7 +16,7 @@
       </div>
     }
 
-    @if (action.photo) {
+    @if (action?.photo) {
       <div class="standard-block">
         <h3 class="standard-title">{{ action.photo.header }}</h3>
 
