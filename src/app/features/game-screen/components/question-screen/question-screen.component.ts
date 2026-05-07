@@ -1,4 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { CurrentTargetService } from "../../services/currentTarget.service";
+import { Subscription } from "rxjs";
+import { GameTarget } from "../../interfaces/game.interface";
 
 @Component({
   selector: "app-question-screen",
@@ -6,11 +9,29 @@ import { Component } from "@angular/core";
   styleUrl: "./question-screen.component.scss",
   standalone: false
 })
-export class QuestionScreenComponent {
+export class QuestionScreenComponent implements OnInit {
+  private currentTargetSubscription!: Subscription;
+  private currentTarget: GameTarget | null = null;
   userAnswer: string = '';
   question = "question";
 
+  constructor(private currentTargetService: CurrentTargetService){}
+
+
+  ngOnInit(): void { }
   selectAnswer(option: any){}
+
+  subscribeToCurrentTarget() {
+    this.currentTargetSubscription = this.currentTargetService
+    .getCurrentTarget$.subscribe(target => {
+      this.currentTarget = target;
+      if(target) {
+        console.log(target);
+        this.currentTarget = target;
+      }
+    })
+  }
+
 
   close(){}
   validate() {
@@ -29,7 +50,7 @@ export class QuestionScreenComponent {
   }
 }
 
-onSuccess() {
-  // close modal + unlock next checkpoint
-}
+  onSuccess() {
+    // close modal + unlock next checkpoint
+  }
 }

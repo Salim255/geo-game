@@ -1,3 +1,31 @@
+export interface CurrentTargetState {
+  target: GameTarget | null;
+
+  // The active challenge inside this target
+  currentChallenge: GameChallenge | null;
+
+  // Story context (array of paragraphs)
+  storyContext: string[];
+
+  // Question details
+  questionText: string[];
+  questionType: string;
+  expectedAnswer: string;
+
+  // Clean list of actions (already transformed)
+  actions: ChallengeAction[];
+
+  // Instructions (derived from story + question + actions)
+  instructions: string[];
+
+  // Success / failure
+  successMessage?: string;
+  successVoice?: string;
+  failureMessage?: string;
+  retryAllowed?: boolean;
+}
+
+
 export interface GameTarget {
   id: number;
   order: number;
