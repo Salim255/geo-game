@@ -1,4 +1,7 @@
-import { Component, OnInit, signal } from "@angular/core";
+import { Component, OnDestroy, OnInit, signal } from "@angular/core";
+import { CurrentTargetService } from "../../services/currentTarget.service";
+import { Subscription } from "rxjs";
+import { GameTarget } from "../../services/game-data.service";
 
 export enum ActionType {
   STANDARD='standard',
@@ -11,14 +14,31 @@ export enum ActionType {
   styleUrls: ["./action-screen.component.scss"],
   standalone: false
 })
-export class ActionScreenComponent implements OnInit {
-
+export class ActionScreenComponent implements OnInit, OnDestroy {
+  private currentTargetSubscription!: Subscription;
+  private currentTarget: GameTarget | null = null;
   currentActionType = signal<ActionType | null>(null);
-
   actionType=ActionType;
 
-  constructor(){}
+  constructor(private currentTargetService: CurrentTargetService ){}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscribeToCurrentTarget();
+  }
+
+  subscribeToCurrentTarget() {
+    this.currentTargetSubscription = this.currentTargetService
+    .getCurrentTarget$.subscribe(target => {
+      this.currentTarget = target;
+      if(target) {
+        console.log(target);
+        this.currentTarget = target;
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.currentTargetSubscription?.unsubscribe();
+  }
 
 }
