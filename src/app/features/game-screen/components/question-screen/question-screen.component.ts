@@ -1,7 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, signal } from "@angular/core";
 import { CurrentTargetService } from "../../services/currentTarget.service";
 import { Subscription } from "rxjs";
-import { GameTarget } from "../../interfaces/game.interface";
+import { GameChallenge, GameTarget } from "../../interfaces/game.interface";
+import { ChallengeService } from "../../services/challenge.service";
 
 @Component({
   selector: "app-question-screen",
@@ -9,29 +10,27 @@ import { GameTarget } from "../../interfaces/game.interface";
   styleUrl: "./question-screen.component.scss",
   standalone: false
 })
-export class QuestionScreenComponent implements OnInit {
-  private currentTargetSubscription!: Subscription;
-  private currentTarget: GameTarget | null = null;
+export class QuestionScreenComponent implements OnInit,  OnDestroy {
+  private currentChallengeSubscription!: Subscription;
+  currentChallenge = signal<GameChallenge | null>(null);
   userAnswer: string = '';
   question = "question";
 
-  constructor(private currentTargetService: CurrentTargetService){}
+  constructor(private challengeService: ChallengeService){}
 
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.subscribeToCurrentChallenge();
+   }
+
   selectAnswer(option: any){}
 
-  subscribeToCurrentTarget() {
-    this.currentTargetSubscription = this.currentTargetService
-    .getCurrentTarget$.subscribe(target => {
-      this.currentTarget = target;
-      if(target) {
-        console.log(target);
-        this.currentTarget = target;
-      }
+  subscribeToCurrentChallenge() {
+    this.currentChallengeSubscription = this.challengeService
+    .getCurrentChallenge$.subscribe((challenge: GameChallenge | null) => {
+      this.currentChallenge.set(challenge);
     })
   }
-
 
   close(){}
   validate() {
@@ -52,5 +51,9 @@ export class QuestionScreenComponent implements OnInit {
 
   onSuccess() {
     // close modal + unlock next checkpoint
+  }
+
+  ngOnDestroy(): void {
+    this.currentChallengeSubscription?.unsubscribe();
   }
 }

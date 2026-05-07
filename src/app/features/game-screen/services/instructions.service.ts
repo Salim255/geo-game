@@ -40,16 +40,6 @@ export class InstructionService {
     return this.currentTargetSubscription.asObservable();
   }
 
-  openQuestionDialog(target: GameTarget) {
-    this.modalCtr.open(QuestionScreenComponent, {
-      disableClose: true,
-      data: {
-        title: 'Game Instructions',
-        target: target
-      }
-    });
-  }
-
   onClose(){
     this.modalCtr.closeAll();
   }

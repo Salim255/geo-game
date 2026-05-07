@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit, signal } from "@angular/core";
 import { Subscription } from "rxjs";
 import { GameDataService } from "./services/game-data.service";
 import { CurrentTargetService } from "./services/currentTarget.service";
+import { ChallengeService } from "./services/challenge.service";
+import { GameTarget } from "./interfaces/game.interface";
 
 @Component({
   selector: "app-game-screen",
@@ -13,9 +15,13 @@ export class GameScreenPage implements OnInit, OnDestroy {
   private nextTargetSubscription!: Subscription;
   private currentTargetStatSubscription!: Subscription;
 
+  private currentTargetObject = signal<GameTarget | null>(null);
   toPlay = signal<boolean>(false);
 
-  constructor(private currentTarget: CurrentTargetService) {}
+  constructor(
+    private challengeService: ChallengeService,
+    private currentTarget: CurrentTargetService
+  ) {}
 
   // 1 We get the target
   // 2 We determine if the target contents
@@ -31,13 +37,31 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
   subscribeToTargetStat(){
     this.currentTargetStatSubscription = this.currentTarget
-    .getCurrentTargetState$.subscribe((target => {
-      console.log(target);
+    .getCurrentTargetState$.subscribe((state => {
+
+      if (!state || !this.currentTargetObject()) return;
+
+
+      const challengeIndex = state.getCurrentChallengeIndex();
+
+      if(challengeIndex === undefined) return;
+
+      const challenge = this.currentTargetObject()?.challenges[challengeIndex];
+
+      console.log(this.currentTargetObject(), challenge, "hello")
+      if(!challenge) return;
+
+      console.log(challenge, "Hello from challenge");
+      this.challengeService.setCurrentChallenge(challenge);
+
+      // Open Question
+      this.challengeService.openQuestionDialog();
     }))
   }
+
   subscribeToNextTarget() {
     this.nextTargetSubscription = this.currentTarget.getCurrentTarget$.subscribe(target=> {
-      console.log(target);
+      this.currentTargetObject.set(target);
     })
   }
 

@@ -18,16 +18,11 @@
 
     <h2 class="question-screen__block-title">Context</h2>
 
-    <p class="question-screen__text">
-      In the center of the old district, there is a place not marked on any map.
-      Every morning before sunrise, a silent gathering happens there.
-
-      A note was found nearby:
-
-      “The answer is not where noise is the loudest, but where silence is shared.
-      Count the steps between the river and the clock tower.”
-    </p>
-
+    @for (item of currentChallenge()?.story?.context; track $index) {
+      <p class="question-screen__text">
+        {{item}}
+      </p>
+    }
   </section>
 
   <!-- QUESTION BLOCK -->

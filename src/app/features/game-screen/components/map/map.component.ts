@@ -6,6 +6,7 @@ import { InstructionService } from '../../services/instructions.service';
 import { Subscription } from 'rxjs';
 import { GameDataService } from '../../services/game-data.service';
 import { GameConfig, GameTarget } from '../../interfaces/game.interface';
+import { ChallengeService } from '../../services/challenge.service';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private currentTargetIndex = 0;
 
   constructor(
+    private challengeService: ChallengeService,
     private data: GameDataService,
     private gps: GpsService,
     private inst: InstructionService,
@@ -171,7 +173,7 @@ export class MapComponent implements OnInit, OnDestroy {
     console.log('🎉 TARGET REACHED');
 
     // 🔥 visual + audio feedback handled in service
-    this.inst.openQuestionDialog(this.target);
+    this.challengeService.openQuestionDialog();
     this.game.moveTargetAlongPath([], () => {}, () => {});
 
     this.animateTarget();
