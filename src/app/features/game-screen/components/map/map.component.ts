@@ -110,17 +110,17 @@ export class MapComponent implements OnInit, OnDestroy {
     const userIcon = this.createUserIcon();
 
     // 🧪 DEV MODE
-   /*  this.gps.startFakeTracking(
-      50.632615310744754,
-      3.013675532644488,
+    this.gps.startFakeTracking(
+      50.63061531074475,   // NEW start lat (300m before point 1)
+      3.010675532644488,   // NEW start lng
       (pos) => this.handlePosition(pos, userIcon)
-    ); */
+    );
 
     // 📍 PROD MODE
 
-    this.gps.startTracking((pos) =>
+    /* this.gps.startTracking((pos) =>
       this.handlePosition(pos, userIcon)
-    );
+    ); */
 
   }
 
@@ -197,7 +197,7 @@ export class MapComponent implements OnInit, OnDestroy {
     this.target.location = {
       lat: next.location.lat,
       lng: next.location.lng,
-      radius: 50
+      radius: 20
     }
 
 

@@ -19,7 +19,7 @@ export class ActionService {
       });
     }
 
-    onClose(){
+    onClose() {
       this.modalCtr.closeAll();
     }
 }

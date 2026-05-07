@@ -24,7 +24,6 @@ export class IntroductionComponent {
   warCry = '';
 
   constructor(
-    private currentTargetService: CurrentTargetService,
     private router: Router,
     private data: GameDataService,
     private nextTargetService: NextTargetService,

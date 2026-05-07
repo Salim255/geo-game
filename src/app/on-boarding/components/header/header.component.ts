@@ -22,7 +22,7 @@ export class HeaderComponent {
   }
 
   onInstruction(){
-    this.actionService.openActionModal();
+    //this.actionService.openActionModal();
     //this.instructionService.openInstructions();
   }
 }

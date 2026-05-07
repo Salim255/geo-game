@@ -1,6 +1,7 @@
 import { Component, signal } from "@angular/core";
 import { ActionService } from "../../services/action.service";
 import { ChallengeService } from "../../services/challenge.service";
+import { CurrentTargetService } from "../../services/currentTarget.service";
 
 @Component({
   selector: "app-action-countdown",
@@ -18,6 +19,7 @@ export class ActionCountdownComponent {
   cooldown = false;
 
   constructor(
+    private currentTarget: CurrentTargetService,
     private challengeService: ChallengeService,
     private actionService: ActionService,
   ){}
@@ -48,8 +50,15 @@ export class ActionCountdownComponent {
   }
 
   confirmSuccess() {
-    console.log("Action validée → étape suivante");
     this.actionService.onClose();
+
+    // Set next challenge
+    const target = this.currentTarget.getCurrentTarget();
+    const currentState = this.currentTarget.getCurrentTargetState();
+    const nexChallenge = target?.challenges[1];
+    if (!nexChallenge) return;
+    currentState?.setCurrentChallengeIndex(1);
+    this.challengeService.setCurrentChallenge(nexChallenge);
     this.challengeService.openQuestionDialog();
   }
 

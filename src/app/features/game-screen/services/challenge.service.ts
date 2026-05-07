@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 @Injectable({providedIn: "root"})
 export class ChallengeService {
   private currentChallengeSubject = new BehaviorSubject<GameChallenge | null>(null);
+
   constructor(private modalCtr: MatDialog){}
 
 
@@ -21,9 +22,15 @@ export class ChallengeService {
   openQuestionDialog() {
     this.modalCtr.open(QuestionScreenComponent, {
       disableClose: true,
+      maxWidth: "96vw",
+      maxHeight: "96vh",
       data: {
         title: 'Game Instructions',
       }
     });
+  }
+
+  onClose(){
+    this.modalCtr.closeAll();
   }
 }

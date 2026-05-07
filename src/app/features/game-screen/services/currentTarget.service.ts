@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { CurrentTargetState, GameTarget } from "../interfaces/game.interface";
+import { ChallengeService } from "./challenge.service";
 
 
 @Injectable({providedIn: "root"})
@@ -8,6 +9,7 @@ export class CurrentTargetService {
   private currentTargetStateSubject = new BehaviorSubject<CurrentTargetState | null>(null);
   private currentTargetSubject = new BehaviorSubject< GameTarget | null>(null);
 
+  constructor(private challengeService: ChallengeService){}
 
   setCurrentTargetState(target: CurrentTargetState | null): void{
     this.currentTargetStateSubject.next(target);
@@ -27,5 +29,13 @@ export class CurrentTargetService {
 
   get getCurrentTarget$(): Observable<GameTarget | null>{
     return this.currentTargetSubject.asObservable();
+  }
+
+  getCurrentTarget():GameTarget | null{
+    return this.currentTargetSubject.value;
+  }
+
+  getCurrentTargetState():CurrentTargetState | null{
+      return this.currentTargetStateSubject.value;
   }
 }

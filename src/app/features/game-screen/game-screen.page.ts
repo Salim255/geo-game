@@ -55,7 +55,11 @@ export class GameScreenPage implements OnInit, OnDestroy {
       this.challengeService.setCurrentChallenge(challenge);
 
       // Open Question
-      this.challengeService.openQuestionDialog();
+      // Close
+      this.challengeService.onClose();
+      setTimeout(() => {
+        this.challengeService.openQuestionDialog();
+      }, 0)
     }))
   }
 

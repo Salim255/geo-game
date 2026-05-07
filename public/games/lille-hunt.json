@@ -29,9 +29,9 @@
       "order": 1,
       "name": "Grand Place",
       "location": {
-        "lat": 50.6406,
-        "lng": 3.0618,
-        "radius": 50
+        "lat": 50.632615310744754,
+        "lng": 3.013675532644488,
+        "radius": 20
       },
       "nextTargetId": 2,
       "challenges": [
@@ -93,9 +93,9 @@
       "order": 2,
       "name": "Quequetterie",
       "location": {
-        "lat": 50.6366,
-        "lng": 3.0635,
-        "radius": 50
+        "lat": 50.63461531074475,
+        "lng": 3.016675532644488,
+        "radius": 20
       },
       "nextTargetId": 3,
       "challenges": [
@@ -146,9 +146,9 @@
       "order": 3,
       "name": "Passage du désir",
       "location": {
-        "lat": 50.6339,
-        "lng": 3.0573,
-        "radius": 50
+        "lat": 50.63661531074475,
+        "lng": 3.019675532644488,
+        "radius": 20
       },
       "nextTargetId": 4,
       "challenges": [
@@ -195,9 +195,9 @@
       "order": 4,
       "name": "Darjeeling",
       "location": {
-        "lat": 50.6369,
-        "lng": 3.0612,
-        "radius": 50
+        "lat": 50.63861531074475,
+        "lng": 3.022675532644488,
+        "radius": 20
       },
       "nextTargetId": 5,
       "challenges": [
@@ -233,9 +233,9 @@
       "order": 5,
       "name": "Nocibé",
       "location": {
-        "lat": 50.6319,
-        "lng": 3.0497,
-        "radius": 50
+        "lat": 50.64061531074475,
+        "lng": 3.025675532644488,
+        "radius": 20
       },
       "nextTargetId": 6,
       "challenges": [
@@ -257,9 +257,9 @@
       "order": 6,
       "name": "Bois d’Eldars",
       "location": {
-        "lat": 50.6406,
-        "lng": 3.0618,
-        "radius": 50
+        "lat": 50.64261531074475,
+        "lng": 3.028675532644488,
+        "radius": 20
       },
       "nextTargetId": 7,
       "challenges": [
@@ -283,9 +283,9 @@
       "order": 7,
       "name": "Final",
       "location": {
-        "lat": 50.6406,
-        "lng": 3.0618,
-        "radius": 50
+        "lat": 50.64461531074475,
+        "lng": 3.031675532644488,
+        "radius": 20
       },
       "nextTargetId": null,
       "challenges": [
