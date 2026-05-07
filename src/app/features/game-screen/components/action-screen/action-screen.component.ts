@@ -32,6 +32,9 @@ export class ActionScreenComponent implements OnInit, OnDestroy {
       this.currentTarget = target;
       if(target) {
         console.log(target);
+        if (target.id === 1) {
+          this.currentActionType.set(this.actionType.COUNTDOWN);
+        }
         this.currentTarget = target;
       }
     })

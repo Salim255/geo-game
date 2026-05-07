@@ -15,9 +15,6 @@
 
   <!-- STORY BLOCK -->
   <section class="question-screen__block">
-
-    <h2 class="question-screen__block-title">Context</h2>
-
     @for (item of currentChallenge()?.story?.context; track $index) {
       <p class="question-screen__text">
         {{item}}
@@ -27,11 +24,8 @@
 
   <!-- QUESTION BLOCK -->
   <section class="question-screen__block">
-
-    <h2 class="question-screen__block-title">Question</h2>
-
     <p class="question-screen__question">
-      What does the message refer to?
+      {{currentChallenge()?.question?.text}}
     </p>
 
     <!-- INPUT -->
@@ -56,3 +50,4 @@
     </button>
   </footer>
 </div>
+

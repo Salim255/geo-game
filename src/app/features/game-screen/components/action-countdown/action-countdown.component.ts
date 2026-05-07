@@ -1,4 +1,6 @@
 import { Component, signal } from "@angular/core";
+import { ActionService } from "../../services/action.service";
+import { ChallengeService } from "../../services/challenge.service";
 
 @Component({
   selector: "app-action-countdown",
@@ -14,6 +16,11 @@ export class ActionCountdownComponent {
   showReady = signal<boolean>(true);
   showConfirmation = signal<boolean>(false);
   cooldown = false;
+
+  constructor(
+    private challengeService: ChallengeService,
+    private actionService: ActionService,
+  ){}
 
   startCountdown() {
     if (this.cooldown) return;
@@ -42,6 +49,8 @@ export class ActionCountdownComponent {
 
   confirmSuccess() {
     console.log("Action validée → étape suivante");
+    this.actionService.onClose();
+    this.challengeService.openQuestionDialog();
   }
 
   retry() {
