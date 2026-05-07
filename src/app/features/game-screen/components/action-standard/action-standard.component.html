@@ -1,0 +1,35 @@
+<div class="action-standard">
+
+  <div class="top-zone">
+    <h2 class="standard-header">Action à réaliser</h2>
+  </div>
+
+  <div class="content-zone">
+
+    @if (action.acheter) {
+      <div class="standard-block">
+        <h3 class="standard-title">{{ action.acheter.header }}</h3>
+
+        @for (p of action.acheter.paragraphs; track p) {
+          <p class="standard-text">{{ p }}</p>
+        }
+      </div>
+    }
+
+    @if (action.photo) {
+      <div class="standard-block">
+        <h3 class="standard-title">{{ action.photo.header }}</h3>
+
+        @for (p of action.photo.paragraphs; track p) {
+          <p class="standard-text">{{ p }}</p>
+        }
+      </div>
+    }
+
+  </div>
+
+  <div class="bottom-zone">
+    <button class="btn btn-primary" (click)="confirm()">Action réalisée</button>
+  </div>
+
+</div>

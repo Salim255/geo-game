@@ -1,0 +1,110 @@
+// =========================
+// VARIABLES
+// =========================
+$gray-50: #f9fafb;
+$gray-100: #e5e7eb;
+$slate-400: #94a3b8;
+$green-400: #4ade80;
+$font-ui: "Inter", "SF Pro Text", system-ui, sans-serif;
+
+// =========================
+// MIXINS
+// =========================
+@mixin flex-col { display: flex; flex-direction: column; }
+@mixin flex-center { display: flex; justify-content: center; align-items: center; }
+
+@mixin bfm-btn-base {
+  padding: 1rem 2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: 0.15s ease;
+  font-size: 1.2rem;
+}
+
+@mixin bfm-btn-primary {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #022c22;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(34, 197, 94, 0.35);
+  }
+}
+
+// =========================
+// ACTION STANDARD
+// =========================
+.action-standard {
+  @include flex-col;
+  justify-content: space-between;
+
+  width: 80vw;
+  min-height: 70vh;
+  max-height: 70vh;
+
+  padding: 2.5rem;
+  border-radius: 22px;
+  margin: 0 auto;
+
+  background: #0f172a;
+  border: 1px solid rgba($slate-400, 0.3);
+  color: $gray-100;
+  font-family: $font-ui;
+  text-align: center;
+
+  // TOP ZONE
+  .top-zone {
+    height: 20%;
+    @include flex-center;
+    flex-direction: column;
+  }
+
+  .standard-header {
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $gray-50;
+  }
+
+  // CONTENT ZONE
+  .content-zone {
+    height: 60%;
+    @include flex-center;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 2rem;
+  }
+
+  .standard-block {
+    @include flex-col;
+    gap: 1.2rem;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+
+  .standard-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: $gray-50;
+  }
+
+  .standard-text {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    color: $gray-100;
+  }
+
+  // BOTTOM ZONE
+  .bottom-zone {
+    height: 20%;
+    @include flex-center;
+
+    .btn-primary {
+      @include bfm-btn-base;
+      @include bfm-btn-primary;
+    }
+  }
+}
