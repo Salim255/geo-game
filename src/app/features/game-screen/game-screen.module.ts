@@ -11,9 +11,11 @@ import { ActionScreenComponent } from "./components/action-screen/action-screen.
 import { ActionCountdownComponent } from "./components/action-countdown/action-countdown.component";
 import { ActionStandardComponent } from "./components/action-standard/action-standard.component";
 import { PuzzleInstructionComponent } from "./components/puzzle-instruction/puzzle-instruction.component";
+import { QuestionFormComponent } from "./components/question-form/question-form.component";
 
 @NgModule({
   declarations: [
+    QuestionFormComponent,
     PuzzleInstructionComponent,
     ActionStandardComponent,
     ActionCountdownComponent,
