@@ -69,6 +69,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
     })
   }
 
+
   ngOnDestroy(): void {
     this.nextTargetSubscription?.unsubscribe();
     this.currentTargetStatSubscription?.unsubscribe();

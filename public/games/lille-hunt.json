@@ -95,7 +95,7 @@
       "location": {
         "lat": 50.63461531074475,
         "lng": 3.016675532644488,
-        "radius": 20
+        "radius": 50
       },
       "nextTargetId": 3,
       "challenges": [
@@ -148,7 +148,7 @@
       "location": {
         "lat": 50.63661531074475,
         "lng": 3.019675532644488,
-        "radius": 20
+        "radius": 50
       },
       "nextTargetId": 4,
       "challenges": [
@@ -197,7 +197,7 @@
       "location": {
         "lat": 50.63861531074475,
         "lng": 3.022675532644488,
-        "radius": 20
+        "radius": 50
       },
       "nextTargetId": 5,
       "challenges": [
@@ -235,7 +235,7 @@
       "location": {
         "lat": 50.64061531074475,
         "lng": 3.025675532644488,
-        "radius": 20
+        "radius": 50
       },
       "nextTargetId": 6,
       "challenges": [
@@ -259,7 +259,7 @@
       "location": {
         "lat": 50.64261531074475,
         "lng": 3.028675532644488,
-        "radius": 20
+        "radius": 50
       },
       "nextTargetId": 7,
       "challenges": [
@@ -285,7 +285,7 @@
       "location": {
         "lat": 50.64461531074475,
         "lng": 3.031675532644488,
-        "radius": 20
+        "radius": 50
       },
       "nextTargetId": null,
       "challenges": [

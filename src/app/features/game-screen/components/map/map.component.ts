@@ -2,11 +2,12 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import * as L from 'leaflet';
 import { GpsService } from '../../services/gps.service';
 import { GameScreenService } from '../../services/game-screen.service';
-import { InstructionService } from '../../services/instructions.service';
 import { Subscription } from 'rxjs';
 import { GameDataService } from '../../services/game-data.service';
 import { GameConfig, GameTarget } from '../../interfaces/game.interface';
 import { ChallengeService } from '../../services/challenge.service';
+import { CurrentTargetService } from '../../services/currentTarget.service';
+import { NextTargetService, NextTargetState } from '../../services/next-target-service';
 
 
 @Component({
@@ -18,6 +19,7 @@ import { ChallengeService } from '../../services/challenge.service';
 export class MapComponent implements OnInit, OnDestroy {
 
   private gameDataSubscription!: Subscription;
+
   // ================= MAP =================
   private map!: L.Map;
   private userMarker!: L.Marker;
@@ -32,16 +34,16 @@ export class MapComponent implements OnInit, OnDestroy {
   private currentTargetIndex = 0;
 
   constructor(
+    private nextTargetService: NextTargetService,
+    private currentTargetService: CurrentTargetService,
     private challengeService: ChallengeService,
-    private data: GameDataService,
+    private dataService: GameDataService,
     private gps: GpsService,
-    private inst: InstructionService,
     private game: GameScreenService
   ) {}
 
   // ================= INIT =================
   ngOnInit() {
-    this.data.loadGame().subscribe();
     this.subscribeToGameData();
   }
 
@@ -50,8 +52,9 @@ export class MapComponent implements OnInit, OnDestroy {
     this.targets = this.gameData?.targets ?? [];
   }
 
+
   private subscribeToGameData(){
-    this.gameDataSubscription = this.data.getGame$.subscribe(game=> {
+    this.gameDataSubscription = this.dataService.getGame$.subscribe(game=> {
       this.setGameData(game);
       if (!this.targets.length) return;
 
@@ -157,6 +160,7 @@ export class MapComponent implements OnInit, OnDestroy {
       this.target.location.lng
     );
 
+    console.log(distance, this.target)
     if (distance < this.target.location.radius && !this.isInZone) {
       this.isInZone = true;
       this.onEnterZone();
@@ -169,41 +173,48 @@ export class MapComponent implements OnInit, OnDestroy {
 
   // ================= GAME EVENT =================
   private onEnterZone() {
-
     console.log('🎉 TARGET REACHED');
-
     // 🔥 visual + audio feedback handled in service
-    this.challengeService.openQuestionDialog();
+
     this.game.moveTargetAlongPath([], () => {}, () => {});
 
     this.animateTarget();
     this.speak("Target reached. Well done!");
 
     this.goToNextTarget();
+
+    // Set the current target
+    this.challengeService.openQuestionDialog();
   }
 
   // ================= NEXT TARGET =================
   private goToNextTarget() {
 
-    this.currentTargetIndex++;
+
 
     if (this.currentTargetIndex >= this.targets.length) {
-      console.log('🏁 GAME COMPLETE');
+     // console.log('🏁 GAME COMPLETE');
       return;
     }
 
-    const next = this.targets[this.currentTargetIndex];
 
-    this.target.location = {
-      lat: next.location.lat,
-      lng: next.location.lng,
-      radius: 20
-    }
+    // Set
+    const nextTarget: NextTargetState = {
+      id: this.target.id,
+      name: this.target.name,
+      reached: true,
+      currentActionIndex: 0
+    };
+    this.nextTargetService.setNextTarget(nextTarget);
+    this.currentTargetService.setCurrentTarget(this.target);
 
 
     this.updateTargetZone();
-
     console.log('➡️ Next target:', this.target);
+
+    // Update current target
+    this.currentTargetIndex++;
+    this.target = this.targets[this.currentTargetIndex];
   }
 
   // ================= VISUAL =================

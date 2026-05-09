@@ -63,7 +63,7 @@ export class QuestionScreenComponent implements OnInit,  OnDestroy {
     if (this.targetId() === 1) {
       if (challengeIndex === 0){
         this.actionService.onClose();
-        this.actionService.openActionModal();
+        this.actionService.openActionModal('countdown');
       } else {
       this.actionService.onClose();
       }
@@ -72,6 +72,7 @@ export class QuestionScreenComponent implements OnInit,  OnDestroy {
 
 
     const nextTargetId = this.currentTargetService.getCurrentTargetState()?.getNextTargetId();
+
     // End of target one
     if (this.targetId() === 1 && challengeIndex === 1){
       // Set the new target
@@ -83,10 +84,14 @@ export class QuestionScreenComponent implements OnInit,  OnDestroy {
       }
     }
 
+    if (this.targetId() == 2){
+        this.actionService.onClose();
+        this.actionService.openActionModal('standard');
+    }
 
 
 
-    if (this.userAnswer.toLowerCase().includes('silence')) {
+    if (this.userAnswer.toLowerCase().includes(this.currentChallenge()?.question?.answer!)) {
       console.log('🎉 Correct answer!');
 
       this.onSuccess();
