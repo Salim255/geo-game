@@ -33,8 +33,6 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
     this.subscribeToCurrentChallenge();
   }
 
-  selectAnswer(option: any){}
-
   subscribeToCurrentChallenge() {
     this.currentChallengeSubscription = this.challengeService
     .getCurrentChallenge$.subscribe((challenge: GameChallenge | null) => {
@@ -74,8 +72,8 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
     }
 
     if (this.targetId() == 2){
-        this.actionService.onClose();
-        this.actionService.openActionModal('standard');
+      this.actionService.onClose();
+      this.actionService.openActionModal('standard');
     }
 
 
@@ -84,8 +82,10 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
       console.log('🎉 Correct answer!');
 
       this.onSuccess();
+            this.actionService.onClose();
     } else {
       console.log('❌ Wrong answer');
+      this.actionService.onClose();
     }
 }
 

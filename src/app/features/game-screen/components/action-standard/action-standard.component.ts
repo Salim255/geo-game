@@ -1,4 +1,7 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { GameChallenge } from '../../interfaces/game.interface';
+import { Subscription } from 'rxjs';
+import { ChallengeService } from '../../services/challenge.service';
 
 @Component({
   selector: 'app-acton-standard',
@@ -7,20 +10,42 @@ import { Component, Input, OnInit, signal } from '@angular/core';
   standalone: false
 })
 
-export class ActionStandardComponent implements OnInit {
+export class ActionStandardComponent implements OnInit, OnDestroy {
+  private currentChallengeSubscription!: Subscription;
+  currentChallenge = signal<GameChallenge | null>(null);
+  userAnswer: string = '';
+  question = "question";
+
+    targetId = signal<number | null>(null);
  // The action object (acheter, photo, etc.)
   @Input() action: any;
 
   // Optional: track if user validated the action
   validated = signal<boolean>(false);
 
+  constructor(private challengeService: ChallengeService){}
+
   ngOnInit(): void {
 
   }
+
+  subscribeToCurrentChallenge() {
+    this.currentChallengeSubscription = this.challengeService
+    .getCurrentChallenge$.subscribe((challenge: GameChallenge | null) => {
+      this.currentChallenge.set(challenge);
+      if (!challenge?.actions) return;
+      this.action = challenge?.actions[0];
+    })
+  }
+
   confirm() {
     this.validated.set(true);
     console.log("Action simple validée → étape suivante");
     // Here you can close the modal or notify parent if needed
+  }
+
+  ngOnDestroy(): void {
+    this.currentChallengeSubscription?.unsubscribe();
   }
 }
 
