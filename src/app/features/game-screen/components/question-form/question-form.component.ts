@@ -50,7 +50,7 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
     if (this.targetId() === 1) {
       if (challengeIndex === 0){
         this.actionService.onClose();
-        this.actionService.openActionModal('countdown');
+       // this.actionService.openActionModal();
       } else {
       this.actionService.onClose();
       }
@@ -72,8 +72,8 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
     }
 
     if (this.targetId() == 2){
-      this.actionService.onClose();
-      this.actionService.openActionModal('standard');
+      //this.actionService.onClose();
+      //this.actionService.openActionModal();
     }
 
 

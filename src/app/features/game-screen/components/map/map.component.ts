@@ -184,7 +184,8 @@ export class MapComponent implements OnInit, OnDestroy {
     this.goToNextTarget();
 
     // Set the current target
-    this.challengeService.openQuestionDialog();
+
+    //this.challengeService.openQuestionDialog();
   }
 
   // ================= NEXT TARGET =================
@@ -207,7 +208,6 @@ export class MapComponent implements OnInit, OnDestroy {
     };
     this.nextTargetService.setNextTarget(nextTarget);
     this.currentTargetService.setCurrentTarget(this.target);
-
 
     this.updateTargetZone();
     console.log('➡️ Next target:', this.target);
