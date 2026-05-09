@@ -1,0 +1,53 @@
+<div class="question-screen">
+
+  <!-- TOP BAR -->
+  <header class="question-screen__header">
+    <span class="question-screen__tag">Checkpoint</span>
+
+    <h1 class="question-screen__title">
+      Mission briefing
+    </h1>
+
+    <p class="question-screen__subtitle">
+      Read carefully before answering
+    </p>
+  </header>
+
+  <!-- STORY BLOCK -->
+  <section class="question-screen__block">
+    @for (item of currentChallenge()?.story?.context; track $index) {
+      <p class="question-screen__text">
+        {{item}}
+      </p>
+    }
+  </section>
+
+  <!-- QUESTION BLOCK -->
+  <section class="question-screen__block">
+    <p class="question-screen__question">
+      {{currentChallenge()?.question?.text}}
+    </p>
+
+    <!-- INPUT -->
+    <div class="question-screen__input-wrapper">
+
+      <input
+        type="text"
+        class="question-screen__input"
+        [class.input-error]="true"
+        placeholder="Type your answer..."
+        [(ngModel)]="userAnswer"
+      />
+
+    </div>
+
+  </section>
+
+  <!-- ACTIONS -->
+  <footer class="question-screen__actions">
+    <button class="btn btn-primary" (click)="validate()">
+      Submit
+    </button>
+  </footer>
+</div>
+
