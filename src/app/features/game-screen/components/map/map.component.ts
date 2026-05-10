@@ -160,7 +160,6 @@ export class MapComponent implements OnInit, OnDestroy {
       this.target.location.lng
     );
 
-    console.log(distance, this.target)
     if (distance < this.target.location.radius && !this.isInZone) {
       this.isInZone = true;
       this.onEnterZone();
@@ -173,7 +172,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   // ================= GAME EVENT =================
   private onEnterZone() {
-    console.log('🎉 TARGET REACHED');
+    //console.log('🎉 TARGET REACHED');
     // 🔥 visual + audio feedback handled in service
 
     this.game.moveTargetAlongPath([], () => {}, () => {});
@@ -214,7 +213,7 @@ export class MapComponent implements OnInit, OnDestroy {
     this.currentTargetService.openTargetHandlerDialog();
 
     this.updateTargetZone();
-    console.log('➡️ Next target:', this.target);
+    //console.log('➡️ Next target:', this.target);
 
     // Update current target
     this.currentTargetIndex++;

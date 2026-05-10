@@ -8,7 +8,6 @@ import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({providedIn: "root"})
 export class ActionService {
-
   private userActionSubject = new BehaviorSubject<'done' | null>(null);
 
   constructor(private modalCtr: MatDialog ){}
@@ -31,10 +30,12 @@ export class ActionService {
   }
 
   setUserActionSubject(done: 'done' | null): void{
+    console.log(done);
     this.userActionSubject.next(done);
+    console.log(this.userActionSubject.value);
   }
 
-  get getUserActionDone$(): Observable<'done' | null>{
+  get getUserAction$(): Observable<'done' | null>{
     return this.userActionSubject.asObservable();
   }
 
