@@ -63,16 +63,24 @@ export class ActionCountdownComponent implements OnInit, OnDestroy {
   }
 
   confirmSuccess() {
-    this.actionService.onClose();
-
     // Set next challenge
     const target = this.currentTargetService.getCurrentTarget();
     const currentState = this.currentTargetService.getCurrentTargetState();
     const nexChallenge = target?.challenges[1];
-    if (!nexChallenge) return;
+
+    if (!nexChallenge) {
+      // TO handle error
+      return
+    };
+
     currentState?.setCurrentChallengeIndex(1);
     this.challengeService.setCurrentChallenge(nexChallenge);
-    this.challengeService.openQuestionDialog();
+
+    // Close current modal
+    this.actionService.onClose();
+
+    // Open next modal
+    // this.challengeService.openQuestionDialog();
   }
 
   retry() {

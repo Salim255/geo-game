@@ -56,10 +56,8 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
 }
 
   onSuccess() {
-    // close modal + unlock next checkpoint
     this.currentTargetService.setUserAnser(this.userAnswer);
     this.actionService.onClose();
-    this.actionService.openActionModal('countdown');
   }
 
   ngOnDestroy(): void {

@@ -12,6 +12,7 @@ import { GameChallenge, GameTarget } from "../../interfaces/game.interface";
   standalone: false
 })
 export class TargetHandlerComponent {
+  private userAnswerSubscription!: Subscription;
   private currentChallengeSubscription!: Subscription;
   private nextTargetSubscription!: Subscription;
   private currentTargetStatSubscription!: Subscription;
@@ -28,6 +29,14 @@ export class TargetHandlerComponent {
     this.subscribeToCurrentChallenge();
     this.subscribeToTargetStat();
     this.subscribeToNextTarget();
+    this.subscribeToUserAnswer();
+  }
+
+  subscribeToUserAnswer(){
+    this.userAnswerSubscription = this.currentTargetService
+    .getUserAnswer$.subscribe((answer: string | null) => {
+      if (answer )alert('Here is user answer' +`${answer}`)
+    })
   }
 
   subscribeToCurrentChallenge(){
@@ -36,6 +45,7 @@ export class TargetHandlerComponent {
       if(challenge) this.challengeHandler(challenge);
     })
   }
+
   subscribeToNextTarget() {
     this.nextTargetSubscription = this.currentTargetService.getCurrentTarget$.subscribe(target=> {
       if(!target){
@@ -48,6 +58,8 @@ export class TargetHandlerComponent {
   subscribeToTargetStat(){
     this.currentTargetStatSubscription = this.currentTargetService
     .getCurrentTargetState$.subscribe((state => {
+
+      console.log(state, "hello from state 👹👹");
 
       if (!state || !this.currentTargetObject()) return;
 
@@ -77,15 +89,24 @@ export class TargetHandlerComponent {
 
   challengeHandler(challenge: GameChallenge): void{
     const state = this.currentTargetService.getCurrentTargetState();
+
     if (!state) return;
 
-    console.log(challenge, "Hello from challenge 👹👹");
+    const challengeIndex = state.getCurrentChallengeIndex();
+
     switch(state.getTargetId()){
       case 1:
         // challenge 1
         // a Question
+        if (challengeIndex  === 0) {
+          this.challengeService.openQuestionDialog();
+        }
 
-        this.challengeService.openQuestionDialog();
+        if (challengeIndex  === 1 ) {
+          alert("Hello from "+ `${challengeIndex}`)
+          //this.challengeService.openQuestionDialog();
+        }
+
         // challenge 2
         // Countdown with
         return
