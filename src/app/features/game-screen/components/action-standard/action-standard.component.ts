@@ -1,7 +1,8 @@
 import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
-import { GameChallenge } from '../../interfaces/game.interface';
+import { GameAction, GameChallenge } from '../../interfaces/game.interface';
 import { Subscription } from 'rxjs';
 import { ChallengeService } from '../../services/challenge.service';
+import { ActionService } from '../../services/action.service';
 
 @Component({
   selector: 'app-acton-standard',
@@ -12,21 +13,33 @@ import { ChallengeService } from '../../services/challenge.service';
 
 export class ActionStandardComponent implements OnInit, OnDestroy {
   private currentChallengeSubscription!: Subscription;
+  private currentActionSubscription!: Subscription;
+
   currentChallenge = signal<GameChallenge | null>(null);
   userAnswer: string = '';
   question = "question";
 
-    targetId = signal<number | null>(null);
- // The action object (acheter, photo, etc.)
+  targetId = signal<number | null>(null);
+  // The action object (acheter, photo, etc.)
   @Input() action: any;
 
   // Optional: track if user validated the action
   validated = signal<boolean>(false);
 
-  constructor(private challengeService: ChallengeService){}
+  constructor(
+    private actionService: ActionService,
+    private challengeService: ChallengeService,
+  ){}
 
   ngOnInit(): void {
+    this.subscribeToCurrentAction();
+  }
 
+  subscribeToCurrentAction(){
+    this.currentActionSubscription = this.actionService
+    .getCurrentAction$.subscribe((action: GameAction | null) => {
+      console.log(action);
+    })
   }
 
   subscribeToCurrentChallenge() {
@@ -45,6 +58,7 @@ export class ActionStandardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.currentActionSubscription?.unsubscribe();
     this.currentChallengeSubscription?.unsubscribe();
   }
 }
