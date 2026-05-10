@@ -3,10 +3,13 @@ import { ActionScreenComponent } from "../components/action-screen/action-screen
 import { MatDialog } from "@angular/material/dialog";
 import { ActionStandardComponent } from "../components/action-standard/action-standard.component";
 import { ComponentType } from "@angular/cdk/overlay";
+import { BehaviorSubject, Observable } from "rxjs";
 
 
 @Injectable({providedIn: "root"})
 export class ActionService {
+
+  private actionDoneSubject = new BehaviorSubject<'done' | null>(null);
 
   constructor(private modalCtr: MatDialog ){}
 
@@ -25,6 +28,15 @@ export class ActionService {
         title: 'Action Screen'
       }
     });
+  }
+
+
+  setActionDoneSubject(){
+
+  }
+
+  get getActionDone$(): Observable<'done' | null>{
+    return this.actionDoneSubject.asObservable();
   }
 
   onClose() {

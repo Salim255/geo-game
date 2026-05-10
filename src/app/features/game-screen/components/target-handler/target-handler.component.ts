@@ -3,7 +3,7 @@ import { ActionService } from "../../services/action.service";
 import { ChallengeService } from "../../services/challenge.service";
 import { CurrentTargetService } from "../../services/currentTarget.service";
 import { Subscription } from "rxjs";
-import { GameChallenge, GameTarget } from "../../interfaces/game.interface";
+import { CurrentTargetState, GameChallenge, GameTarget } from "../../interfaces/game.interface";
 
 @Component({
   selector: "app-target-handler",
@@ -35,9 +35,12 @@ export class TargetHandlerComponent {
   subscribeToUserAnswer(){
     this.userAnswerSubscription = this.currentTargetService
     .getUserAnswer$.subscribe((answer: string | null) => {
-      if (answer )alert('Here is user answer' +`${answer}`)
+      if (answer) {
+        this.handleUserAnswer();
+      }
     })
   }
+
 
   subscribeToCurrentChallenge(){
     this.currentChallengeSubscription = this.challengeService
@@ -87,6 +90,46 @@ export class TargetHandlerComponent {
     }))
   }
 
+  handleUserAction(): void{
+
+  }
+
+  handleUserAnswer(): void{
+    const state: CurrentTargetState | null  = this.currentTargetService.getCurrentTargetState();
+
+    if(!state) return;
+    const challengeIndex = state.getCurrentChallengeIndex();
+    const targetId = state.getTargetId();
+    const actionIndex = state.getCurrentActionIndex();
+
+    switch(targetId){
+      case 1:
+        if(challengeIndex === 0){
+          this.actionService.openActionModal('countdown');
+        }
+        return
+      case 2:
+          //alert("TargetId: "+ `${state.getTargetId()}`)
+          return;
+      case 3:
+          //alert("TargetId: "+ `${state.getTargetId()}`)
+        return;
+      case 4:
+          //alert("TargetId: "+ `${state.getTargetId()}`)
+        return;
+      case 5:
+          //alert("TargetId: "+ `${state.getTargetId()}`)
+        return;
+      case 6:
+          //alert("TargetId: "+ `${state.getTargetId()}`)
+        return;
+      case 7:
+          //alert("TargetId: "+ `${state.getTargetId()}`)
+        return;
+      default:
+    }
+  }
+
   challengeHandler(challenge: GameChallenge): void{
     const state = this.currentTargetService.getCurrentTargetState();
 
@@ -103,7 +146,7 @@ export class TargetHandlerComponent {
         }
 
         if (challengeIndex  === 1 ) {
-          alert("Hello from "+ `${challengeIndex}`)
+         // alert("Hello from "+ `${challengeIndex}`)
           //this.challengeService.openQuestionDialog();
         }
 

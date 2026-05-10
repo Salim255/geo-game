@@ -37,6 +37,7 @@ export class ActionCountdownComponent implements OnInit, OnDestroy {
       this.userAnswer.set(answer)
     })
   }
+
   startCountdown() {
     if (this.coolDown) return;
     this.coolDown = true;
