@@ -30,9 +30,8 @@ export class ActionService {
     });
   }
 
-
-  setActionDoneSubject(){
-
+  setActionDoneSubject(done: 'done' | null): void{
+    this.actionDoneSubject.next(done);
   }
 
   get getActionDone$(): Observable<'done' | null>{
