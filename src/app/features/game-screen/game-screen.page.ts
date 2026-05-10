@@ -99,7 +99,27 @@ export class GameScreenPage implements OnInit, OnDestroy {
   }
 
   handleUserAction(): void{
-    console.log("Hello from user action, 👹👹✅✅")
+    const target = this.currentTargetService.getCurrentTarget();
+    const state = this.currentTargetService.getCurrentTargetState();
+    if(state?.getTargetId() === 1) {
+      if(state.getCurrentChallengeIndex() === 0) {
+        const nexChallenge = target?.challenges[1];
+        if (!nexChallenge) {
+          // TO handle error
+          return
+        };
+
+        state?.setCurrentChallengeIndex(1);
+        this.challengeService.setCurrentChallenge(nexChallenge);
+
+        // To open modal after currently running code
+        queueMicrotask(() => {
+          this.challengeService.openQuestionDialog();
+        });
+
+        return;
+      }
+    }
   }
 
   handleUserAnswer(): void{
@@ -114,6 +134,12 @@ export class GameScreenPage implements OnInit, OnDestroy {
       case 1:
         if(challengeIndex === 0){
           this.actionService.openActionModal('countdown');
+        }
+        if (challengeIndex === 1) {
+          // TODO:
+          // Clear all current state
+          // Clear current challenge
+          // Clear current target
         }
         return
       case 2:
@@ -150,7 +176,8 @@ export class GameScreenPage implements OnInit, OnDestroy {
         // challenge 1
         // a Question
         if (challengeIndex  === 0) {
-          this.challengeService.openQuestionDialog();
+          this.currentTargetService.openTargetHandlerDialog('question');
+          //this.challengeService.openQuestionDialog();
         }
 
         if (challengeIndex  === 1 ) {
@@ -162,7 +189,13 @@ export class GameScreenPage implements OnInit, OnDestroy {
         // Countdown with
         return
       case 2:
-          //alert("TargetId: "+ `${state.getTargetId()}`)
+        if (challengeIndex === 0) {
+          // Prepare the action
+          this.actionService.openActionModal('standard');
+        }
+        // Two actions and one question
+        // The question after the action
+        //alert("TargetId: "+ `${state.getTargetId()}`)
           return;
       case 3:
           //alert("TargetId: "+ `${state.getTargetId()}`)

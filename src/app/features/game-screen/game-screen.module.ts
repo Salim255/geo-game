@@ -12,11 +12,9 @@ import { ActionCountdownComponent } from "./components/action-countdown/action-c
 import { ActionStandardComponent } from "./components/action-standard/action-standard.component";
 import { PuzzleInstructionComponent } from "./components/puzzle-instruction/puzzle-instruction.component";
 import { QuestionFormComponent } from "./components/question-form/question-form.component";
-import { TargetHandlerComponent } from "./components/target-handler/target-handler.component";
 
 @NgModule({
   declarations: [
-    TargetHandlerComponent,
     QuestionFormComponent,
     PuzzleInstructionComponent,
     ActionStandardComponent,

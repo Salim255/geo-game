@@ -210,7 +210,6 @@ export class MapComponent implements OnInit, OnDestroy {
 
     const challenge = this.target.challenges[0];
     this.challengeService.setCurrentChallenge(challenge);
-    this.currentTargetService.openTargetHandlerDialog();
 
     this.updateTargetZone();
     //console.log('➡️ Next target:', this.target);

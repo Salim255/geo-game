@@ -30,9 +30,7 @@ export class ActionService {
   }
 
   setUserActionSubject(done: 'done' | null): void{
-    console.log(done);
     this.userActionSubject.next(done);
-    console.log(this.userActionSubject.value);
   }
 
   get getUserAction$(): Observable<'done' | null>{

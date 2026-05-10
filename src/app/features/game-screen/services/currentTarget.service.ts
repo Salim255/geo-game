@@ -3,7 +3,8 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { CurrentTargetState, GameTarget } from "../interfaces/game.interface";
 import { ChallengeService } from "./challenge.service";
 import { MatDialog } from "@angular/material/dialog";
-import { TargetHandlerComponent } from "../components/target-handler/target-handler.component";
+import { QuestionScreenComponent } from "../components/question-screen/question-screen.component";
+import { PuzzleInstructionComponent } from "../components/puzzle-instruction/puzzle-instruction.component";
 
 
 @Injectable({providedIn: "root"})
@@ -21,8 +22,9 @@ export class CurrentTargetService {
     this.userAnswerSubject.next(answer);
   }
 
-  openTargetHandlerDialog() {
-    this.modalCtr.open(TargetHandlerComponent, {
+  openTargetHandlerDialog(componentType: 'puzzle' | 'question' ) {
+    const component = componentType==='question' ? QuestionScreenComponent : PuzzleInstructionComponent
+    this.modalCtr.open(component, {
       disableClose: true,
       maxWidth: "96vw",
       maxHeight: "96vh",

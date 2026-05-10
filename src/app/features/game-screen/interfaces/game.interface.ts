@@ -1,3 +1,9 @@
+export interface GameAction {
+  name:  string;
+  header: string;
+  paragraphs: string []
+}
+
 export class CurrentTargetState {
   private targetId?: number;
   private targetName?: string;
