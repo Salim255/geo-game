@@ -17,6 +17,10 @@ export class CurrentTargetService {
     private challengeService: ChallengeService,
   ){}
 
+  setUserAnser(answer: string){
+    this.userAnswerSubject.next(answer);
+  }
+
   openTargetHandlerDialog() {
     this.modalCtr.open(TargetHandlerComponent, {
       disableClose: true,
@@ -32,10 +36,6 @@ export class CurrentTargetService {
     this.currentTargetStateSubject.next(target);
   }
 
-  get getCurrentTargetState$(): Observable<CurrentTargetState | null>{
-    return this.currentTargetStateSubject.asObservable();
-  }
-
   setCurrentTarget(target: GameTarget | null): void{
     if(!target) return;
     const currentTargeState = new CurrentTargetState();
@@ -44,8 +44,16 @@ export class CurrentTargetService {
     this.currentTargetSubject.next(target);
   }
 
+  get getCurrentTargetState$(): Observable<CurrentTargetState | null>{
+    return this.currentTargetStateSubject.asObservable();
+  }
+
   get getCurrentTarget$(): Observable<GameTarget | null>{
     return this.currentTargetSubject.asObservable();
+  }
+
+  get getUserAnswer$(): Observable<string | null>{
+    return this.userAnswerSubject.asObservable();
   }
 
   getCurrentTarget():GameTarget | null{
