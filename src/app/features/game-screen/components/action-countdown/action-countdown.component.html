@@ -1,37 +1,65 @@
 <div class="action-countdown">
 
-  <div class="top-zone">
-    <h2 class="action-header">Action à réaliser</h2>
-    <div class="action-message">{{ actionText }}</div>
+  <!-- TOP -->
+  <div class="action-countdown__top">
+    <h2 class="action-countdown__header">Action à réaliser</h2>
+
+    <p class="action-countdown__message">
+      {{ actionText }}
+    </p>
+
+    @if (userAnswer()) {
+      <div class="action-countdown__cry-box">
+        <span class="action-countdown__cry-label">Votre cri de guerre :</span>
+        <span class="action-countdown__cry-value">{{ userAnswer() }}</span>
+      </div>
+    }
   </div>
 
-  <div class="action-zone">
+  <!-- MIDDLE -->
+  <div class="action-countdown__middle">
 
     @if (showReady()) {
-      <div class="action-buttons">
-        <button class="btn btn-primary" (click)="startCountdown()">Je suis prêt</button>
-      </div>
+      <button class="action-countdown__btn action-countdown__btn--primary"
+              (click)="startCountdown()">
+        Je suis prêt
+      </button>
     }
 
     @if (!showReady() && !showConfirmation()) {
-      <div class="countdown">{{ countdownValue() }}</div>
+      <div class="action-countdown__countdown">
+        {{ countdownValue() }}
+      </div>
+
+      <div class="action-countdown__instruction">
+        Préparez-vous à crier :
+        <span class="action-countdown__cry-big">{{ userAnswer() }}</span>
+      </div>
     }
 
     @if (showConfirmation()) {
-      <div class="confirmation">
-        <p class="confirmation-text">Avez-vous bien réalisé l’action ?</p>
+      <div class="action-countdown__confirm">
+        <p class="action-countdown__confirm-text">
+          Avez-vous bien crié : <strong>{{ userAnswer() }}</strong> ?
+        </p>
 
-        <div class="confirmation-buttons">
-          <button class="btn btn-primary" (click)="confirmSuccess()">Oui</button>
-          <button class="btn btn-ghost" (click)="retry()">Non</button>
+        <div class="action-countdown__confirm-buttons">
+          <button class="action-countdown__btn action-countdown__btn--primary"
+                  (click)="confirmSuccess()">
+            Oui
+          </button>
+
+          <button class="action-countdown__btn action-countdown__btn--ghost"
+                  (click)="retry()">
+            Non
+          </button>
         </div>
       </div>
     }
 
   </div>
 
-  <div class="bottom-zone">
-    <!-- Optional footer -->
-  </div>
+  <!-- BOTTOM -->
+  <div class="action-countdown__bottom"></div>
 
 </div>
