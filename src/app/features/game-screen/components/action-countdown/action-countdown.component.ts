@@ -77,11 +77,9 @@ export class ActionCountdownComponent implements OnInit, OnDestroy {
     currentState?.setCurrentChallengeIndex(1);
     this.challengeService.setCurrentChallenge(nexChallenge);
 
+    this.actionService.setActionDoneSubject('done');
     // Close current modal
     this.actionService.onClose();
-
-    // Open next modal
-    // this.challengeService.openQuestionDialog();
   }
 
   retry() {

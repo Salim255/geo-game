@@ -12,6 +12,7 @@ import { CurrentTargetState, GameChallenge, GameTarget } from "../../interfaces/
   standalone: false
 })
 export class TargetHandlerComponent {
+  private userActionSubscription!: Subscription;
   private userAnswerSubscription!: Subscription;
   private currentChallengeSubscription!: Subscription;
   private nextTargetSubscription!: Subscription;
@@ -30,6 +31,13 @@ export class TargetHandlerComponent {
     this.subscribeToTargetStat();
     this.subscribeToNextTarget();
     this.subscribeToUserAnswer();
+    this.subscribeToUserAction();
+  }
+
+
+  subscribeToUserAction(){
+    this.userActionSubscription = this.actionService
+    .getUserActionDone$.subscribe((action: 'done' | null) => {})
   }
 
   subscribeToUserAnswer(){
@@ -174,5 +182,14 @@ export class TargetHandlerComponent {
       default:
         this.actionService.openActionModal('countdown');
     }
+  }
+
+
+  ngOnDestroy(): void {
+    this.currentTargetStatSubscription?.unsubscribe();
+    this.userActionSubscription?.unsubscribe();
+    this.userAnswerSubscription?.unsubscribe();
+    this.currentChallengeSubscription?.unsubscribe();
+    this.nextTargetSubscription?.unsubscribe();
   }
 }

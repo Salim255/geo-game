@@ -9,7 +9,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 @Injectable({providedIn: "root"})
 export class ActionService {
 
-  private actionDoneSubject = new BehaviorSubject<'done' | null>(null);
+  private userActionSubject = new BehaviorSubject<'done' | null>(null);
 
   constructor(private modalCtr: MatDialog ){}
 
@@ -30,12 +30,12 @@ export class ActionService {
     });
   }
 
-  setActionDoneSubject(done: 'done' | null): void{
-    this.actionDoneSubject.next(done);
+  setUserActionSubject(done: 'done' | null): void{
+    this.userActionSubject.next(done);
   }
 
-  get getActionDone$(): Observable<'done' | null>{
-    return this.actionDoneSubject.asObservable();
+  get getUserActionDone$(): Observable<'done' | null>{
+    return this.userActionSubject.asObservable();
   }
 
   onClose() {
