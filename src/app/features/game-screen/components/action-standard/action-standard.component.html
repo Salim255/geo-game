@@ -9,7 +9,7 @@
   <div class="action-standard__content">
 
     <!-- CONTEXT (optional) -->
-    @if (context()?.length) {
+    @if (context().length) {
       <div class="action-standard__context">
         @for (c of context(); track c) {
           <p class="action-standard__context-text">{{ c }}</p>
@@ -30,8 +30,9 @@
 
   <!-- BOTTOM -->
   <div class="action-standard__bottom">
-    <button class="action-standard__btn action-standard__btn--primary"
-            (click)="confirm()">
+    <button
+      class="action-standard__btn action-standard__btn--primary"
+      (click)="confirm()">
       Action réalisée
     </button>
   </div>

@@ -1,4 +1,39 @@
 // =========================
+// VARIABLES
+// =========================
+$gray-50: #f9fafb;
+$gray-100: #e5e7eb;
+$slate-400: #94a3b8;
+$green-400: #4ade80;
+$font-ui: "Inter", "SF Pro Text", system-ui, sans-serif;
+
+// =========================
+// MIXINS
+// =========================
+@mixin flex-col { display: flex; flex-direction: column; }
+@mixin flex-center { display: flex; justify-content: center; align-items: center; }
+
+@mixin bfm-btn-base {
+  padding: 1rem 2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: 0.15s ease;
+  font-size: 1.2rem;
+}
+
+@mixin bfm-btn-primary {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #022c22;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(34, 197, 94, 0.35);
+  }
+}
+
+// =========================
 // ACTION STANDARD (BFM)
 // =========================
 .action-standard {

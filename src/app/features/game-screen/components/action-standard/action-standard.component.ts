@@ -16,15 +16,15 @@ export class ActionStandardComponent implements OnInit, OnDestroy {
   private currentActionSubscription!: Subscription;
 
   currentChallenge = signal<GameChallenge | null>(null);
-  userAnswer: string = '';
-  question = "question";
 
   targetId = signal<number | null>(null);
 
   action = signal<GameAction | null>(null);
 
   // Optional: track if user validated the action
-  validated = signal<boolean>(false);
+  context = signal<string []>([]);
+
+  private isLastAction = signal<boolean>(false);
 
   constructor(
     private actionService: ActionService,
@@ -37,16 +37,18 @@ export class ActionStandardComponent implements OnInit, OnDestroy {
 
   subscribeToCurrentAction(){
     this.currentActionSubscription = this.actionService
-    .getCurrentAction$.subscribe((action: GameAction | null) => {
+    .getCurrentAction$.subscribe((action: {action: GameAction, context: string[]}  | null) => {
       console.log(action);
-      this.action.set(action);
+      if (action)
+      this.action.set(action?.action);
+      this.context.set(action?.context ?? [])
     })
   }
 
 
   confirm() {
-    this.validated.set(true);
-    // Here you can close the modal or notify parent if needed
+    this.actionService.setUserActionSubject('done');
+    this.actionService.onClose();
   }
 
   ngOnDestroy(): void {

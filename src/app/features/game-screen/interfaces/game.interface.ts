@@ -4,6 +4,102 @@ export interface GameAction {
   paragraphs: string []
 }
 
+export class CurrentActionState {
+  // Target + Challenge context
+  private targetId!: number;
+  private challengeIndex!: number;
+
+  // Action context
+  private actionIndex!: number;
+  private actionName!: string;
+  private actionHeader!: string;
+  private actionParagraphs!: string[];
+
+  // Metadata
+  private paragraphCount!: number;
+  private hasParagraphs!: boolean;
+
+  // Navigation
+  private nextActionIndex: number | null = null;
+
+  constructor() {}
+
+  /**
+   * Build state from a GameAction object
+   */
+  buildFromAction(
+    targetId: number,
+    challengeIndex: number,
+    actionIndex: number,
+    action: GameAction,
+    totalActions: number
+  ) {
+    this.targetId = targetId;
+    this.challengeIndex = challengeIndex;
+
+    this.actionIndex = actionIndex;
+    this.actionName = action.name;
+    this.actionHeader = action.header;
+    this.actionParagraphs = action.paragraphs;
+
+    this.paragraphCount = action.paragraphs?.length ?? 0;
+    this.hasParagraphs = this.paragraphCount > 0;
+
+    // Next action
+    this.nextActionIndex =
+      actionIndex + 1 < totalActions ? actionIndex + 1 : null;
+  }
+
+  // -------------------------
+  // GETTERS
+  // -------------------------
+
+  getTargetId() {
+    return this.targetId;
+  }
+
+  getChallengeIndex() {
+    return this.challengeIndex;
+  }
+
+  getActionIndex() {
+    return this.actionIndex;
+  }
+
+  getActionName() {
+    return this.actionName;
+  }
+
+  getActionHeader() {
+    return this.actionHeader;
+  }
+
+  getActionParagraphs() {
+    return this.actionParagraphs;
+  }
+
+  getParagraphCount() {
+    return this.paragraphCount;
+  }
+
+  getHasParagraphs() {
+    return this.hasParagraphs;
+  }
+
+  getNextActionIndex() {
+    return this.nextActionIndex;
+  }
+
+  // -------------------------
+  // SETTERS
+  // -------------------------
+
+  setActionIndex(index: number) {
+    this.actionIndex = index;
+  }
+}
+
+
 export class CurrentTargetState {
   private targetId?: number;
   private targetName?: string;

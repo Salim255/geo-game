@@ -106,24 +106,52 @@ export class GameScreenPage implements OnInit, OnDestroy {
   handleUserAction(): void{
     const target = this.currentTargetService.getCurrentTarget();
     const state = this.currentTargetService.getCurrentTargetState();
-    if(state?.getTargetId() === 1) {
-      if(state.getCurrentChallengeIndex() === 0) {
-        const nexChallenge = target?.challenges[1];
-        if (!nexChallenge) {
-          // TO handle error
-          return
-        };
+    switch(state?.getTargetId()){
+      case 1:
+        if(state.getCurrentChallengeIndex() === 0) {
+          const nexChallenge = target?.challenges[1];
+          if (!nexChallenge) {
+            // TO handle error
+            return
+          };
 
-        state?.setCurrentChallengeIndex(1);
-        this.challengeService.setCurrentChallenge(nexChallenge);
+          state?.setCurrentChallengeIndex(1);
+          this.challengeService.setCurrentChallenge(nexChallenge);
 
-        // To open modal after currently running code
-        queueMicrotask(() => {
-          this.challengeService.openQuestionDialog();
-        });
+          // To open modal after currently running code
+          queueMicrotask(() => {
+            this.challengeService.openQuestionDialog();
+          });
 
+          return;
+        }
         return;
-      }
+      case 2:
+        if(state.getCurrentChallengeIndex() === 0) {
+          console.log("Hello from next action👹👹");
+
+
+          const chs =  this.currentChallenge();
+          if(!chs?.actions?.length) return;
+          const currentAction = chs.actions[1];
+          this.actionService.setCurrentAction({ action: currentAction, context: chs.story?.context ?? [], isLast: true} );
+
+          // To open modal after currently running code
+          queueMicrotask(() => {
+            this.actionService.openActionModal('standard');
+          });
+
+          return;
+        }
+        return;
+      case 3:
+        return;
+      case 4:
+        return;
+      case 5:
+        return
+      default:
+        return;
     }
   }
 
@@ -200,7 +228,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
           const chs =  this.currentChallenge();
           if(!chs?.actions?.length) return;
           const currentAction = chs.actions[0];
-          this.actionService.setCurrentAction(currentAction);
+          this.actionService.setCurrentAction({action: currentAction, context: chs.story?.context ?? [], isLast: false} );
           this.actionService.openActionModal('standard');
         }
         // Two actions and one question

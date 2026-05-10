@@ -9,7 +9,7 @@ import { GameAction } from "../interfaces/game.interface";
 
 @Injectable({providedIn: "root"})
 export class ActionService {
-  private currentActionSubject = new BehaviorSubject<GameAction | null>(null);
+  private currentActionSubject = new BehaviorSubject<{action: GameAction, context: string[], isLast: boolean} | null>(null);
   private userActionSubject = new BehaviorSubject<'done' | null>(null);
 
   constructor(private modalCtr: MatDialog ){}
@@ -31,7 +31,7 @@ export class ActionService {
     });
   }
 
-  setCurrentAction(action:GameAction | null){
+  setCurrentAction(action: { action: GameAction, context: string[], isLast: boolean }  | null){
     this.currentActionSubject.next(action);
   }
 
@@ -39,7 +39,7 @@ export class ActionService {
     this.userActionSubject.next(done);
   }
 
-  get getCurrentAction$(): Observable<GameAction | null>{
+  get getCurrentAction$(): Observable<{action: GameAction, context: string[]}  | null>{
     return this.currentActionSubject.asObservable();
   }
   get getUserAction$(): Observable<'done' | null>{
