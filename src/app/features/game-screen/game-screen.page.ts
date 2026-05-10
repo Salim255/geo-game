@@ -14,12 +14,5 @@ import { ActionService } from "./services/action.service";
 })
 export class GameScreenPage implements OnInit {
   constructor() {}
-
-  // 1 We get the target
-  // 2 We determine if the target contents
-  // 3 We context and its questions
-  // 4 We actions
-  // 5 set instructions
-  // 6 We set its Actions
   ngOnInit() {}
 }

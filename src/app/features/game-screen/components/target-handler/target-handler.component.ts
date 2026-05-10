@@ -1,8 +1,9 @@
-import { Component } from "@angular/core";
+import { Component, signal } from "@angular/core";
 import { ActionService } from "../../services/action.service";
 import { ChallengeService } from "../../services/challenge.service";
 import { CurrentTargetService } from "../../services/currentTarget.service";
 import { Subscription } from "rxjs";
+import { GameChallenge, GameTarget } from "../../interfaces/game.interface";
 
 @Component({
   selector: "app-target-handler",
@@ -11,30 +12,41 @@ import { Subscription } from "rxjs";
   standalone: false
 })
 export class TargetHandlerComponent {
+  private currentChallengeSubscription!: Subscription;
   private nextTargetSubscription!: Subscription;
   private currentTargetStatSubscription!: Subscription;
+  private currentTargetObject = signal<GameTarget | null>(null);
+
 
   constructor(
     private actionService: ActionService,
     private challengeService: ChallengeService,
-    private currentTarget: CurrentTargetService
+    private currentTargetService: CurrentTargetService
   ){}
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+    this.subscribeToCurrentChallenge();
     this.subscribeToTargetStat();
     this.subscribeToNextTarget();
   }
 
-   subscribeToNextTarget() {
-    this.nextTargetSubscription = this.currentTarget.getCurrentTarget$.subscribe(target=> {
+  subscribeToCurrentChallenge(){
+    this.currentChallengeSubscription = this.challengeService
+    .getCurrentChallenge$.subscribe((challenge) => {
+      if(challenge) this.challengeHandler(challenge);
+    })
+  }
+  subscribeToNextTarget() {
+    this.nextTargetSubscription = this.currentTargetService.getCurrentTarget$.subscribe(target=> {
+      if(!target){
+       // this.currentTargetService.onClose();
+      }
       this.currentTargetObject.set(target);
     })
   }
 
   subscribeToTargetStat(){
-    this.currentTargetStatSubscription = this.currentTarget
+    this.currentTargetStatSubscription = this.currentTargetService
     .getCurrentTargetState$.subscribe((state => {
 
       if (!state || !this.currentTargetObject()) return;
@@ -55,39 +67,48 @@ export class TargetHandlerComponent {
       // Close
       this.challengeService.onClose();
       setTimeout(() => {
-        switch(state.getTargetId()){
-          case 1:
-           // alert("TargetId: "+ `${state.getTargetId()}`)
 
-            // 1 question component with
-            // 2 Will see action component
-            //this.actionService.openActionModal('countdown');
-            return
-          case 2:
-             //alert("TargetId: "+ `${state.getTargetId()}`)
-              return;
-          case 3:
-             //alert("TargetId: "+ `${state.getTargetId()}`)
-            return;
-          case 4:
-             //alert("TargetId: "+ `${state.getTargetId()}`)
-            return;
-          case 5:
-             //alert("TargetId: "+ `${state.getTargetId()}`)
-            return;
-          case 6:
-             //alert("TargetId: "+ `${state.getTargetId()}`)
-            return;
-          case 7:
-             //alert("TargetId: "+ `${state.getTargetId()}`)
-            return;
-          default:
-            this.actionService.openActionModal('countdown');
-        }
 
         //this.challengeService.openQuestionDialog();
         //this.brainService.screenDeterminer(this.currentTargetObject()?.id!)
       }, 0)
     }))
+  }
+
+  challengeHandler(challenge: GameChallenge): void{
+    const state = this.currentTargetService.getCurrentTargetState();
+    if (!state) return;
+
+    console.log(challenge, "Hello from challenge 👹👹");
+    switch(state.getTargetId()){
+      case 1:
+        // challenge 1
+        // a Question
+
+        this.challengeService.openQuestionDialog();
+        // challenge 2
+        // Countdown with
+        return
+      case 2:
+          //alert("TargetId: "+ `${state.getTargetId()}`)
+          return;
+      case 3:
+          //alert("TargetId: "+ `${state.getTargetId()}`)
+        return;
+      case 4:
+          //alert("TargetId: "+ `${state.getTargetId()}`)
+        return;
+      case 5:
+          //alert("TargetId: "+ `${state.getTargetId()}`)
+        return;
+      case 6:
+          //alert("TargetId: "+ `${state.getTargetId()}`)
+        return;
+      case 7:
+          //alert("TargetId: "+ `${state.getTargetId()}`)
+        return;
+      default:
+        this.actionService.openActionModal('countdown');
+    }
   }
 }

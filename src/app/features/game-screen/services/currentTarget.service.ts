@@ -2,14 +2,31 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { CurrentTargetState, GameTarget } from "../interfaces/game.interface";
 import { ChallengeService } from "./challenge.service";
+import { MatDialog } from "@angular/material/dialog";
+import { TargetHandlerComponent } from "../components/target-handler/target-handler.component";
 
 
 @Injectable({providedIn: "root"})
 export class CurrentTargetService {
+  private userAnswerSubject = new BehaviorSubject<string | null>(null);
   private currentTargetStateSubject = new BehaviorSubject<CurrentTargetState | null>(null);
   private currentTargetSubject = new BehaviorSubject< GameTarget | null>(null);
 
-  constructor(private challengeService: ChallengeService){}
+  constructor(
+    private modalCtr: MatDialog,
+    private challengeService: ChallengeService,
+  ){}
+
+  openTargetHandlerDialog() {
+    this.modalCtr.open(TargetHandlerComponent, {
+      disableClose: true,
+      maxWidth: "96vw",
+      maxHeight: "96vh",
+      data: {
+        title: 'Target handler',
+      }
+    });
+  }
 
   setCurrentTargetState(target: CurrentTargetState | null): void{
     this.currentTargetStateSubject.next(target);
@@ -36,6 +53,10 @@ export class CurrentTargetService {
   }
 
   getCurrentTargetState():CurrentTargetState | null{
-      return this.currentTargetStateSubject.value;
+    return this.currentTargetStateSubject.value;
+  }
+
+  onClose(){
+    this.modalCtr.closeAll();
   }
 }

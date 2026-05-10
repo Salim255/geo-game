@@ -46,38 +46,6 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
       return;
     }
 
-    const challengeIndex = this.currentTargetService.getCurrentTargetState()?.getCurrentChallengeIndex();
-    if (this.targetId() === 1) {
-      if (challengeIndex === 0){
-        this.actionService.onClose();
-       // this.actionService.openActionModal();
-      } else {
-      this.actionService.onClose();
-      }
-      return
-    }
-
-
-    const nextTargetId = this.currentTargetService.getCurrentTargetState()?.getNextTargetId();
-
-    // End of target one
-    if (this.targetId() === 1 && challengeIndex === 1){
-      // Set the new target
-      if(nextTargetId){
-        const target =  this.datService.getTargetById(nextTargetId);
-        console.log(target);
-        // Set current target
-        //this.currentTargetService.setCurrentTarget(target);
-      }
-    }
-
-    if (this.targetId() == 2){
-      //this.actionService.onClose();
-      //this.actionService.openActionModal();
-    }
-
-
-
     if (this.userAnswer.toLowerCase().includes(this.currentChallenge()?.question?.answer!)) {
       console.log('🎉 Correct answer!');
 
