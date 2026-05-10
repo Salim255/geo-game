@@ -19,6 +19,8 @@ export class GameScreenPage implements OnInit, OnDestroy {
   private currentTargetStatSubscription!: Subscription;
   private currentTargetObject = signal<GameTarget | null>(null);
 
+  private currentChallenge = signal<GameChallenge | null>(null);
+
   constructor(
     private actionService: ActionService,
     private challengeService: ChallengeService,
@@ -52,8 +54,11 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
   subscribeToCurrentChallenge(){
     this.currentChallengeSubscription = this.challengeService
-    .getCurrentChallenge$.subscribe((challenge) => {
-      if(challenge) this.challengeHandler(challenge);
+    .getCurrentChallenge$.subscribe((challenge: GameChallenge | null) => {
+      this.currentChallenge.set(challenge);
+      if(challenge) {
+        this.challengeHandler(challenge);
+      };
     })
   }
 
@@ -191,6 +196,11 @@ export class GameScreenPage implements OnInit, OnDestroy {
       case 2:
         if (challengeIndex === 0) {
           // Prepare the action
+          //this.challengeService.
+          const chs =  this.currentChallenge();
+          if(!chs?.actions?.length) return;
+          const currentAction = chs.actions[0];
+          this.actionService.setCurrentAction(currentAction);
           this.actionService.openActionModal('standard');
         }
         // Two actions and one question

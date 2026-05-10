@@ -20,8 +20,8 @@ export class ActionStandardComponent implements OnInit, OnDestroy {
   question = "question";
 
   targetId = signal<number | null>(null);
-  // The action object (acheter, photo, etc.)
-  @Input() action: any;
+
+  action = signal<GameAction | null>(null);
 
   // Optional: track if user validated the action
   validated = signal<boolean>(false);
@@ -39,21 +39,13 @@ export class ActionStandardComponent implements OnInit, OnDestroy {
     this.currentActionSubscription = this.actionService
     .getCurrentAction$.subscribe((action: GameAction | null) => {
       console.log(action);
+      this.action.set(action);
     })
   }
 
-  subscribeToCurrentChallenge() {
-    this.currentChallengeSubscription = this.challengeService
-    .getCurrentChallenge$.subscribe((challenge: GameChallenge | null) => {
-      this.currentChallenge.set(challenge);
-      if (!challenge?.actions) return;
-      this.action = challenge?.actions[0];
-    })
-  }
 
   confirm() {
     this.validated.set(true);
-    console.log("Action simple validée → étape suivante");
     // Here you can close the modal or notify parent if needed
   }
 
