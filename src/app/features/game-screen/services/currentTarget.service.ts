@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { CurrentTargetState, GameTarget } from "../interfaces/game.interface";
-import { ChallengeService } from "./challenge.service";
 import { MatDialog } from "@angular/material/dialog";
 import { QuestionScreenComponent } from "../components/question-screen/question-screen.component";
 import { PuzzleInstructionComponent } from "../components/puzzle-instruction/puzzle-instruction.component";
@@ -13,10 +12,7 @@ export class CurrentTargetService {
   private currentTargetStateSubject = new BehaviorSubject<CurrentTargetState | null>(null);
   private currentTargetSubject = new BehaviorSubject< GameTarget | null>(null);
 
-  constructor(
-    private modalCtr: MatDialog,
-    private challengeService: ChallengeService,
-  ){}
+  constructor(private modalCtr: MatDialog){}
 
   setUserAnswer(answer: string){
     this.userAnswerSubject.next(answer);
@@ -43,10 +39,6 @@ export class CurrentTargetService {
   }
 
   setCurrentTarget(target: GameTarget | null): void{
-    if(!target) return;
-    const currentTargeState = new CurrentTargetState();
-    currentTargeState.buildFromTarget(target);
-    this.setCurrentTargetState(currentTargeState);
     this.currentTargetSubject.next(target);
   }
 

@@ -35,16 +35,17 @@ export class ActionService {
     this.currentActionStateSubject.next(action);
   }
 
-  get getCurrentActionState$(): Observable<CurrentActionState  | null>{
-    return this.currentActionStateSubject.asObservable();
-  }
-
   currentActionIsDone(){
     const currentActionState = this.currentActionStateSubject.value;
+    console.log(currentActionState);
     currentActionState?.setIsDone();
     this.setCurrentActionState(currentActionState);
   }
 
+
+  get getCurrentActionState$(): Observable<CurrentActionState  | null>{
+    return this.currentActionStateSubject.asObservable();
+  }
   onClose() {
     this.modalCtr.closeAll();
   }

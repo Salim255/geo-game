@@ -150,13 +150,21 @@
         {
           "story": {
             "context": [
-              "Après la gourmandise vient le désir, force invisible qui attire les âmes.",
-              "Tirez un gage du coffre ancien."
+              "Après la gourmandise vient le désir, cette force invisible qui attire, enflamme et rapproche les âmes.",
+              "Mais le désir ne se révèle jamais sans épreuve.",
+              "Il est temps d’invoquer le destin… et de tirer un gage.",
+              "Dans le coffre ancien reposent plusieurs enveloppes scellées.",
+              "Une seule contient l’épreuve qui vous est destinée.",
+              "Pour la trouver, laissez-vous guider par le disque-clé, et percez l’énigme qu’il renferme.",
+              "Car seul l’esprit le plus affûté saura désigner la bonne enveloppe… et réveiller la suite de votre quête"
             ]
           },
           "actions": [],
           "question": {
-            "text": ["Quelle fleur suis-je ?"],
+            "text": [
+              "On m’associe aux sentiments les plus sincères, je suis douce à regarder, mais gare à celui qui me prend sans précaution",
+              "Je suis la reine de nombreux jardins et l’invitée incontournable des grandes déclarations d’amour.",
+              "Quelle fleur suis-je ?"],
             "type": "text",
             "answer": "rose"
           },
@@ -171,7 +179,11 @@
         {
           "story": {
             "context": [
-              "La séduction se construit pièce par pièce…"
+              "Après la gourmandise et le désir, vient la séduction, cet art subtil qui charme, intrigue et envoûte les cœurs",
+              "Mais la séduction ne se dévoile jamais d’un seul regard.",
+              "Elle se construit, pièce après pièce, dans un équilibre délicat.",
+              "Pour découvrir le prochain lieu de votre quête, vous devrez reconstituer les fragments dispersés du mystère.",
+              "Assemblez le puzzle, et laissez apparaître le mot caché… Celui qui vous guidera vers la prochaine étape du rituel."
             ]
           },
           "actions": [],
@@ -201,12 +213,17 @@
         {
           "story": {
             "context": [
-              "Il est temps d’invoquer un nouveau gage…"
+              "il est temps d’invoquer un nouveau gage ! Dans le coffre ancien reposent plusieurs enveloppes scellées.",
+              "Une seule contient l’épreuve qui vous est destinée.",
+              "Pour la trouver, laissez-vous guider par le disque-clé, et percez l’énigme qu’il renferme."
             ]
           },
           "actions": [],
           "question": {
-            "text": ["Quelle fleur suis-je ?"],
+            "text": [
+              "je peins des paysage entiers de couleurs parfaites alignées sous un ciel souvent capricieux",
+              "Cherchez moi dans les champs du pays des moulins à vent.",
+              "Quelle fleur suis-je ?"],
             "type": "text",
             "answer": "tulipe"
           }
@@ -214,12 +231,19 @@
         {
           "story": {
             "context": [
-              "La beauté se cache dans les détails…"
+              "Après la gourmandise, le désir et la séduction, vient la beauté — celle qui attire les regards, illumine les âmes et révèle l’éclat du lien sacré.",
+              "Mais la beauté véritable ne se montre pas à tous.",
+              "Elle se cache dans les détails… et parfois, dans ce qui ne devrait pas être.",
+              "Pour mettre la main sur cet ingrédient précieux, vous devrez découvrir le prochain lieu du rituel.",
+              "Observez attentivement la photo, et laissez la carte-indice vous guider.",
+              "Car certains éléments n’ont rien à faire là…et ce sont eux qui détiennent la clé"
             ]
           },
           "actions": [],
           "question": {
-            "text": ["Quel est le mot trouvé ?"],
+            "text": [
+              "Les deux premières de ceux qui ne devraient pas apparaître sur la photo s’unissent pour former le mot de passe.",
+              "Quel est le mot trouvé ?"],
             "type": "text",
             "answer": "promesse"
           }
@@ -240,11 +264,40 @@
       "challenges": [
         {
           "story": {
-            "context": ["Dernier ingrédient : la magie."]
+            "context": [
+              "il est temps d’invoquer un nouveau gage ! Dans le coffre ancien reposent plusieurs enveloppes scellées.",
+              "Une seule contient l’épreuve qui vous est destinée.",
+              "Pour la trouver, laissez-vous guider par le disque-clé, et percez l’énigme qu’il renferme."
+            ]
           },
           "actions": [],
           "question": {
-            "text": ["Quel est le code caché ?"],
+            "text": [
+              "Du matin au soir, je tourne sans jamais me déplacer, guidé par quelque chose que je ne peux toucher.",
+              "Je porte en moi l’image même de ce que je regard, comme un miroir doré posé sur la terre.",
+              "Je ne passe jamais inaperçu dans les champs d’été tandis que mon nom révèle mon secret…",
+              "Quel est le mot caché ?"],
+            "type": "text",
+            "answer": "tournesol"
+          }
+        },
+          {
+          "story": {
+            "context": [
+              "Après la gourmandise, le désir, la séduction et la beauté, il ne reste plus qu’un élément à invoquer : la magie.",
+              "Celle qui unit les cœurs au-delà du temps, celle qui transforme un instant en éternité.",
+              "Pour révéler cet ultime ingrédient, vous devrez suivre les traces d’un voyage à venir…",
+              "La carte du monde des voyages de Laurène et Kevin renferme un secret.",
+              "Observez-la attentivement, car elle dissimule le code qui vous ouvrira la voie vers le dernier lieu du rituel."
+            ]
+          },
+          "actions": [],
+          "question": {
+            "text": [
+              "Du matin au soir, je tourne sans jamais me déplacer, guidé par quelque chose que je ne peux toucher.",
+              "Je porte en moi l’image même de ce que je regard, comme un miroir doré posé sur la terre.",
+              "Je ne passe jamais inaperçu dans les champs d’été tandis que mon nom révèle mon secret…",
+              "Quel est le code caché dans cette carte ?"],
             "type": "text",
             "answer": "love"
           }
@@ -266,7 +319,7 @@
         {
           "story": {
             "context": [
-              "Dernier gage…"
+              "il est temps de distribuer le dernier gage !"
             ]
           },
           "actions": [],
@@ -274,36 +327,32 @@
             "text": ["Je ne suis pas une personne, quel mot suis-je ?"],
             "type": "text",
             "answer": "tournesol"
+          },
+          "conclusion": {
+            "text": [
+              "Félicitations…",
+              "La quête est achevée.",
+              "Laurène, tu as su rassembler chacun des ingrédients essentiels et prouver ta valeur.",
+              "Les forces anciennes te reconnaissent désormais comme prête à franchir cette nouvelle étape de ta vie.",
+              "Le rituel du bonheur marital peut à présent être accompli…",
+              "Une fois chez toi, à l’abri des regards, suis ces dernières étapes :"
+            ],
+            "steps": [
+              "Offre ton symbole d’union à ton futur mari,",
+              "pare-toi de ta plus belle allure,",
+              "laisse place à la séduction…",
+              "et pimente cette soirée avec l’objet choisi lors de votre quête.",
+              "Enfin, dépose la pierre magique sous l’oreiller de Kevin, afin que les énergies du rituel veillent sur votre union."
+            ]
+           ,
+            "last-word": {
+              "header": "Et pour sceller définitivement le sortilège, prononce la formule sacrée :",
+              "say": " Oui, je le veux!"
+            }
           }
         }
       ]
-    },
-
-    {
-      "id": 7,
-      "order": 7,
-      "name": "Final",
-      "location": {
-        "lat": 50.64461531074475,
-        "lng": 3.031675532644488,
-        "radius": 50
-      },
-      "nextTargetId": null,
-      "challenges": [
-        {
-          "story": {
-            "context": [
-              "Félicitations… la quête est achevée."
-            ]
-          },
-          "actions": [],
-          "conclusion": [
-            "Laurène, tu as su rassembler tous les ingrédients essentiels.",
-            "Le rituel peut être accompli.",
-            "Oui, je le veux!"
-          ]
-        }
-      ]
     }
+
   ]
 }

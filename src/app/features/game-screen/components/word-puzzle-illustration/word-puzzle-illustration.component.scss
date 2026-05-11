@@ -1,0 +1,69 @@
+.wp-illustration {
+  font-family: "Inter", sans-serif;
+  color: #f1f5f9;
+  background: #0f172a;
+  padding: 1.6rem;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+
+  &__title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.2rem;
+  }
+
+  &__subtitle {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  &__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  &__label {
+    width: 3.2rem;
+    font-weight: 600;
+    opacity: 0.9;
+    font-size: 0.95rem;
+  }
+
+  &__cell {
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1rem;
+
+    &--on {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    &--off {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+  }
+
+  &__explanation {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+}

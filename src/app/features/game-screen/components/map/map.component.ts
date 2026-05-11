@@ -4,7 +4,7 @@ import { GpsService } from '../../services/gps.service';
 import { GameScreenService } from '../../services/game-screen.service';
 import { Subscription } from 'rxjs';
 import { GameDataService } from '../../services/game-data.service';
-import { CurrentActionState, GameConfig, GameTarget } from '../../interfaces/game.interface';
+import { CurrentActionState, CurrentTargetState, GameConfig, GameTarget } from '../../interfaces/game.interface';
 import { ChallengeService } from '../../services/challenge.service';
 import { CurrentTargetService } from '../../services/currentTarget.service';
 import { NextTargetService, NextTargetState } from '../../services/next-target-service';
@@ -208,11 +208,13 @@ export class MapComponent implements OnInit, OnDestroy {
       currentActionIndex: 0
     };
     this.nextTargetService.setNextTarget(nextTarget);
+    const currentTargeState = new CurrentTargetState();
+    currentTargeState.buildFromTarget(this.target);
+    this.currentTargetService.setCurrentTargetState(currentTargeState);
     this.currentTargetService.setCurrentTarget(this.target);
 
 
     this.updateTargetZone();
-    //console.log('➡️ Next target:', this.target);
 
     // Update current target
     this.currentTargetIndex++;

@@ -45,11 +45,10 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
     }
 
     if (this.userAnswer.toLowerCase().includes(this.currentChallenge()?.question?.answer!)) {
-
       this.onSuccess();
     } else {
       console.log('❌ Wrong answer');
-      this.actionService.onClose();
+      //this.actionService.onClose();
     }
 }
 

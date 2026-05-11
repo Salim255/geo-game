@@ -75,9 +75,6 @@ export class GameScreenPage implements OnInit, OnDestroy {
   subscribeToTargetStat(){
     this.currentTargetStatSubscription = this.currentTargetService
     .getCurrentTargetState$.subscribe((state => {
-
-      console.log(state, "hello from state 👹👹");
-
       if (!state || !this.currentTargetObject()) return;
     }))
   }
@@ -158,22 +155,32 @@ export class GameScreenPage implements OnInit, OnDestroy {
           this.actionService.setCurrentActionState(currentActionState);
           this.actionService.openActionModal('countdown');
         }
-
-        if (challengeIndex === 1) {
-          // TODO:
-          // Clear all current state
-          // Clear current challenge
-          // Clear current target
-        }
         return
       case 2:
-          //alert("TargetId: "+ `${state.getTargetId()}`)
-          return;
+
+        return;
       case 3:
-          //alert("TargetId: "+ `${state.getTargetId()}`)
+        if (challengeIndex === 0){
+          const currentChallenge = this.currentTargetObject()?.challenges[1];
+          this.challengeService.setCurrentChallenge(currentChallenge!)
+          this.currentTargetService.openTargetHandlerDialog('question');
+
+          //
+          const currentTargeState = new CurrentTargetState();
+          currentTargeState.buildFromTarget(this.currentTargetObject()!, 1);
+          this.currentTargetService.setCurrentTargetState(currentTargeState);
+        }
         return;
       case 4:
-          //alert("TargetId: "+ `${state.getTargetId()}`)
+        if(challengeIndex === 0) {
+          console.log("Hello from user answer")
+          const currentChallenge = this.currentTargetObject()?.challenges[1];
+          this.challengeService.setCurrentChallenge(currentChallenge!)
+          const currentTargeState = new CurrentTargetState();
+          currentTargeState.buildFromTarget(this.currentTargetObject()!, 1);
+          this.currentTargetService.setCurrentTargetState(currentTargeState);
+          this.currentTargetService.openTargetHandlerDialog('question');
+        }
         return;
       case 5:
           //alert("TargetId: "+ `${state.getTargetId()}`)
@@ -195,54 +202,28 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
     const challengeIndex = state.getCurrentChallengeIndex();
 
-    switch(state.getTargetId()){
+    let challenges;
+    let currentAction;
+    let currentActionState;
+    switch(this.currentTargetObject()?.id){
       case 1:
-        // challenge 1
-        // a Question
-        if (challengeIndex  === 0) {
-
-          this.currentTargetService.openTargetHandlerDialog('question');
-
-    /*         const chs = this.target.challenges;
-    const currentAction = chs[0]?.actions[0];
-    if(currentAction) {
-      let isLast = false;
-      if(this.target.id === 1){
-        isLast = true;
-      }
-      const currentActionState = new CurrentActionState(0, currentAction, isLast, false);
-      this.actionService.setCurrentActionState(currentActionState);
-    } */
-          //this.challengeService.openQuestionDialog();
-        }
-
-        if (challengeIndex  === 1 ) {
-        // alert("Hello from "+ `${challengeIndex}`)
-          //this.challengeService.openQuestionDialog();
-        }
-
-        // challenge 2
-        // Countdown with
-        return
+        this.currentTargetService.openTargetHandlerDialog('question');
+        return;
       case 2:
-        if (challengeIndex === 0) {
-          console.log("Hello from target 2")
-
-          const chs = this.currentTargetObject()!.challenges;
-          const currentAction = chs[0]?.actions[0];
-          const currentActionState = new CurrentActionState(0, currentAction, true, false);
-          this.actionService.setCurrentActionState(currentActionState);
-          this.actionService.openActionModal('standard');
-        }
-        // Two actions and one question
-        // The question after the action
-        //alert("TargetId: "+ `${state.getTargetId()}`)
-          return;
+        challenges = this.currentTargetObject()!.challenges;
+        if(!challenges.length) return;
+        currentAction = challenges[0]?.actions[0];
+        currentActionState = new CurrentActionState(0, currentAction, true, false);
+        this.actionService.setCurrentActionState(currentActionState);
+        this.actionService.openActionModal('standard');
+        return;
       case 3:
-          //alert("TargetId: "+ `${state.getTargetId()}`)
+        if (challengeIndex === 0){
+          this.currentTargetService.openTargetHandlerDialog('question');
+        }
         return;
       case 4:
-          //alert("TargetId: "+ `${state.getTargetId()}`)
+        this.currentTargetService.openTargetHandlerDialog('question');
         return;
       case 5:
           //alert("TargetId: "+ `${state.getTargetId()}`)
@@ -250,11 +231,8 @@ export class GameScreenPage implements OnInit, OnDestroy {
       case 6:
           //alert("TargetId: "+ `${state.getTargetId()}`)
         return;
-      case 7:
-          //alert("TargetId: "+ `${state.getTargetId()}`)
-        return;
       default:
-        this.actionService.openActionModal('countdown');
+        return
     }
   }
 
