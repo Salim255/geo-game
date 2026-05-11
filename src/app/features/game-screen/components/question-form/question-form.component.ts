@@ -55,7 +55,7 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
 
   onSuccess() {
     this.actionService.onClose();
-    this.currentTargetService.setUserAnser(this.userAnswer);
+    this.currentTargetService.setUserAnswer(this.userAnswer);
   }
 
   ngOnDestroy(): void {

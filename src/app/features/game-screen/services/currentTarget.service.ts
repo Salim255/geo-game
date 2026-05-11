@@ -18,11 +18,11 @@ export class CurrentTargetService {
     private challengeService: ChallengeService,
   ){}
 
-  setUserAnser(answer: string){
+  setUserAnswer(answer: string){
     this.userAnswerSubject.next(answer);
   }
 
-  openTargetHandlerDialog(componentType: 'puzzle' | 'question' | 'countdown' ) {
+  openTargetHandlerDialog(componentType: 'puzzle' | 'question' ) {
     const component =
       componentType==='question'
       ? QuestionScreenComponent :

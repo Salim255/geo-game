@@ -71,6 +71,7 @@
               "Un mot s’y cache, tapi dans l’ombre, attendant d’être découvert."
             ]
           },
+          "actions": [],
           "question": {
             "text": ["Je ne suis pas une personne, quel mot suis-je ?"],
             "type": "text",
@@ -113,14 +114,8 @@
               "paragraphs": [
                 "une forme masculine pour la future mariée",
                 "et une forme féminine pour le futur marié",
-                "Deux emblèmes à emporter, garants de l’harmonie à venir."
-              ]
-            },
-            {
-              "name": "photo",
-              "header": "Une preuve sera exigée :",
-              "paragraphs": [
-                "immortalisez votre trouvaille avec une photo de groupe."
+                "Deux emblèmes à emporter, garants de l’harmonie à venir.",
+                "Puis immortalisez votre trouvaille avec une photo de groupe."
               ]
             }
           ],
@@ -159,6 +154,7 @@
               "Tirez un gage du coffre ancien."
             ]
           },
+          "actions": [],
           "question": {
             "text": ["Quelle fleur suis-je ?"],
             "type": "text",
@@ -178,6 +174,7 @@
               "La séduction se construit pièce par pièce…"
             ]
           },
+          "actions": [],
           "question": {
             "text": ["Quel mot se révèle lorsque les pièces s’unissent ?"],
             "type": "text",
@@ -207,6 +204,7 @@
               "Il est temps d’invoquer un nouveau gage…"
             ]
           },
+          "actions": [],
           "question": {
             "text": ["Quelle fleur suis-je ?"],
             "type": "text",
@@ -219,6 +217,7 @@
               "La beauté se cache dans les détails…"
             ]
           },
+          "actions": [],
           "question": {
             "text": ["Quel est le mot trouvé ?"],
             "type": "text",
@@ -243,6 +242,7 @@
           "story": {
             "context": ["Dernier ingrédient : la magie."]
           },
+          "actions": [],
           "question": {
             "text": ["Quel est le code caché ?"],
             "type": "text",
@@ -269,6 +269,7 @@
               "Dernier gage…"
             ]
           },
+          "actions": [],
           "question": {
             "text": ["Je ne suis pas une personne, quel mot suis-je ?"],
             "type": "text",
@@ -295,6 +296,7 @@
               "Félicitations… la quête est achevée."
             ]
           },
+          "actions": [],
           "conclusion": [
             "Laurène, tu as su rassembler tous les ingrédients essentiels.",
             "Le rituel peut être accompli.",

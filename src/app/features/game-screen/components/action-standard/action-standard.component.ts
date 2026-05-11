@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { ChallengeAction, CurrentActionState, GameChallenge } from '../../interfaces/game.interface';
-import { Subscription } from 'rxjs';
+import { single, Subscription } from 'rxjs';
 import { ChallengeService } from '../../services/challenge.service';
 import { ActionService } from '../../services/action.service';
 
@@ -15,7 +15,7 @@ export class ActionStandardComponent implements OnInit, OnDestroy {
   private currentActionSubscription!: Subscription;
 
   action = signal<ChallengeAction | null>(null);
-
+  private currentAction = signal<CurrentActionState | null>(null);
   constructor(
     private actionService: ActionService,
   ){}
@@ -29,12 +29,19 @@ export class ActionStandardComponent implements OnInit, OnDestroy {
     .getCurrentActionState$.subscribe((action: CurrentActionState  | null) => {
       if (action)
       this.action.set(action.getAction());
-    })
+      this.currentAction.set(action);
+    });
+
   }
 
 
   confirm() {
-    //this.actionService.setUserActionSubject('done');
+    if(this.currentAction()){
+      const currentActionState = this.currentAction();
+      currentActionState?.setIsDone();
+      this.actionService.setCurrentActionState(currentActionState);
+    }
+
     this.actionService.onClose();
   }
 

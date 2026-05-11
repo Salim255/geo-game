@@ -4,10 +4,11 @@ import { GpsService } from '../../services/gps.service';
 import { GameScreenService } from '../../services/game-screen.service';
 import { Subscription } from 'rxjs';
 import { GameDataService } from '../../services/game-data.service';
-import { GameConfig, GameTarget } from '../../interfaces/game.interface';
+import { CurrentActionState, GameConfig, GameTarget } from '../../interfaces/game.interface';
 import { ChallengeService } from '../../services/challenge.service';
 import { CurrentTargetService } from '../../services/currentTarget.service';
 import { NextTargetService, NextTargetState } from '../../services/next-target-service';
+import { ActionService } from '../../services/action.service';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private currentTargetIndex = 0;
 
   constructor(
+    private actionService: ActionService,
     private nextTargetService: NextTargetService,
     private currentTargetService: CurrentTargetService,
     private challengeService: ChallengeService,
@@ -208,8 +210,6 @@ export class MapComponent implements OnInit, OnDestroy {
     this.nextTargetService.setNextTarget(nextTarget);
     this.currentTargetService.setCurrentTarget(this.target);
 
-    const challenge = this.target.challenges[0];
-    this.challengeService.setCurrentChallenge(challenge);
 
     this.updateTargetZone();
     //console.log('➡️ Next target:', this.target);

@@ -36,9 +36,17 @@ export class CurrentActionState {
   getIsDone(){
     return this.isDone;
   }
+
   // -------------------------
   // SETTERS
   // -------------------------
+  setIsDone(){
+    this.isDone = !this.isDone;
+  }
+
+  setItLast(){
+    this.isLast = !this.isLast;
+  }
 
   setActionIndex(index: number) {
     this.actionIndex = index;
@@ -185,7 +193,7 @@ export interface GameChallenge {
   };
 
   // UPDATED: actions are now a list of named action objects
-  actions?: ChallengeAction[];
+  actions: ChallengeAction[];
 
   success?: {
     message: string;
