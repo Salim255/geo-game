@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, signal } from "@angular/core";
 import { GameChallenge } from "../../interfaces/game.interface";
-import { GameDataService } from "../../services/game-data.service";
 import { ActionService } from "../../services/action.service";
 import { CurrentTargetService } from "../../services/currentTarget.service";
 import { ChallengeService } from "../../services/challenge.service";
@@ -22,7 +21,6 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
   targetId = signal<number | null>(null);
 
   constructor(
-    private datService: GameDataService,
     private actionService: ActionService,
     private currentTargetService: CurrentTargetService,
     private challengeService: ChallengeService,

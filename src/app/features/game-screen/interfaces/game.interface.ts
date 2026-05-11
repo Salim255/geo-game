@@ -1,101 +1,51 @@
-export interface GameAction {
-  name:  string;
-  header: string;
-  paragraphs: string []
-}
-
 export class CurrentActionState {
-  // Target + Challenge context
-  private targetId!: number;
-  private challengeIndex!: number;
-
   // Action context
   private actionIndex!: number;
-  private actionName!: string;
-  private actionHeader!: string;
-  private actionParagraphs!: string[];
-
-  // Metadata
-  private paragraphCount!: number;
-  private hasParagraphs!: boolean;
-
-  // Navigation
-  private nextActionIndex: number | null = null;
-
-  constructor() {}
+  private currentAction!: ChallengeAction;
+  private isLast!: boolean;
+  private isDone!: boolean;
 
   /**
    * Build state from a GameAction object
    */
-  buildFromAction(
-    targetId: number,
-    challengeIndex: number,
+  constructor(
     actionIndex: number,
-    action: GameAction,
-    totalActions: number
+    action: ChallengeAction,
+    isLast: boolean,
+    isDone: boolean,
   ) {
-    this.targetId = targetId;
-    this.challengeIndex = challengeIndex;
 
     this.actionIndex = actionIndex;
-    this.actionName = action.name;
-    this.actionHeader = action.header;
-    this.actionParagraphs = action.paragraphs;
-
-    this.paragraphCount = action.paragraphs?.length ?? 0;
-    this.hasParagraphs = this.paragraphCount > 0;
-
-    // Next action
-    this.nextActionIndex =
-      actionIndex + 1 < totalActions ? actionIndex + 1 : null;
+    this.currentAction = action;
+    this.isLast = isLast;
+    this.isDone = isDone;
   }
+
 
   // -------------------------
   // GETTERS
   // -------------------------
-
-  getTargetId() {
-    return this.targetId;
-  }
-
-  getChallengeIndex() {
-    return this.challengeIndex;
-  }
-
   getActionIndex() {
     return this.actionIndex;
   }
 
-  getActionName() {
-    return this.actionName;
+  getAction() {
+    return this.currentAction;
   }
 
-  getActionHeader() {
-    return this.actionHeader;
+  getIsDone(){
+    return this.isDone;
   }
-
-  getActionParagraphs() {
-    return this.actionParagraphs;
-  }
-
-  getParagraphCount() {
-    return this.paragraphCount;
-  }
-
-  getHasParagraphs() {
-    return this.hasParagraphs;
-  }
-
-  getNextActionIndex() {
-    return this.nextActionIndex;
-  }
-
   // -------------------------
   // SETTERS
   // -------------------------
 
   setActionIndex(index: number) {
     this.actionIndex = index;
+  }
+
+  getIsLast(): boolean {
+    return this.isLast;
   }
 }
 

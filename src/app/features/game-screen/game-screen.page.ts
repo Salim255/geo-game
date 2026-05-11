@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, signal } from "@angular/core";
-import { Subscription } from "rxjs";
+import { retry, Subscription } from "rxjs";
 import { CurrentTargetService } from "./services/currentTarget.service";
 import { ChallengeService } from "./services/challenge.service";
-import { CurrentTargetState, GameChallenge, GameTarget } from "./interfaces/game.interface";
+import { CurrentActionState, CurrentTargetState, GameChallenge, GameTarget } from "./interfaces/game.interface";
 import { ActionService } from "./services/action.service";
 
 @Component({
@@ -36,9 +36,9 @@ export class GameScreenPage implements OnInit, OnDestroy {
   }
 
   subscribeToUserAction(){
-    this.userActionSubscription = this.actionService.getUserAction$.subscribe((action) => {
-      console.log(action);
-      this.handleUserAction();
+    this.userActionSubscription = this.actionService
+    .getCurrentActionState$.subscribe((action) => {
+      if (action) this.handleUserAction(action);
     })
   }
 
@@ -103,12 +103,17 @@ export class GameScreenPage implements OnInit, OnDestroy {
     }))
   }
 
-  handleUserAction(): void{
+  handleUserAction(action: CurrentActionState): void{
     const target = this.currentTargetService.getCurrentTarget();
     const state = this.currentTargetService.getCurrentTargetState();
     switch(state?.getTargetId()){
       case 1:
-        if(state.getCurrentChallengeIndex() === 0) {
+        if (state.getCurrentChallengeIndex() === 0) {
+          if(!action.getIsDone()) {
+            this.actionService.openActionModal('countdown');
+            return
+          }
+
           const nexChallenge = target?.challenges[1];
           if (!nexChallenge) {
             // TO handle error
@@ -127,14 +132,12 @@ export class GameScreenPage implements OnInit, OnDestroy {
         }
         return;
       case 2:
-        if(state.getCurrentChallengeIndex() === 0) {
-          console.log("Hello from next action👹👹");
-
-
+        if (state.getCurrentChallengeIndex() === 0) {
           const chs =  this.currentChallenge();
           if(!chs?.actions?.length) return;
           const currentAction = chs.actions[1];
-          this.actionService.setCurrentAction({ action: currentAction, context: chs.story?.context ?? [], isLast: true} );
+          const currentActionState = new CurrentActionState(1, currentAction, true, false);
+          this.actionService.setCurrentActionState(currentActionState);
 
           // To open modal after currently running code
           queueMicrotask(() => {
@@ -165,9 +168,17 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
     switch(targetId){
       case 1:
-        if(challengeIndex === 0){
+        if (challengeIndex === 0) {
+          // Set the currentAction state
+          const currentChallenge =  this.currentTargetObject()?.challenges[0];
+          if(!currentChallenge?.actions) return;
+          const currentAction = currentChallenge?.actions[0];
+
+          const currentActionState = new CurrentActionState(0, currentAction, true, false);
+          this.actionService.setCurrentActionState(currentActionState);
           this.actionService.openActionModal('countdown');
         }
+
         if (challengeIndex === 1) {
           // TODO:
           // Clear all current state
@@ -209,6 +220,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
         // challenge 1
         // a Question
         if (challengeIndex  === 0) {
+
           this.currentTargetService.openTargetHandlerDialog('question');
           //this.challengeService.openQuestionDialog();
         }
@@ -228,7 +240,9 @@ export class GameScreenPage implements OnInit, OnDestroy {
           const chs =  this.currentChallenge();
           if(!chs?.actions?.length) return;
           const currentAction = chs.actions[0];
-          this.actionService.setCurrentAction({action: currentAction, context: chs.story?.context ?? [], isLast: false} );
+          const currentActionState = new CurrentActionState(0, currentAction, false, false);
+
+          this.actionService.setCurrentActionState(currentActionState);
           this.actionService.openActionModal('standard');
         }
         // Two actions and one question

@@ -12,10 +12,7 @@ import { GameDataService } from "../../services/game-data.service";
   styleUrl: "./question-screen.component.scss",
   standalone: false
 })
-export class QuestionScreenComponent {
-  constructor(private currentTargetService: CurrentTargetService){}
-
+export class QuestionScreenComponent implements OnInit {
   ngOnInit(): void {}
 
-  selectAnswer(option: any){}
 }

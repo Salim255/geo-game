@@ -4,20 +4,20 @@ import { MatDialog } from "@angular/material/dialog";
 import { ActionStandardComponent } from "../components/action-standard/action-standard.component";
 import { ComponentType } from "@angular/cdk/overlay";
 import { BehaviorSubject, Observable } from "rxjs";
-import { GameAction } from "../interfaces/game.interface";
+import { CurrentActionState } from "../interfaces/game.interface";
 
 
 @Injectable({providedIn: "root"})
 export class ActionService {
-  private currentActionSubject = new BehaviorSubject<{action: GameAction, context: string[], isLast: boolean} | null>(null);
-  private userActionSubject = new BehaviorSubject<'done' | null>(null);
+  private currentActionStateSubject = new BehaviorSubject<CurrentActionState | null>(null);
 
   constructor(private modalCtr: MatDialog ){}
 
   openActionModal(type: 'standard' | 'countdown') {
     const component: ComponentType<any> =   type === 'standard'
         ? ActionStandardComponent
-        : ActionScreenComponent
+        : ActionScreenComponent;
+
     this.modalCtr.open(
       component
         , {
@@ -31,19 +31,12 @@ export class ActionService {
     });
   }
 
-  setCurrentAction(action: { action: GameAction, context: string[], isLast: boolean }  | null){
-    this.currentActionSubject.next(action);
+  setCurrentActionState(action: CurrentActionState  | null){
+    this.currentActionStateSubject.next(action);
   }
 
-  setUserActionSubject(done: 'done' | null): void{
-    this.userActionSubject.next(done);
-  }
-
-  get getCurrentAction$(): Observable<{action: GameAction, context: string[]}  | null>{
-    return this.currentActionSubject.asObservable();
-  }
-  get getUserAction$(): Observable<'done' | null>{
-    return this.userActionSubject.asObservable();
+  get getCurrentActionState$(): Observable<CurrentActionState  | null>{
+    return this.currentActionStateSubject.asObservable();
   }
 
   onClose() {

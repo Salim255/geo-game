@@ -22,8 +22,12 @@ export class CurrentTargetService {
     this.userAnswerSubject.next(answer);
   }
 
-  openTargetHandlerDialog(componentType: 'puzzle' | 'question' ) {
-    const component = componentType==='question' ? QuestionScreenComponent : PuzzleInstructionComponent
+  openTargetHandlerDialog(componentType: 'puzzle' | 'question' | 'countdown' ) {
+    const component =
+      componentType==='question'
+      ? QuestionScreenComponent :
+       PuzzleInstructionComponent;
+
     this.modalCtr.open(component, {
       disableClose: true,
       maxWidth: "96vw",

@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, signal } from "@angular/core";
 import { ActionService } from "../../services/action.service";
-import { ChallengeService } from "../../services/challenge.service";
 import { CurrentTargetService } from "../../services/currentTarget.service";
 import { Subscription } from "rxjs";
+import { CurrentActionState } from "../../interfaces/game.interface";
 
 @Component({
   selector: "app-action-countdown",
@@ -11,6 +11,7 @@ import { Subscription } from "rxjs";
   standalone: false
 })
 export class ActionCountdownComponent implements OnInit, OnDestroy {
+  private currentActionSubscription!: Subscription;
   private userAnserSubscription!: Subscription;
   actionText = "Criez votre cri de guerre !";
 
@@ -21,14 +22,23 @@ export class ActionCountdownComponent implements OnInit, OnDestroy {
 
   userAnswer = signal<string| null>(null);
 
+  private currentActionState = signal<CurrentActionState | null>(null);
+
   constructor(
     private currentTargetService: CurrentTargetService,
-    private challengeService: ChallengeService,
     private actionService: ActionService,
   ){}
 
   ngOnInit(): void {
     this.subscribeToUserAnser();
+    this.subscribeToUserAction();
+  }
+
+  private subscribeToUserAction(){
+    this.currentActionSubscription = this.actionService
+    .getCurrentActionState$.subscribe((action) => {
+      this.currentActionState.set(action);
+    })
   }
 
   private subscribeToUserAnser(){
@@ -64,20 +74,14 @@ export class ActionCountdownComponent implements OnInit, OnDestroy {
   }
 
   confirmSuccess() {
-    // Set next challenge
-    const target = this.currentTargetService.getCurrentTarget();
-    const currentState = this.currentTargetService.getCurrentTargetState();
-    const nexChallenge = target?.challenges[1];
+    const currentAction = new CurrentActionState(
+      this.currentActionState()?.getActionIndex()!,
+      this.currentActionState()?.getAction()!,
+      this.currentActionState()?.getIsLast()!,
+      true
+    );
 
-    if (!nexChallenge) {
-      // TO handle error
-      return
-    };
-
-    //currentState?.setCurrentChallengeIndex(1);
-    //this.challengeService.setCurrentChallenge(nexChallenge);
-
-    this.actionService.setUserActionSubject('done');
+    this.actionService.setCurrentActionState(currentAction);
     // Close current modal
     this.actionService.onClose();
   }
@@ -89,6 +93,7 @@ export class ActionCountdownComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.userAnserSubscription?.unsubscribe();
+    this.currentActionSubscription?.unsubscribe();
+    this.userAnserSubscription?.unsubscribe();
   }
 }

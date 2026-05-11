@@ -1,5 +1,5 @@
-import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
-import { GameAction, GameChallenge } from '../../interfaces/game.interface';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChallengeAction, CurrentActionState, GameChallenge } from '../../interfaces/game.interface';
 import { Subscription } from 'rxjs';
 import { ChallengeService } from '../../services/challenge.service';
 import { ActionService } from '../../services/action.service';
@@ -12,23 +12,12 @@ import { ActionService } from '../../services/action.service';
 })
 
 export class ActionStandardComponent implements OnInit, OnDestroy {
-  private currentChallengeSubscription!: Subscription;
   private currentActionSubscription!: Subscription;
 
-  currentChallenge = signal<GameChallenge | null>(null);
-
-  targetId = signal<number | null>(null);
-
-  action = signal<GameAction | null>(null);
-
-  // Optional: track if user validated the action
-  context = signal<string []>([]);
-
-  private isLastAction = signal<boolean>(false);
+  action = signal<ChallengeAction | null>(null);
 
   constructor(
     private actionService: ActionService,
-    private challengeService: ChallengeService,
   ){}
 
   ngOnInit(): void {
@@ -37,23 +26,20 @@ export class ActionStandardComponent implements OnInit, OnDestroy {
 
   subscribeToCurrentAction(){
     this.currentActionSubscription = this.actionService
-    .getCurrentAction$.subscribe((action: {action: GameAction, context: string[]}  | null) => {
-      console.log(action);
+    .getCurrentActionState$.subscribe((action: CurrentActionState  | null) => {
       if (action)
-      this.action.set(action?.action);
-      this.context.set(action?.context ?? [])
+      this.action.set(action.getAction());
     })
   }
 
 
   confirm() {
-    this.actionService.setUserActionSubject('done');
+    //this.actionService.setUserActionSubject('done');
     this.actionService.onClose();
   }
 
   ngOnDestroy(): void {
     this.currentActionSubscription?.unsubscribe();
-    this.currentChallengeSubscription?.unsubscribe();
   }
 }
 

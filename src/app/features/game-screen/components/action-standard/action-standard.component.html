@@ -7,16 +7,6 @@
 
   <!-- CONTENT -->
   <div class="action-standard__content">
-
-    <!-- CONTEXT (optional) -->
-    @if (context().length) {
-      <div class="action-standard__context">
-        @for (c of context(); track c) {
-          <p class="action-standard__context-text">{{ c }}</p>
-        }
-      </div>
-    }
-
     <!-- ACTION BLOCK -->
     <div class="action-standard__block">
       <h3 class="action-standard__title">{{ action()?.header }}</h3>
