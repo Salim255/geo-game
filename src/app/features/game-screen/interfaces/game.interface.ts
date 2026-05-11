@@ -41,7 +41,7 @@ export class CurrentActionState {
   // SETTERS
   // -------------------------
   setIsDone(){
-    this.isDone = !this.isDone;
+    this.isDone = true;
   }
 
   setItLast(){

@@ -39,6 +39,12 @@ export class ActionService {
     return this.currentActionStateSubject.asObservable();
   }
 
+  currentActionIsDone(){
+    const currentActionState = this.currentActionStateSubject.value;
+    currentActionState?.setIsDone();
+    this.setCurrentActionState(currentActionState);
+  }
+
   onClose() {
     this.modalCtr.closeAll();
   }
