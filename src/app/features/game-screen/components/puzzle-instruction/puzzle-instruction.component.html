@@ -1,20 +1,31 @@
 <div class="puzzle">
 
+  <!-- CONTEXT -->
+  <div class="puzzle__context">
+    <p class="puzzle__context-text">
+      Avant de poursuivre votre quête vers un nouveau lieu, une étape vous attend…
+    </p>
+    <p class="puzzle__context-text">
+      Le coffre ancien, gardien des épreuves, doit être ouvert.
+    </p>
+  </div>
+
   <!-- HEADER -->
   <div class="puzzle__header">
-    <h2 class="puzzle__title">Énigme à résoudre</h2>
-    <p class="puzzle__subtitle">
-      Complétez les cases vides pour révéler le mot final.
-    </p>
+    <h2 class="puzzle__title">Énigme : Trouvez la combinaison du coffre</h2>
   </div>
 
   <!-- TABLE 1 -->
   <div class="puzzle__section">
-    <h3 class="puzzle__section-title">Tableau principal</h3>
+    <h3 class="puzzle__section-title">Tableau des correspondances</h3>
+
+    <p class="puzzle__hint">
+      Utilisez ce tableau pour retrouver le numéro de chaque lettre du code.
+    </p>
 
     <div class="puzzle__grid puzzle__grid--main">
 
-      <!-- Row 1 -->
+      <!-- Row 1 (numbers) -->
       <div class="puzzle__row">
         <div class="puzzle__cell">1</div>
         <div class="puzzle__cell">5</div>
@@ -25,18 +36,18 @@
         <div class="puzzle__cell puzzle__cell--empty"></div>
       </div>
 
-      <!-- Row 2 -->
+      <!-- Row 2 (letters) -->
       <div class="puzzle__row">
         <div class="puzzle__cell">L</div>
         <div class="puzzle__cell">A</div>
         <div class="puzzle__cell">U</div>
         <div class="puzzle__cell">R</div>
-        <div class="puzzle__cell puzzle__cell--empty"></div>
+        <div class="puzzle__cell">E</div>
         <div class="puzzle__cell">N</div>
-        <div class="puzzle__cell puzzle__cell--empty"></div>
+        <div class="puzzle__cell">E</div>
       </div>
 
-      <!-- Row 3 -->
+      <!-- Row 3 (numbers) -->
       <div class="puzzle__row">
         <div class="puzzle__cell puzzle__cell--empty"></div>
         <div class="puzzle__cell">8</div>
@@ -47,12 +58,12 @@
         <div class="puzzle__cell">6</div>
       </div>
 
-      <!-- Row 4 -->
+      <!-- Row 4 (letters) -->
       <div class="puzzle__row">
-        <div class="puzzle__cell puzzle__cell--empty"></div>
+        <div class="puzzle__cell">E</div>
         <div class="puzzle__cell">T</div>
         <div class="puzzle__cell">K</div>
-        <div class="puzzle__cell puzzle__cell--empty"></div>
+        <div class="puzzle__cell">E</div>
         <div class="puzzle__cell">V</div>
         <div class="puzzle__cell">I</div>
         <div class="puzzle__cell">N</div>
@@ -63,19 +74,23 @@
 
   <!-- TABLE 2 -->
   <div class="puzzle__section">
-    <h3 class="puzzle__section-title">Extraction finale</h3>
+    <h3 class="puzzle__section-title">Code à déchiffrer</h3>
+
+    <p class="puzzle__hint">
+      Trouvez les numéros correspondant aux lettres du mot ci‑dessous. Puis ouvrez le coffre.
+    </p>
 
     <div class="puzzle__grid puzzle__grid--extract">
 
-      <!-- Row 1 -->
+      <!-- Row 1 (numbers to fill) -->
       <div class="puzzle__row">
-        <div class="puzzle__cell puzzle__cell--empty"></div>
-        <div class="puzzle__cell puzzle__cell--empty"></div>
-        <div class="puzzle__cell puzzle__cell--empty"></div>
-        <div class="puzzle__cell puzzle__cell--empty"></div>
+        <div class="puzzle__cell puzzle__cell--empty">?</div>
+        <div class="puzzle__cell puzzle__cell--empty">?</div>
+        <div class="puzzle__cell puzzle__cell--empty">?</div>
+        <div class="puzzle__cell puzzle__cell--empty">?</div>
       </div>
 
-      <!-- Row 2 -->
+      <!-- Row 2 (letters) -->
       <div class="puzzle__row">
         <div class="puzzle__cell">L</div>
         <div class="puzzle__cell">I</div>
@@ -86,12 +101,16 @@
     </div>
   </div>
 
-  <!-- INSTRUCTIONS -->
-  <div class="puzzle__instructions">
-    <p class="puzzle__instructions-text">
-      Trouvez les lettres manquantes dans le premier tableau, puis placez-les
-      dans les cases du second tableau pour révéler le mot final.
+  <!-- FINAL QUESTION -->
+  <div class="puzzle__question">
+    <p class="puzzle__question-text">
+      <strong>Avez-vous reussi à ouvrir le coffre&nbsp;?</strong>
     </p>
+
+    <div class="puzzle__actions">
+      <button class="puzzle__btn puzzle__btn--yes">Oui</button>
+      <button class="puzzle__btn puzzle__btn--no">Non</button>
+    </div>
   </div>
 
 </div>
