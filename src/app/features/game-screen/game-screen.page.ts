@@ -194,7 +194,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
         }
         return;
       case 6:
-          //alert("TargetId: "+ `${state.getTargetId()}`)
+        this.currentTargetService.openTargetHandlerDialog('question');
         return;
       default:
         return;
@@ -235,7 +235,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
         this.currentTargetService.openTargetHandlerDialog('question');
         return;
       case 6:
-          //alert("TargetId: "+ `${state.getTargetId()}`)
+        this.currentTargetService.openTargetHandlerDialog('epilogue');
         return;
       default:
         return
@@ -244,7 +244,6 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    console.log("Destroyed")
     this.currentTargetStatSubscription?.unsubscribe();
     this.userActionSubscription?.unsubscribe();
     this.userAnswerSubscription?.unsubscribe();

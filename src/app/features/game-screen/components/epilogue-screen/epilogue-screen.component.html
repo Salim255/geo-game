@@ -2,21 +2,11 @@
 
   <!-- CONTEXT -->
   <div class="epilogue__context">
-    <p class="epilogue__context-text">
-      Il est temps de distribuer le dernier gage.
-    </p>
-    <p class="epilogue__context-text">
-      Vous avez traversé chaque épreuve, dévoilé chaque secret, et rassemblé les éléments du rituel.
-    </p>
-    <p class="epilogue__context-text">
-      Ici, dans le Bois d’Eldars, les forces anciennes observent votre arrivée.
-    </p>
-    <p class="epilogue__context-text">
-      Elles savent que vous êtes prête à accomplir l’ultime étape.
-    </p>
-    <p class="epilogue__context-text">
-      Approchez… l’épilogue du rituel vous attend.
-    </p>
+    <p class="epilogue__context-text">Il est temps de distribuer le dernier gage.</p>
+    <p class="epilogue__context-text">Vous avez traversé chaque épreuve, dévoilé chaque secret, et rassemblé les éléments du rituel.</p>
+    <p class="epilogue__context-text">Ici, dans le Bois d’Eldars, les forces anciennes observent votre arrivée.</p>
+    <p class="epilogue__context-text">Elles savent que vous êtes prête à accomplir l’ultime étape.</p>
+    <p class="epilogue__context-text">Approchez… l’épilogue du rituel vous attend.</p>
   </div>
 
   <!-- INTRODUCTION -->
@@ -24,18 +14,10 @@
     <div class="epilogue__block">
       <p class="epilogue__line">Félicitations…</p>
       <p class="epilogue__line">La quête est achevée.</p>
-      <p class="epilogue__line">
-        Laurène, tu as su rassembler chacun des ingrédients essentiels et prouver ta valeur.
-      </p>
-      <p class="epilogue__line">
-        Les forces anciennes te reconnaissent désormais comme prête à franchir cette nouvelle étape de ta vie.
-      </p>
-      <p class="epilogue__line">
-        Le rituel du bonheur marital peut à présent être accompli…
-      </p>
-      <p class="epilogue__line">
-        Une fois chez toi, à l’abri des regards, suis ces dernières étapes :
-      </p>
+      <p class="epilogue__line">Laurène, tu as su rassembler chacun des ingrédients essentiels et prouver ta valeur.</p>
+      <p class="epilogue__line">Les forces anciennes te reconnaissent désormais comme prête à franchir cette nouvelle étape de ta vie.</p>
+      <p class="epilogue__line">Le rituel du bonheur marital peut à présent être accompli…</p>
+      <p class="epilogue__line">Une fois chez toi, à l’abri des regards, suis ces dernières étapes :</p>
     </div>
   </div>
 
@@ -46,9 +28,7 @@
       <li class="epilogue__step">pare-toi de ta plus belle allure,</li>
       <li class="epilogue__step">laisse place à la séduction…</li>
       <li class="epilogue__step">et pimente cette soirée avec l’objet choisi lors de votre quête.</li>
-      <li class="epilogue__step">
-        Enfin, dépose la pierre magique sous l’oreiller de Kevin, afin que les énergies du rituel veillent sur votre union.
-      </li>
+      <li class="epilogue__step">Enfin, dépose la pierre magique sous l’oreiller de Kevin, afin que les énergies du rituel veillent sur votre union.</li>
     </ul>
   </div>
 
@@ -58,9 +38,15 @@
       Et pour sceller définitivement le sortilège, prononce la formule sacrée :
     </p>
 
-    <div class="epilogue__final-phrase">
+    <button class="epilogue__final-phrase" (click)="onFinalPhraseClick()">
       Oui, je le veux!
-    </div>
+    </button>
   </div>
 
+  <!-- OVERLAY DE TRANSITION -->
+   @if(isClosing()){
+      <div class="epilogue__transition-overlay"></div>
+   }
 </div>
+
+

@@ -13,9 +13,11 @@ import { ActionStandardComponent } from "./components/action-standard/action-sta
 import { PuzzleInstructionComponent } from "./components/puzzle-instruction/puzzle-instruction.component";
 import { QuestionFormComponent } from "./components/question-form/question-form.component";
 import { WordPuzzleIllustrationComponent } from "./components/word-puzzle-illustration/word-puzzle-illustration.component";
+import { EpilogueScreenComponent } from "./components/epilogue-screen/epilogue-screen.component";
 
 @NgModule({
   declarations: [
+    EpilogueScreenComponent,
     WordPuzzleIllustrationComponent,
     QuestionFormComponent,
     PuzzleInstructionComponent,

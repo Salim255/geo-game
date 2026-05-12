@@ -8,7 +8,6 @@
   max-width: 720px;
   margin: 0 auto;
 
-  /* CONTEXT */
   &__context {
     margin-bottom: 2rem;
   }
@@ -20,7 +19,6 @@
     margin: 0.35rem 0;
   }
 
-  /* SECTIONS */
   &__section {
     margin-bottom: 2rem;
   }
@@ -37,7 +35,6 @@
     line-height: 1.5;
   }
 
-  /* STEPS */
   &__steps {
     list-style: none;
     padding: 0;
@@ -63,7 +60,6 @@
     }
   }
 
-  /* FINAL PHRASE */
   &__final {
     margin-top: 2rem;
     text-align: center;
@@ -85,4 +81,38 @@
     display: inline-block;
     letter-spacing: 0.5px;
   }
+}
+
+/* OVERLAY DE TRANSITION */
+.epilogue__transition-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0f172a;
+  opacity: 0;
+  animation: fadeOutToBlack 1s forwards;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+@keyframes fadeOutToBlack {
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Effet halo sur la phrase finale */
+.epilogue__final-phrase {
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.epilogue__final-phrase:active {
+  transform: scale(0.96);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
 }
