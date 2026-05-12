@@ -29,8 +29,8 @@
       "order": 1,
       "name": "Grand Place",
       "location": {
-        "lat": 50.632615310744754,
-        "lng": 3.013675532644488,
+        "lat": 50.6369,
+        "lng": 3.0635,
         "radius": 20
       },
       "nextTargetId": 2,
@@ -94,8 +94,8 @@
       "order": 2,
       "name": "Quequetterie",
       "location": {
-        "lat": 50.63461531074475,
-        "lng": 3.016675532644488,
+        "lat": 50.6414,
+        "lng": 3.0582,
         "radius": 50
       },
       "nextTargetId": 3,
@@ -141,8 +141,8 @@
       "order": 3,
       "name": "Passage du désir",
       "location": {
-        "lat": 50.63661531074475,
-        "lng": 3.019675532644488,
+        "lat": 50.6361,
+        "lng": 3.0644,
         "radius": 50
       },
       "nextTargetId": 4,
@@ -204,8 +204,8 @@
       "order": 4,
       "name": "Darjeeling",
       "location": {
-        "lat": 50.63861531074475,
-        "lng": 3.022675532644488,
+        "lat": 50.6367,
+        "lng": 3.0628,
         "radius": 50
       },
       "nextTargetId": 5,
@@ -266,8 +266,8 @@
       "order": 5,
       "name": "Nocibé",
       "location": {
-        "lat": 50.64061531074475,
-        "lng": 3.025675532644488,
+        "lat": 50.6360,
+        "lng": 3.0547,
         "radius": 50
       },
       "nextTargetId": 6,
@@ -316,8 +316,8 @@
       "order": 6,
       "name": "Bois d’Eldars",
       "location": {
-        "lat": 50.64261531074475,
-        "lng": 3.028675532644488,
+        "lat": 50.6328,
+        "lng": 3.0530,
         "radius": 50
       },
       "nextTargetId": 7,
