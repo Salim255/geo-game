@@ -2,21 +2,11 @@
 
   <!-- CONTEXT -->
   <div class="wp-illustration__context">
-    <p class="wp-illustration__context-text">
-      Après la gourmandise et le désir vient la séduction — un équilibre subtil qui se dévoile pas à pas.
-    </p>
-    <p class="wp-illustration__context-text">
-      Rien ne s’impose d’un seul regard. Chaque élément se révèle progressivement.
-    </p>
-    <p class="wp-illustration__context-text">
-      Pour poursuivre votre quête, vous devez rassembler les fragments du mystère.
-    </p>
-    <p class="wp-illustration__context-text">
-      Assemblez les pièces. Laissez apparaître le mot caché.
-    </p>
-    <p class="wp-illustration__context-text">
-      Il vous guidera vers la prochaine étape du rituel.
-    </p>
+    @for (item of currentChallenge()?.story?.context; track $index) {
+       <p class="wp-illustration__context-text">
+        {{ item }}
+       </p>
+    }
   </div>
 
   <!-- TITLE -->
@@ -89,14 +79,17 @@
 
   <!-- QUESTION -->
   <div class="wp-illustration__question">
-    <p class="wp-illustration__question-text">
-      Quel mot se révèle lorsque les pièces s’unissent&nbsp;?
-    </p>
+    @for (item of currentChallenge()?.question?.text; track $index) {
+      <p class="wp-illustration__question-text">
+        {{ item }}
+      </p>
+    }
 
     <input
       type="text"
       class="wp-illustration__input"
       placeholder="Votre réponse…"
+      [(ngModel)]="userAnswer"
     />
 
     <button class="wp-illustration__btn" (click)="onSend()">Valider</button>

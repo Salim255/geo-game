@@ -252,7 +252,7 @@
           "actions": [],
           "question": {
             "text": [
-              "Les deux premières de ceux qui ne devraient pas apparaître sur la photo s’unissent pour former le mot de passe.",
+              "Les deux premières lettres de ceux qui ne devraient pas apparaître sur la photo s’unissent pour former le mot de passe.",
               "Quel est le mot trouvé ?"],
             "type": "text",
             "answer": "promesse"

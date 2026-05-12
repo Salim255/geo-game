@@ -116,7 +116,6 @@ export class GameScreenPage implements OnInit, OnDestroy {
       case 3:
         return;
       case 4:
-        console.log("Hello from use Action", state.getCurrentChallengeIndex(), action.getIsDone())
         if(state.getCurrentChallengeIndex() === 0 && action.getIsDone()){
           const currentChallenge = this.currentTargetObject()?.challenges[1];
           this.challengeService.setCurrentChallenge(currentChallenge!)
@@ -181,9 +180,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
         }
         return;
       case 4:
-        console.log("user anser", challengeIndex)
         if(challengeIndex === 0) {
-          console.log("Hello from user answer", 4);
           const challenges = this.currentTargetObject()!.challenges;
           const currentAction = challenges[0]?.actions[0];
           const currentActionState = new CurrentActionState(0, currentAction, true, false);
@@ -193,12 +190,12 @@ export class GameScreenPage implements OnInit, OnDestroy {
         return;
       case 5:
         if (challengeIndex === 0) {
-          console.log("Here form user anser")
-          const challenges = this.currentTargetObject()!.challenges;
-          const currentAction = challenges[0]?.actions[0];
-          const currentActionState = new CurrentActionState(0, currentAction, true, false);
-          this.actionService.setCurrentActionState(currentActionState);
-          this.actionService.openActionModal('standard');
+          const currentChallenge = this.currentTargetObject()?.challenges[1];
+
+          const currentTargeState = new CurrentTargetState();
+          currentTargeState.buildFromTarget(this.currentTargetObject()!, 1);
+          this.currentTargetService.setCurrentTargetState(currentTargeState);
+          this.challengeService.setCurrentChallenge(currentChallenge!);
         }
         return;
       case 6:
@@ -240,9 +237,9 @@ export class GameScreenPage implements OnInit, OnDestroy {
         this.currentTargetService.openTargetHandlerDialog('question');
         return;
       case 5:
-        if(challengeIndex === 0) {
+        queueMicrotask(() => {
           this.currentTargetService.openTargetHandlerDialog('question');
-        }
+        })
         return;
       case 6:
         this.gpsService.stopTracking();
