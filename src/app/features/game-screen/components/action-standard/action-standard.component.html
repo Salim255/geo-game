@@ -1,30 +1,24 @@
-<div class="action-standard">
+<div class="action-screen">
 
-  <!-- TOP -->
-  <div class="action-standard__top">
-    <h2 class="action-standard__header">Action à réaliser</h2>
-  </div>
+  <!-- HEADER -->
+  <header class="action-screen__header">
+    <h2 class="action-screen__title">
+      {{ action()?.header }}
+    </h2>
+  </header>
 
   <!-- CONTENT -->
-  <div class="action-standard__content">
-    <!-- ACTION BLOCK -->
-    <div class="action-standard__block">
-      <h3 class="action-standard__title">{{ action()?.header }}</h3>
+  <section class="action-screen__content">
+    @for (p of action()?.paragraphs; track p) {
+      <p class="action-screen__text">{{ p }}</p>
+    }
+  </section>
 
-      @for (p of action()?.paragraphs; track p) {
-        <p class="action-standard__text">{{ p }}</p>
-      }
-    </div>
-
-  </div>
-
-  <!-- BOTTOM -->
-  <div class="action-standard__bottom">
-    <button
-      class="action-standard__btn action-standard__btn--primary"
-      (click)="confirm()">
-      Action réalisée
+  <!-- FOOTER -->
+  <footer class="action-screen__footer">
+    <button class="btn btn-primary" (click)="confirm()">
+      Gage réalisé 🎉
     </button>
-  </div>
+  </footer>
 
 </div>

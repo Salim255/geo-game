@@ -20,15 +20,17 @@ export class CurrentTargetService {
     this.userAnswerSubject.next(answer);
   }
 
+  private componentMap = {
+    question: QuestionScreenComponent,
+    epilogue: EpilogueScreenComponent,
+    'wd-puzzle': WordPuzzleIllustrationComponent,
+    puzzle: PuzzleInstructionComponent
+  };
+
   openTargetHandlerDialog (
-    componentType: 'puzzle' | 'question' | 'wd-puzzle' | 'epilogue'
+    type: keyof typeof this.componentMap
   ) {
-    const component =
-      componentType === 'question'
-      ? QuestionScreenComponent :
-      componentType === 'wd-puzzle' ? WordPuzzleIllustrationComponent
-      : componentType === 'epilogue' ? EpilogueScreenComponent
-      : PuzzleInstructionComponent;
+    const component: any =  this.componentMap[type];
 
     this.modalCtr.open(component, {
       disableClose: true,

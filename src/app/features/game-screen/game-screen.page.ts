@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit, signal } from "@angular/core";
-import { retry, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 import { CurrentTargetService } from "./services/currentTarget.service";
 import { ChallengeService } from "./services/challenge.service";
 import { CurrentActionState, CurrentTargetState, GameChallenge, GameTarget } from "./interfaces/game.interface";
 import { ActionService } from "./services/action.service";
+import { GpsService } from "./services/gps.service";
 
 @Component({
   selector: "app-game-screen",
@@ -22,6 +23,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
   private currentChallenge = signal<GameChallenge | null>(null);
 
   constructor(
+    private gpsService: GpsService,
     private actionService: ActionService,
     private challengeService: ChallengeService,
     private currentTargetService: CurrentTargetService
@@ -82,31 +84,20 @@ export class GameScreenPage implements OnInit, OnDestroy {
   handleUserAction(action: CurrentActionState): void{
     const target = this.currentTargetService.getCurrentTarget();
     const state = this.currentTargetService.getCurrentTargetState();
-    console.log("user action hbalder")
     switch(state?.getTargetId()){
       case 1:
-        if (state.getCurrentChallengeIndex() === 0) {
-          if(!action.getIsDone()) {
-
-            //this.actionService.openActionModal('countdown');
-            return
-          }
-
+        if (state.getCurrentChallengeIndex() === 0 &&  action.getIsDone()) {
           const nexChallenge = target?.challenges[1];
           if (!nexChallenge) {
-            // TO handle error
             return
           };
 
           state?.setCurrentChallengeIndex(1);
           this.challengeService.setCurrentChallenge(nexChallenge);
-
           // To open modal after currently running code
           queueMicrotask(() => {
             this.challengeService.openQuestionDialog();
           });
-
-          return;
         }
         return;
       case 2:
@@ -120,15 +111,33 @@ export class GameScreenPage implements OnInit, OnDestroy {
           queueMicrotask(() => {
             this.currentTargetService.openTargetHandlerDialog("puzzle");
           });
-
-          return;
         }
         return;
       case 3:
         return;
       case 4:
+        console.log("Hello from use Action", state.getCurrentChallengeIndex(), action.getIsDone())
+        if(state.getCurrentChallengeIndex() === 0 && action.getIsDone()){
+          const currentChallenge = this.currentTargetObject()?.challenges[1];
+          this.challengeService.setCurrentChallenge(currentChallenge!)
+          const currentTargeState = new CurrentTargetState();
+          currentTargeState.buildFromTarget(this.currentTargetObject()!, 1);
+          this.currentTargetService.setCurrentTargetState(currentTargeState);
+          queueMicrotask(() => {
+            this.currentTargetService.openTargetHandlerDialog('wd-puzzle');
+          })
+        }
         return;
       case 5:
+        if(state.getCurrentChallengeIndex() === 0 && action.getIsDone()){
+          const currentChallenge = this.currentTargetObject()?.challenges[1];
+          this.challengeService.setCurrentChallenge(currentChallenge!)
+          const currentTargeState = new CurrentTargetState();
+
+          currentTargeState.buildFromTarget(this.currentTargetObject()!, 1);
+          this.currentTargetService.setCurrentTargetState(currentTargeState);
+          this.currentTargetService.openTargetHandlerDialog('question');
+        }
         return
       default:
         return;
@@ -165,32 +174,31 @@ export class GameScreenPage implements OnInit, OnDestroy {
           this.challengeService.setCurrentChallenge(currentChallenge!)
           this.currentTargetService.openTargetHandlerDialog('question');
 
-          //
+
           const currentTargeState = new CurrentTargetState();
           currentTargeState.buildFromTarget(this.currentTargetObject()!, 1);
           this.currentTargetService.setCurrentTargetState(currentTargeState);
         }
         return;
       case 4:
+        console.log("user anser", challengeIndex)
         if(challengeIndex === 0) {
-          console.log("Hello from user answer")
-          const currentChallenge = this.currentTargetObject()?.challenges[1];
-          this.challengeService.setCurrentChallenge(currentChallenge!)
-          const currentTargeState = new CurrentTargetState();
-          currentTargeState.buildFromTarget(this.currentTargetObject()!, 1);
-          this.currentTargetService.setCurrentTargetState(currentTargeState);
-          this.currentTargetService.openTargetHandlerDialog('wd-puzzle');
+          console.log("Hello from user answer", 4);
+          const challenges = this.currentTargetObject()!.challenges;
+          const currentAction = challenges[0]?.actions[0];
+          const currentActionState = new CurrentActionState(0, currentAction, true, false);
+          this.actionService.setCurrentActionState(currentActionState);
+          this.actionService.openActionModal('standard');
         }
         return;
       case 5:
-        if(challengeIndex === 0) {
-          const currentChallenge = this.currentTargetObject()?.challenges[1];
-          this.challengeService.setCurrentChallenge(currentChallenge!)
-          const currentTargeState = new CurrentTargetState();
-
-          currentTargeState.buildFromTarget(this.currentTargetObject()!, 1);
-          this.currentTargetService.setCurrentTargetState(currentTargeState);
-          this.currentTargetService.openTargetHandlerDialog('question');
+        if (challengeIndex === 0) {
+          console.log("Here form user anser")
+          const challenges = this.currentTargetObject()!.challenges;
+          const currentAction = challenges[0]?.actions[0];
+          const currentActionState = new CurrentActionState(0, currentAction, true, false);
+          this.actionService.setCurrentActionState(currentActionState);
+          this.actionService.openActionModal('standard');
         }
         return;
       case 6:
@@ -232,9 +240,12 @@ export class GameScreenPage implements OnInit, OnDestroy {
         this.currentTargetService.openTargetHandlerDialog('question');
         return;
       case 5:
-        this.currentTargetService.openTargetHandlerDialog('question');
+        if(challengeIndex === 0) {
+          this.currentTargetService.openTargetHandlerDialog('question');
+        }
         return;
       case 6:
+        this.gpsService.stopTracking();
         this.currentTargetService.openTargetHandlerDialog('epilogue');
         return;
       default:

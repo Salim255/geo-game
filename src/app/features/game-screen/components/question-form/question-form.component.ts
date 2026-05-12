@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, signal } from "@angular/core";
-import { GameChallenge } from "../../interfaces/game.interface";
+import { GameChallenge, GameTarget } from "../../interfaces/game.interface";
 import { ActionService } from "../../services/action.service";
 import { CurrentTargetService } from "../../services/currentTarget.service";
 import { ChallengeService } from "../../services/challenge.service";
@@ -14,12 +14,13 @@ import { Subscription } from "rxjs";
 
 export class QuestionFormComponent  implements OnInit, OnDestroy {
   private currentChallengeSubscription!: Subscription;
+  private currentTargetSubscription!: Subscription;
   currentChallenge = signal<GameChallenge | null>(null);
   userAnswer: string = '';
   question = "question";
 
   targetId = signal<number | null>(null);
-
+  currentTargetName = signal<string | null>(null);
   constructor(
     private actionService: ActionService,
     private currentTargetService: CurrentTargetService,
@@ -29,8 +30,17 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribeToCurrentChallenge();
+    this.subscribeToCurrentTarget();
   }
 
+  subscribeToCurrentTarget(){
+    this.currentTargetSubscription = this.currentTargetService
+    .getCurrentTarget$.subscribe((target: GameTarget| null) => {
+      if(target){
+        this.currentTargetName.set(target.name);
+      }
+    })
+  }
   subscribeToCurrentChallenge() {
     this.currentChallengeSubscription = this.challengeService
     .getCurrentChallenge$.subscribe((challenge: GameChallenge | null) => {
@@ -58,6 +68,7 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.currentTargetSubscription?.unsubscribe();
     this.currentChallengeSubscription?.unsubscribe();
   }
 }

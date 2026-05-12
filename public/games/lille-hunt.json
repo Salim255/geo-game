@@ -179,7 +179,7 @@
         {
           "story": {
             "context": [
-              "Après la gourmandise et le désir, vient la séduction, cet art subtil qui charme, intrigue et envoûte les cœurs",
+              "Après la gourmandise et le désir, vient la séduction, cet art subtil qui charme, intrigue et envoûte les cœurs.",
               "Mais la séduction ne se dévoile jamais d’un seul regard.",
               "Elle se construit, pièce après pièce, dans un équilibre délicat.",
               "Pour découvrir le prochain lieu de votre quête, vous devrez reconstituer les fragments dispersés du mystère.",
@@ -218,7 +218,17 @@
               "Pour la trouver, laissez-vous guider par le disque-clé, et percez l’énigme qu’il renferme."
             ]
           },
-          "actions": [],
+          "actions": [
+            {
+              "name": "designation",
+              "header": "Avez-vous trouvé l’enveloppe qui vous est destinée ?",
+              "paragraphs": [
+                "Si oui, ouvrez-la ensemble et découvrez le gage qu’elle renferme.",
+                "Laurène doit maintenant désigner celles qui auront l’honneur de réaliser ce gage.",
+                "Une fois le défi accompli, validez votre progression en cliquant sur « Suivant »."
+              ]
+            }
+          ],
           "question": {
             "text": [
               "je peins des paysage entiers de couleurs parfaites alignées sous un ciel souvent capricieux",

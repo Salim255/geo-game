@@ -35,10 +35,8 @@ export class MapComponent implements OnInit, OnDestroy {
   private currentTargetIndex = 0;
 
   constructor(
-    private actionService: ActionService,
     private nextTargetService: NextTargetService,
     private currentTargetService: CurrentTargetService,
-    private challengeService: ChallengeService,
     private dataService: GameDataService,
     private gps: GpsService,
     private game: GameScreenService
@@ -47,6 +45,7 @@ export class MapComponent implements OnInit, OnDestroy {
   // ================= INIT =================
   ngOnInit() {
     this.subscribeToGameData();
+    this.goToNextTarget();
   }
 
   setGameData(gameData: GameConfig | null){
@@ -65,7 +64,7 @@ export class MapComponent implements OnInit, OnDestroy {
       this.initMap();
       this.renderTargets();
       this.renderTargetZone();
-      this.startTracking();
+      //this.startTracking();
     })
   }
 
@@ -73,7 +72,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private initMap() {
 
     this.map = L.map('map').setView(
-      [this.target.location.lat, this.target.location.lng],
+      [this.target?.location?.lat, this.target?.location?.lng],
       15
     );
 
@@ -87,7 +86,7 @@ export class MapComponent implements OnInit, OnDestroy {
     const icon = this.createTargetIcon();
 
     this.targets.forEach(t => {
-      L.marker([t.location.lat, t.location.lng], { icon })
+      L.marker([t?.location?.lat, t?.location?.lng], { icon })
         .addTo(this.map)
         .bindPopup(`🎯 Target ${t.id}`);
     });
@@ -95,9 +94,9 @@ export class MapComponent implements OnInit, OnDestroy {
 
   private renderTargetZone() {
     this.targetCircle = L.circle(
-      [this.target.location.lat, this.target.location.lng],
+      [this.target?.location?.lat, this.target?.location?.lng],
       {
-        radius: this.target.location.radius,
+        radius: this.target?.location?.radius,
         color: 'red',
         fillOpacity: 0.2
       }
@@ -105,8 +104,8 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   private updateTargetZone() {
-    this.targetCircle.setLatLng([this.target.location.lat, this.target.location.lng]);
-    this.targetCircle.setRadius(this.target.location.radius);
+    this.targetCircle?.setLatLng([this.target?.location?.lat, this.target?.location?.lng]);
+    this.targetCircle?.setRadius(this.target?.location?.radius);
   }
 
   // ================= GPS =================
@@ -116,8 +115,8 @@ export class MapComponent implements OnInit, OnDestroy {
 
     // 🧪 DEV MODE
     this.gps.startFakeTracking(
-      50.63061531074475,   // NEW start lat (300m before point 1)
-      3.010675532644488,   // NEW start lng
+      50.63061531074475,
+      3.010675532644488,
       (pos) => this.handlePosition(pos, userIcon)
     );
 
@@ -131,8 +130,8 @@ export class MapComponent implements OnInit, OnDestroy {
 
   private handlePosition(pos: GeolocationPosition, icon: L.Icon) {
 
-    const lat = pos.coords.latitude;
-    const lng = pos.coords.longitude;
+    const lat = pos?.coords?.latitude;
+    const lng = pos?.coords?.longitude;
 
     this.updateUserMarker(lat, lng, icon);
     this.checkZone(lat, lng);
@@ -146,28 +145,29 @@ export class MapComponent implements OnInit, OnDestroy {
         .addTo(this.map)
         .bindPopup('📍 You');
     } else {
-      this.userMarker.setLatLng([lat, lng]);
+      this.userMarker?.setLatLng([lat, lng]);
     }
 
-    this.map.panTo([lat, lng]);
+    this.map?.panTo([lat, lng]);
   }
 
   // ================= GAME LOGIC =================
   private checkZone(lat: number, lng: number) {
+    if(!this.target) return;
 
-    const distance = this.gps.getDistance(
+    const distance = this.gps?.getDistance(
       lat,
       lng,
-      this.target.location.lat,
-      this.target.location.lng
+      this.target?.location?.lat,
+      this.target?.location?.lng
     );
 
-    if (distance < this.target.location.radius && !this.isInZone) {
+    if (distance < this.target?.location?.radius && !this.isInZone) {
       this.isInZone = true;
       this.onEnterZone();
     }
 
-    if (distance >= this.target.location.radius && this.isInZone) {
+    if (distance >= this.target?.location?.radius && this.isInZone) {
       this.isInZone = false;
     }
   }
@@ -183,23 +183,16 @@ export class MapComponent implements OnInit, OnDestroy {
     this.speak("Target reached. Well done!");
 
     this.goToNextTarget();
-
-    // Set the current target
-
-    //this.challengeService.openQuestionDialog();
   }
 
   // ================= NEXT TARGET =================
   private goToNextTarget() {
-
-
-
     if (this.currentTargetIndex >= this.targets.length) {
      // console.log('🏁 GAME COMPLETE');
       return;
     }
 
-
+    this.target = this.targets[3];
     // Set
     const nextTarget: NextTargetState = {
       id: this.target.id,
@@ -218,25 +211,26 @@ export class MapComponent implements OnInit, OnDestroy {
 
     // Update current target
     this.currentTargetIndex++;
-    this.target = this.targets[this.currentTargetIndex];
+    //this.target = this.targets[this.currentTargetIndex];
+    this.target = this.targets[1];
   }
 
   // ================= VISUAL =================
   private animateTarget() {
-
+    if(!this.target || !this.targetCircle) return;
     let step = 0;
 
     const interval = setInterval(() => {
 
       step++;
 
-      this.targetCircle.setRadius(
-        this.target.location.radius + step * 8
+      this.targetCircle?.setRadius(
+        this.target?.location?.radius + step * 8
       );
 
       if (step > 6) {
         clearInterval(interval);
-        this.targetCircle.setRadius(this.target.location.radius);
+        this.targetCircle?.setRadius(this.target?.location?.radius);
       }
 
     }, 80);

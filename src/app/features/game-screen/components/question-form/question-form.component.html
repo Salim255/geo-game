@@ -1,53 +1,44 @@
 <div class="question-screen">
 
-  <!-- TOP BAR -->
+  <!-- HEADER WITH TARGET INFO -->
   <header class="question-screen__header">
-    <span class="question-screen__tag">Checkpoint</span>
-
-    <h1 class="question-screen__title">
-      Mission briefing
-    </h1>
-
-    <p class="question-screen__subtitle">
-      Read carefully before answering
-    </p>
+    <div class="question-screen__location">
+      <span class="question-screen__target-name">
+        {{ currentTargetName() }}
+      </span>
+    </div>
   </header>
 
-  <!-- STORY BLOCK -->
+  <!-- STORY CONTEXT -->
   <section class="question-screen__block">
     @for (item of currentChallenge()?.story?.context; track $index) {
       <p class="question-screen__text">
-        {{item}}
+        {{ item }}
       </p>
     }
   </section>
 
-  <!-- QUESTION BLOCK -->
+  <!-- QUESTION -->
   <section class="question-screen__block">
     <p class="question-screen__question">
-      {{currentChallenge()?.question?.text}}
+      {{ currentChallenge()?.question?.text }}
     </p>
 
-    <!-- INPUT -->
     <div class="question-screen__input-wrapper">
-
       <input
         type="text"
         class="question-screen__input"
-        [class.input-error]="true"
-        placeholder="Type your answer..."
+        placeholder="Votre réponse..."
         [(ngModel)]="userAnswer"
       />
-
     </div>
-
   </section>
 
   <!-- ACTIONS -->
   <footer class="question-screen__actions">
     <button class="btn btn-primary" (click)="validate()">
-      Submit
+      Valider
     </button>
   </footer>
-</div>
 
+</div>
