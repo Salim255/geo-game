@@ -179,19 +179,25 @@ export class GameScreenPage implements OnInit, OnDestroy {
           const currentTargeState = new CurrentTargetState();
           currentTargeState.buildFromTarget(this.currentTargetObject()!, 1);
           this.currentTargetService.setCurrentTargetState(currentTargeState);
-          this.currentTargetService.openTargetHandlerDialog('question');
+          this.currentTargetService.openTargetHandlerDialog('wd-puzzle');
         }
         return;
       case 5:
-          //alert("TargetId: "+ `${state.getTargetId()}`)
+        if(challengeIndex === 0) {
+          const currentChallenge = this.currentTargetObject()?.challenges[1];
+          this.challengeService.setCurrentChallenge(currentChallenge!)
+          const currentTargeState = new CurrentTargetState();
+
+          currentTargeState.buildFromTarget(this.currentTargetObject()!, 1);
+          this.currentTargetService.setCurrentTargetState(currentTargeState);
+          this.currentTargetService.openTargetHandlerDialog('question');
+        }
         return;
       case 6:
           //alert("TargetId: "+ `${state.getTargetId()}`)
         return;
-      case 7:
-          //alert("TargetId: "+ `${state.getTargetId()}`)
-        return;
       default:
+        return;
     }
   }
 
@@ -226,7 +232,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
         this.currentTargetService.openTargetHandlerDialog('question');
         return;
       case 5:
-          //alert("TargetId: "+ `${state.getTargetId()}`)
+        this.currentTargetService.openTargetHandlerDialog('question');
         return;
       case 6:
           //alert("TargetId: "+ `${state.getTargetId()}`)

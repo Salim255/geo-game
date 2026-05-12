@@ -281,7 +281,7 @@
             "answer": "tournesol"
           }
         },
-          {
+        {
           "story": {
             "context": [
               "Après la gourmandise, le désir, la séduction et la beauté, il ne reste plus qu’un élément à invoquer : la magie.",
@@ -319,17 +319,15 @@
         {
           "story": {
             "context": [
-              "il est temps de distribuer le dernier gage !"
+              "Il est temps de distribuer le dernier gage.",
+              "Vous avez traversé chaque épreuve, dévoilé chaque secret, et rassemblé les éléments du rituel.",
+              "Ici, dans le Bois d’Eldars, les forces anciennes observent votre arrivée.",
+              "Elles savent que vous êtes prête à accomplir l’ultime étape.",
+              "Approchez… l’épilogue du rituel vous attend."
             ]
           },
-          "actions": [],
-          "question": {
-            "text": ["Je ne suis pas une personne, quel mot suis-je ?"],
-            "type": "text",
-            "answer": "tournesol"
-          },
-          "conclusion": {
-            "text": [
+          "epilogue": {
+            "introduction": [
               "Félicitations…",
               "La quête est achevée.",
               "Laurène, tu as su rassembler chacun des ingrédients essentiels et prouver ta valeur.",
@@ -337,18 +335,15 @@
               "Le rituel du bonheur marital peut à présent être accompli…",
               "Une fois chez toi, à l’abri des regards, suis ces dernières étapes :"
             ],
-            "steps": [
+            "instructions": [
               "Offre ton symbole d’union à ton futur mari,",
               "pare-toi de ta plus belle allure,",
               "laisse place à la séduction…",
               "et pimente cette soirée avec l’objet choisi lors de votre quête.",
               "Enfin, dépose la pierre magique sous l’oreiller de Kevin, afin que les énergies du rituel veillent sur votre union."
-            ]
-           ,
-            "last-word": {
-              "header": "Et pour sceller définitivement le sortilège, prononce la formule sacrée :",
-              "say": " Oui, je le veux!"
-            }
+            ],
+            "final-phrase-label": "Et pour sceller définitivement le sortilège, prononce la formule sacrée :",
+            "final-phrase": "Oui, je le veux!"
           }
         }
       ]

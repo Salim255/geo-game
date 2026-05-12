@@ -4,6 +4,7 @@ import { CurrentTargetState, GameTarget } from "../interfaces/game.interface";
 import { MatDialog } from "@angular/material/dialog";
 import { QuestionScreenComponent } from "../components/question-screen/question-screen.component";
 import { PuzzleInstructionComponent } from "../components/puzzle-instruction/puzzle-instruction.component";
+import { WordPuzzleIllustrationComponent } from "../components/word-puzzle-illustration/word-puzzle-illustration.component";
 
 
 @Injectable({providedIn: "root"})
@@ -18,11 +19,12 @@ export class CurrentTargetService {
     this.userAnswerSubject.next(answer);
   }
 
-  openTargetHandlerDialog(componentType: 'puzzle' | 'question' ) {
+  openTargetHandlerDialog(componentType: 'puzzle' | 'question' | 'wd-puzzle' ) {
     const component =
-      componentType==='question'
+      componentType === 'question'
       ? QuestionScreenComponent :
-       PuzzleInstructionComponent;
+      componentType === 'wd-puzzle' ? WordPuzzleIllustrationComponent
+      : PuzzleInstructionComponent;
 
     this.modalCtr.open(component, {
       disableClose: true,

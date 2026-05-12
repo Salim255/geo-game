@@ -1,24 +1,41 @@
 <div class="wp-illustration">
 
+  <!-- CONTEXT -->
+  <div class="wp-illustration__context">
+    <p class="wp-illustration__context-text">
+      Après la gourmandise et le désir vient la séduction — un équilibre subtil qui se dévoile pas à pas.
+    </p>
+    <p class="wp-illustration__context-text">
+      Rien ne s’impose d’un seul regard. Chaque élément se révèle progressivement.
+    </p>
+    <p class="wp-illustration__context-text">
+      Pour poursuivre votre quête, vous devez rassembler les fragments du mystère.
+    </p>
+    <p class="wp-illustration__context-text">
+      Assemblez les pièces. Laissez apparaître le mot caché.
+    </p>
+    <p class="wp-illustration__context-text">
+      Il vous guidera vers la prochaine étape du rituel.
+    </p>
+  </div>
+
+  <!-- TITLE -->
   <h3 class="wp-illustration__title">Illustration</h3>
   <p class="wp-illustration__subtitle">
     Exemple visuel pour comprendre comment extraire les lettres utiles.
   </p>
 
+  <!-- GRID -->
   <div class="wp-illustration__grid">
 
     <!-- ROW 1 -->
     <div class="wp-illustration__row">
       <div class="wp-illustration__label">mot1</div>
-
-      <!-- Word length = 5 -->
       <div class="wp-illustration__cell wp-illustration__cell--on">L</div>
       <div class="wp-illustration__cell wp-illustration__cell--on">A</div>
       <div class="wp-illustration__cell wp-illustration__cell--on">U</div>
       <div class="wp-illustration__cell wp-illustration__cell--on">R</div>
       <div class="wp-illustration__cell wp-illustration__cell--on">E</div>
-
-      <!-- Dark cells -->
       <div class="wp-illustration__cell wp-illustration__cell--off"></div>
       <div class="wp-illustration__cell wp-illustration__cell--off"></div>
       <div class="wp-illustration__cell wp-illustration__cell--off"></div>
@@ -27,12 +44,8 @@
     <!-- ROW 2 -->
     <div class="wp-illustration__row">
       <div class="wp-illustration__label">mot2</div>
-
-      <!-- Word length = 2 -->
       <div class="wp-illustration__cell wp-illustration__cell--on">I</div>
       <div class="wp-illustration__cell wp-illustration__cell--on">N</div>
-
-      <!-- Dark cells -->
       <div class="wp-illustration__cell wp-illustration__cell--off"></div>
       <div class="wp-illustration__cell wp-illustration__cell--off"></div>
       <div class="wp-illustration__cell wp-illustration__cell--off"></div>
@@ -44,8 +57,6 @@
     <!-- ROW 3 -->
     <div class="wp-illustration__row">
       <div class="wp-illustration__label">mot3</div>
-
-      <!-- Word length = 8 -->
       <div class="wp-illustration__cell wp-illustration__cell--on">E</div>
       <div class="wp-illustration__cell wp-illustration__cell--on">T</div>
       <div class="wp-illustration__cell wp-illustration__cell--on">I</div>
@@ -54,23 +65,17 @@
       <div class="wp-illustration__cell wp-illustration__cell--on">E</div>
       <div class="wp-illustration__cell wp-illustration__cell--on">L</div>
       <div class="wp-illustration__cell wp-illustration__cell--on">A</div>
-
-      <!-- Dark cell -->
       <div class="wp-illustration__cell wp-illustration__cell--off"></div>
     </div>
 
     <!-- ROW 4 -->
     <div class="wp-illustration__row">
       <div class="wp-illustration__label">mot4</div>
-
-      <!-- Word length = 5 -->
       <div class="wp-illustration__cell wp-illustration__cell--on">S</div>
       <div class="wp-illustration__cell wp-illustration__cell--on">O</div>
       <div class="wp-illustration__cell wp-illustration__cell--on">L</div>
       <div class="wp-illustration__cell wp-illustration__cell--on">A</div>
       <div class="wp-illustration__cell wp-illustration__cell--on">R</div>
-
-      <!-- Dark cells -->
       <div class="wp-illustration__cell wp-illustration__cell--off"></div>
       <div class="wp-illustration__cell wp-illustration__cell--off"></div>
       <div class="wp-illustration__cell wp-illustration__cell--off"></div>
@@ -79,8 +84,23 @@
   </div>
 
   <p class="wp-illustration__explanation">
-    En prenant les deux premières lettres de chaque mot, de haut en bas,
-    vous obtenez le mot final.
+    Prenez les deux premières lettres de chaque mot, de haut en bas,
+    pour obtenir le mot final.
   </p>
+
+  <!-- QUESTION -->
+  <div class="wp-illustration__question">
+    <p class="wp-illustration__question-text">
+      Quel mot se révèle lorsque les pièces s’unissent&nbsp;?
+    </p>
+
+    <input
+      type="text"
+      class="wp-illustration__input"
+      placeholder="Votre réponse…"
+    />
+
+    <button class="wp-illustration__btn" (click)="onSend()">Valider</button>
+  </div>
 
 </div>

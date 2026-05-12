@@ -37,7 +37,6 @@ export class ActionService {
 
   currentActionIsDone(){
     const currentActionState = this.currentActionStateSubject.value;
-    console.log(currentActionState);
     currentActionState?.setIsDone();
     this.setCurrentActionState(currentActionState);
   }
