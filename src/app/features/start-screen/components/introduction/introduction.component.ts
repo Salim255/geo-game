@@ -4,7 +4,6 @@ import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 import { NextTargetService, NextTargetState } from "../../../game-screen/services/next-target-service";
 import { GameTarget } from "../../../game-screen/interfaces/game.interface";
-import { CurrentTargetService } from "../../../game-screen/services/currentTarget.service";
 
 @Component({
   selector: "app-introduction",
@@ -15,13 +14,7 @@ import { CurrentTargetService } from "../../../game-screen/services/currentTarge
 
 export class IntroductionComponent {
   introductionSubscription!: Subscription;
-
   instructions = signal< string[]>([]);
-  // STEP MANAGEMENT
-  currentStep = signal<'intro' | 'question' | 'action'>('intro');
-
-  // USER INPUT
-  warCry = '';
 
   constructor(
     private router: Router,
@@ -38,16 +31,6 @@ export class IntroductionComponent {
     this.introductionSubscription = this.data.instruction$.subscribe(data => {
       this.instructions.set(data);
     })
-  }
-
-
-  goToQuestion() {
-    this.currentStep.set('question');
-  }
-
-  validateWarCry() {
-    if (!this.warCry.trim()) return;
-    this.currentStep.set('action');
   }
 
   startGame() {

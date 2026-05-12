@@ -45,7 +45,7 @@ export class MapComponent implements OnInit, OnDestroy {
   // ================= INIT =================
   ngOnInit() {
     this.subscribeToGameData();
-    this.goToNextTarget();
+   // this.goToNextTarget();
   }
 
   setGameData(gameData: GameConfig | null){
@@ -64,7 +64,7 @@ export class MapComponent implements OnInit, OnDestroy {
       this.initMap();
       this.renderTargets();
       this.renderTargetZone();
-      //this.startTracking();
+      this.startTracking();
     })
   }
 
@@ -192,7 +192,8 @@ export class MapComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.target = this.targets[5];
+    // For debug
+    // this.target = this.targets[5];
     // Set
     const nextTarget: NextTargetState = {
       id: this.target.id,
@@ -211,8 +212,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
     // Update current target
     this.currentTargetIndex++;
-    //this.target = this.targets[this.currentTargetIndex];
-    this.target = this.targets[1];
+    this.target = this.targets[this.currentTargetIndex];
   }
 
   // ================= VISUAL =================

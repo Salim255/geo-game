@@ -6,114 +6,74 @@
   align-items: center;
   padding: 3rem 1.5rem;
 
-  background: linear-gradient(135deg, #f7f2ff 0%, #fdfcff 40%, #f3e9ff 100%);
-  color: #3a2e4d;
-  font-family: "Playfair Display", serif;
+  /* GOLDEN BACKGROUND */
+  background: linear-gradient(135deg, #fff9f0 0%, #fdf7ef 40%, #f7e9d8 100%);
+  color: #3d2f1f;
+  font-family: "Inter", sans-serif;
   animation: fadeIn 0.8s ease-out;
 
   &__content {
     max-width: 720px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(10px);
-    border-radius: 18px;
-    padding: 2.5rem 2rem;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(14px);
+    border-radius: 22px;
+    padding: 3rem 2.4rem;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08),
+                0 0 40px rgba(255, 215, 160, 0.35);
     animation: slideUp 0.8s ease-out;
+    border: 1px solid rgba(255, 220, 180, 0.45);
   }
 
   &__title {
     text-align: center;
-    font-size: 2.2rem;
-    margin-bottom: 1.8rem;
-    letter-spacing: 0.5px;
-    color: #2a1f38;
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+    letter-spacing: 0.6px;
+    font-weight: 700;
+    color: #2f2418;
   }
 
   &__paragraphs {
-    margin-bottom: 2rem;
+    margin-bottom: 2.4rem;
 
     p {
-      margin-bottom: 1.2rem;
-      line-height: 1.55;
-      font-size: 1.1rem;
-      color: #4a3d5c;
+      margin-bottom: 1.4rem;
+      line-height: 1.65;
+      font-size: 1.15rem;
+      color: #4d3c2a;
 
       &:last-child {
-        margin-bottom: 2.2rem;
+        margin-bottom: 2.6rem;
       }
     }
   }
 
-  &__context {
-    font-size: 1.15rem;
-    line-height: 1.55;
-    margin-bottom: 2rem;
-    color: #4a3d5c;
-  }
-
-  &__label {
-    display: block;
-    font-size: 1.1rem;
-    margin-bottom: 0.6rem;
-    color: #3a2e4d;
-  }
-
-  &__input {
-    width: 100%;
-    padding: 0.9rem 1rem;
-    border-radius: 10px;
-    border: 1px solid #cfc2e8;
-    background: rgba(255, 255, 255, 0.8);
-    font-size: 1.1rem;
-    margin-bottom: 1.8rem;
-    transition: border-color 0.2s ease;
-
-    &:focus {
-      outline: none;
-      border-color: #7c5ee0;
-    }
-  }
-
-  &__action-text {
-    font-size: 1.3rem;
-    text-align: center;
-    margin-bottom: 1.2rem;
-    color: #3a2e4d;
-  }
-
-  &__war-cry {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #6a4bc4;
-    margin-bottom: 2rem;
-    animation: popIn 0.5s ease-out;
-  }
-
+  /* BUTTON — GOLDEN PREMIUM */
   &__button {
     display: block;
     margin: 0 auto;
-    padding: 0.9rem 2.2rem;
-    font-size: 1.15rem;
-    font-weight: 600;
+    padding: 1rem 2.6rem;
+    font-size: 1.2rem;
+    font-weight: 700;
     border-radius: 50px;
     border: none;
     cursor: pointer;
 
-    background: #6a4bc4;
-    color: #fff;
-    transition: all 0.25s ease;
+    background: linear-gradient(135deg, #f7c27a, #e8a85c);
+    color: #3a2a15;
+    transition: all 0.28s ease;
+    box-shadow: 0 6px 18px rgba(240, 180, 110, 0.35);
 
     &:hover {
-      background: #7c5ee0;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(106, 75, 196, 0.25);
+      background: linear-gradient(135deg, #ffd9a3, #f7b96d);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 26px rgba(240, 180, 110, 0.45);
     }
 
     &:active {
-      transform: translateY(0);
-      box-shadow: none;
+      transform: scale(0.97);
+      box-shadow: 0 4px 12px rgba(240, 180, 110, 0.25);
     }
   }
 }
@@ -127,9 +87,4 @@
 @keyframes slideUp {
   from { transform: translateY(20px); opacity: 0; }
   to   { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes popIn {
-  0%   { transform: scale(0.8); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
 }

@@ -1,64 +1,15 @@
 <div class="introduction">
+  <div class="introduction__content">
+    <h1 class="introduction__title">Introduction</h1>
 
-  <!-- PHASE 1 — INTRO TEXT -->
-  @if (currentStep() === 'intro') {
-    <div class="introduction__content">
-      <h1 class="introduction__title">Introduction</h1>
-
-      <div class="introduction__paragraphs">
-        @for (item of instructions(); track $index) {
-          <p>{{ item }}</p>
-        }
-      </div>
-
-      <button class="introduction__button" (click)="goToQuestion()">
-        Continuer
-      </button>
+    <div class="introduction__paragraphs">
+      @for (item of instructions(); track $index) {
+        <p>{{ item }}</p>
+      }
     </div>
-  }
 
-  <!-- PHASE 2 — QUESTION -->
-  @if (currentStep() === 'question') {
-    <div class="introduction__content">
-      <h1 class="introduction__title">Défi</h1>
-
-      <p class="introduction__context">
-        Êtes-vous prêtes à relever le défi et à faire naître la magie ?
-        Alors prouvez-le dès maintenant en trouvant votre cri de guerre…
-        et SCANDEZ-LE à pleine voix !
-      </p>
-
-      <label for="" class="introduction__label">Quel est votre cri de guerre ?</label>
-      <input
-        class="introduction__input"
-        type="text"
-        name="warCry"
-        value="warCry"
-        [(ngModel)]="warCry"
-        placeholder="Votre cri de guerre"
-      />
-
-      <button class="introduction__button" (click)="validateWarCry()">
-        Valider
-      </button>
-    </div>
-  }
-
-  <!-- PHASE 3 — ACTION -->
-  @if (currentStep() === 'action') {
-    <div class="introduction__content">
-      <h1 class="introduction__title">Action</h1>
-
-      <p class="introduction__action-text">1, 2, 3 cri de guerre !!!</p>
-
-      <h2 class="introduction__war-cry">
-        {{ warCry }}
-      </h2>
-
-      <button class="introduction__button" (click)="startGame()">
-        Commencer l’aventure
-      </button>
-    </div>
-  }
-
+    <button class="introduction__button" (click)="startGame()">
+      Commencer l’aventure
+    </button>
+  </div>
 </div>
