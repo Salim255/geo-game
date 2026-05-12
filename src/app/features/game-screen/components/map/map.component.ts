@@ -192,7 +192,7 @@ export class MapComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.target = this.targets[4];
+    this.target = this.targets[5];
     // Set
     const nextTarget: NextTargetState = {
       id: this.target.id,

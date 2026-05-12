@@ -242,14 +242,13 @@ export class GameScreenPage implements OnInit, OnDestroy {
         })
         return;
       case 6:
-        this.gpsService.stopTracking();
+        //this.gpsService.stopTracking();
         this.currentTargetService.openTargetHandlerDialog('epilogue');
         return;
       default:
         return
     }
   }
-
 
   ngOnDestroy(): void {
     this.currentTargetStatSubscription?.unsubscribe();

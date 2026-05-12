@@ -303,11 +303,7 @@
           },
           "actions": [],
           "question": {
-            "text": [
-              "Du matin au soir, je tourne sans jamais me déplacer, guidé par quelque chose que je ne peux toucher.",
-              "Je porte en moi l’image même de ce que je regard, comme un miroir doré posé sur la terre.",
-              "Je ne passe jamais inaperçu dans les champs d’été tandis que mon nom révèle mon secret…",
-              "Quel est le code caché dans cette carte ?"],
+            "text": ["Quel est le code caché dans cette carte ?"],
             "type": "text",
             "answer": "love"
           }
@@ -336,6 +332,22 @@
               "Approchez… l’épilogue du rituel vous attend."
             ]
           },
+          "actions": [
+            {
+              "name": "dernier-gage",
+              "header": "Le dernier gage vous attend…",
+              "paragraphs": [
+                "Il est temps de distribuer le dernier gage.",
+                "Vous avez traversé chaque épreuve, dévoilé chaque secret, et rassemblé les éléments du rituel.",
+                "Ici, dans le Bois d’Eldars, les forces anciennes observent votre arrivée.",
+                "Elles savent que vous êtes prête à accomplir l’ultime étape.",
+                "Approchez… l’épilogue du rituel vous attend.",
+                "Ouvrez maintenant la dernière enveloppe restante.",
+                "Laurène désigne celles qui auront l’honneur de réaliser le gage qu’elle contient.",
+                "Une fois le gage accompli, validez votre progression en appuyant sur « C’est fait »."
+              ]
+            }
+          ],
           "epilogue": {
             "introduction": [
               "Félicitations…",
