@@ -138,6 +138,14 @@ export class GameScreenPage implements OnInit, OnDestroy {
           this.currentTargetService.openTargetHandlerDialog('question');
         }
         return
+      case 6:
+        if (action.getIsDone()){
+          queueMicrotask(() => {
+            this.gpsService.stopTracking();
+            this.currentTargetService.openTargetHandlerDialog('epilogue');
+          })
+        }
+        return;
       default:
         return;
     }
@@ -149,7 +157,6 @@ export class GameScreenPage implements OnInit, OnDestroy {
     if(!state) return;
     const challengeIndex = state.getCurrentChallengeIndex();
     const targetId = state.getTargetId();
-    const actionIndex = state.getCurrentActionIndex();
 
     switch(targetId){
       case 1:
@@ -191,7 +198,6 @@ export class GameScreenPage implements OnInit, OnDestroy {
       case 5:
         if (challengeIndex === 0) {
           const currentChallenge = this.currentTargetObject()?.challenges[1];
-
           const currentTargeState = new CurrentTargetState();
           currentTargeState.buildFromTarget(this.currentTargetObject()!, 1);
           this.currentTargetService.setCurrentTargetState(currentTargeState);
@@ -199,8 +205,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
         }
         return;
       case 6:
-        this.currentTargetService.openTargetHandlerDialog('question');
-        return;
+
       default:
         return;
     }
@@ -242,8 +247,12 @@ export class GameScreenPage implements OnInit, OnDestroy {
         })
         return;
       case 6:
-        //this.gpsService.stopTracking();
-        this.currentTargetService.openTargetHandlerDialog('epilogue');
+        challenges = this.currentTargetObject()!.challenges;
+        if(!challenges.length) return;
+        currentAction = challenges[0]?.actions[0];
+        currentActionState = new CurrentActionState(0, currentAction, true, false);
+        this.actionService.setCurrentActionState(currentActionState);
+        this.actionService.openActionModal('standard');
         return;
       default:
         return

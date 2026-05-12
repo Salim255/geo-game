@@ -194,7 +194,7 @@ export interface GameChallenge {
 
   // UPDATED: actions are now a list of named action objects
   actions: ChallengeAction[];
-
+  epilogue?: GameEpilogue;
   success?: {
     message: string;
     voice?: string;
@@ -206,6 +206,12 @@ export interface GameChallenge {
   };
 }
 
+export interface GameEpilogue {
+  introduction: string [];
+  instructions: string [];
+  "final-phrase-label":  string;
+  "final-phrase": string;
+}
 export interface ChallengeAction {
   name: string;          // e.g. "acheter", "photo"
   header: string;        // action header

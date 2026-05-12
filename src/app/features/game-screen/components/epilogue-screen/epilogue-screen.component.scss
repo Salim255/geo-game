@@ -50,6 +50,9 @@
     line-height: 1.45;
     padding-left: 1rem;
     position: relative;
+    &::first-letter {
+      text-transform: uppercase;
+    }
 
     &::before {
       content: "•";
