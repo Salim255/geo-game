@@ -1,0 +1,26 @@
+version: "3.9"
+
+name: geo-game-app
+# All your services (backend, frontend, future microservices) go here.
+services:
+
+  # -----------------------------
+  # FRONTEND SERVICE
+  # -----------------------------
+  geo-game-frontend:
+    image: crawan/geo-game-client:latest
+
+    restart: always
+
+    # Expose the frontend port
+    ports:
+      - "3000:80"
+    networks:
+      - geo-game-network
+
+# -----------------------------
+# NETWORKS (optional but clean)
+# -----------------------------
+networks:
+  geo-game-network:
+    driver: bridge
