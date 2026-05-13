@@ -1,14 +1,13 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import { GpsService } from '../../services/gps.service';
 import { GameScreenService } from '../../services/game-screen.service';
 import { Subscription } from 'rxjs';
 import { GameDataService } from '../../services/game-data.service';
-import { CurrentActionState, CurrentTargetState, GameConfig, GameTarget } from '../../interfaces/game.interface';
-import { ChallengeService } from '../../services/challenge.service';
+import { CurrentTargetState, GameConfig, GameTarget } from '../../interfaces/game.interface';
 import { CurrentTargetService } from '../../services/currentTarget.service';
 import { NextTargetService, NextTargetState } from '../../services/next-target-service';
-import { ActionService } from '../../services/action.service';
+
 
 
 @Component({
@@ -34,6 +33,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   private currentTargetIndex = 0;
 
+  private lastLatLng: L.LatLng | null = null;
   constructor(
     private nextTargetService: NextTargetService,
     private currentTargetService: CurrentTargetService,
@@ -44,6 +44,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   // ================= INIT =================
   ngOnInit() {
+    this.startTracking();
     this.subscribeToGameData();
   }
 
@@ -113,17 +114,17 @@ export class MapComponent implements OnInit, OnDestroy {
     const userIcon = this.createUserIcon();
 
     // 🧪 DEV MODE
-    /* this.gps.startFakeTracking(
+     this.gps.startFakeTracking(
       50.63061531074475,
       3.010675532644488,
       (pos) => this.handlePosition(pos, userIcon)
     );
- */
+
     // 📍 PROD MODE
 
-    this.gps.startTracking((pos) =>
+    /* this.gps.startTracking((pos) =>
       this.handlePosition(pos, userIcon)
-    );
+    ); */
 
   }
 
@@ -138,6 +139,32 @@ export class MapComponent implements OnInit, OnDestroy {
 
   // ================= USER =================
   private updateUserMarker(lat: number, lng: number, icon: L.Icon) {
+    const newLatLng = L.latLng(lat, lng);
+    // First time → create marker
+    if (!this.userMarker) {
+      this.userMarker = L.marker(newLatLng, { icon })
+        .addTo(this.map)
+        .bindPopup('📍 You');
+
+      this.lastLatLng = newLatLng;
+      this.map.setView(newLatLng, 15);
+      return;
+    }
+
+    // Smooth animation between last and new position
+    this.animateMarker(this.lastLatLng!, newLatLng);
+
+    // Smooth map follow (instead of instant pan)
+    this.map.panTo(newLatLng, {
+      animate: true,
+      duration: 0.6,
+      easeLinearity: 0.25
+    });
+
+    this.lastLatLng = newLatLng;
+  }
+
+ /*  private updateUserMarker(lat: number, lng: number, icon: L.Icon) {
 
     if (!this.userMarker) {
       this.userMarker = L.marker([lat, lng], { icon })
@@ -148,7 +175,7 @@ export class MapComponent implements OnInit, OnDestroy {
     }
 
     this.map?.panTo([lat, lng]);
-  }
+  } */
 
   // ================= GAME LOGIC =================
   private checkZone(lat: number, lng: number) {
@@ -208,7 +235,6 @@ export class MapComponent implements OnInit, OnDestroy {
 
 
     this.updateTargetZone();
-
     // Update current target
     this.currentTargetIndex++;
     this.target = this.targets[this.currentTargetIndex];
@@ -269,6 +295,28 @@ export class MapComponent implements OnInit, OnDestroy {
       iconSize: [32, 32],
       iconAnchor: [16, 16],
     });
+  }
+
+  private animateMarker(from: L.LatLng, to: L.LatLng, duration = 600) {
+    const start = performance.now();
+
+    const animate = (time: number) => {
+      const progress = Math.min((time - start) / duration, 1);
+
+      // Smooth easing (Google Maps style)
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      const lat = from.lat + (to.lat - from.lat) * eased;
+      const lng = from.lng + (to.lng - from.lng) * eased;
+
+      this.userMarker.setLatLng([lat, lng]);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
   }
 
   // ================= CLEANUP =================
