@@ -46,7 +46,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   // ================= INIT =================
   ngOnInit() {
-    this.startTracking();
+    //this.startTracking();
     this.subscribeToGameData();
   }
 
@@ -103,15 +103,6 @@ export class MapComponent implements OnInit, OnDestroy {
       .addTo(this.map)
       .bindPopup(`🎯 Target ${this.target.id}`);
   }
- /*  private renderTargets() {
-    const icon = this.createTargetIcon();
-
-    this.targets.forEach(t => {
-      L.marker([t?.location?.lat, t?.location?.lng], { icon })
-        .addTo(this.map)
-        .bindPopup(`🎯 Target ${t.id}`);
-    });
-  } */
 
   private renderTargetZone() {
     this.targetCircle = L.circle(
@@ -135,17 +126,17 @@ export class MapComponent implements OnInit, OnDestroy {
     const userIcon = this.createUserIcon();
 
     // 🧪 DEV MODE
-     this.gps.startFakeTracking(
+    /*  this.gps.startFakeTracking(
       50.63061531074475,
       3.010675532644488,
       (pos) => this.handlePosition(pos, userIcon)
-    );
+    ); */
 
     // 📍 PROD MODE
 
-    /* this.gps.startTracking((pos) =>
+     this.gps.startTracking((pos) =>
       this.handlePosition(pos, userIcon)
-    ); */
+    );
 
   }
 
@@ -185,19 +176,6 @@ private updateUserMarker(lat: number, lng: number, icon: L.DivIcon) {
 
   this.lastLatLng = newLatLng;
 }
-
- /*  private updateUserMarker(lat: number, lng: number, icon: L.Icon) {
-
-    if (!this.userMarker) {
-      this.userMarker = L.marker([lat, lng], { icon })
-        .addTo(this.map)
-        .bindPopup('📍 You');
-    } else {
-      this.userMarker?.setLatLng([lat, lng]);
-    }
-
-    this.map?.panTo([lat, lng]);
-  } */
 
   // ================= GAME LOGIC =================
   private checkZone(lat: number, lng: number) {
