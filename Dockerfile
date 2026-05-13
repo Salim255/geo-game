@@ -18,7 +18,7 @@ COPY package*.json ./
 # RUN echo "----- package-lock.json -----" && cat package-lock.json | grep hono || echo "No hono in package-lock.json"
 
 # Install dependencies
-RUN npm ci
+RUN npm install
 
 # Copy the rest of the client source code
 COPY . .
