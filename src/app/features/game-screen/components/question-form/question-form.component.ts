@@ -4,6 +4,7 @@ import { ActionService } from "../../services/action.service";
 import { CurrentTargetService } from "../../services/currentTarget.service";
 import { ChallengeService } from "../../services/challenge.service";
 import { Subscription } from "rxjs";
+import { ToastService } from "../../../../shared/kits/toast/toast.service";
 
 @Component({
   selector: "app-question-form",
@@ -22,6 +23,7 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
   targetId = signal<number | null>(null);
   currentTargetName = signal<string | null>(null);
   constructor(
+    private toastService: ToastService,
     private actionService: ActionService,
     private currentTargetService: CurrentTargetService,
     private challengeService: ChallengeService,
@@ -49,18 +51,20 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
   }
 
   validate() {
-    if (!this.userAnswer) {
-      console.log('⚠️ No answer provided');
-      return;
-    }
+      if (!this.userAnswer) {
+        console.log('⚠️ No answer provided');
+        return;
+      }
 
-    if (this.userAnswer.toLowerCase().includes(this.currentChallenge()?.question?.answer!)) {
-      this.onSuccess();
-    } else {
-      console.log('❌ Wrong answer');
-      //this.actionService.onClose();
-    }
-}
+      if (this.userAnswer.toLowerCase().includes(this.currentChallenge()?.question?.answer!)) {
+        this.toastService.success("Bonne réponse, bien joué !");
+        this.onSuccess();
+      } else {
+        console.log('❌ Wrong answer');
+        this.toastService.error("Mauvaise réponse. Essayez encore.");
+        //this.actionService.onClose();
+      }
+  }
 
   onSuccess() {
     this.actionService.onClose();

@@ -10,7 +10,8 @@ export class ToastService {
     this.snackBar.open(message, "OK", {
       duration: 2500,
       horizontalPosition: "center",
-      verticalPosition: "bottom",
+      verticalPosition: "top",
+
       panelClass: ["toast-success"]
     });
   }
@@ -19,7 +20,7 @@ export class ToastService {
     this.snackBar.open(message, "Réessayer", {
       duration: 3000,
       horizontalPosition: "center",
-      verticalPosition: "bottom",
+      verticalPosition: "top",
       panelClass: ["toast-error"]
     });
   }

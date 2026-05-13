@@ -46,7 +46,6 @@ export class MapComponent implements OnInit, OnDestroy {
 
   // ================= INIT =================
   ngOnInit() {
-    //this.startTracking();
     this.subscribeToGameData();
   }
 
@@ -64,7 +63,6 @@ export class MapComponent implements OnInit, OnDestroy {
       this.target = this.targets[0]; // IMPORTANT
 
       this.initMap();
-      //this.renderTargets();
       this.renderCurrentTarget();
       this.renderTargetZone();
       this.startTracking();
