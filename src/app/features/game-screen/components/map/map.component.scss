@@ -2,3 +2,40 @@
   height: 100vh; /* or 500px */
   width: 100%;
 }
+
+.target-marker {
+  position: relative;
+}
+
+.pulse-core {
+  width: 16px;
+  height: 16px;
+  background: #ff3b3b;
+  border-radius: 50%;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  box-shadow: 0 0 12px rgba(255, 59, 59, 0.8);
+}
+
+.pulse-ring {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(255, 59, 59, 0.4);
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  animation: pulse 1.4s infinite ease-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}

@@ -34,6 +34,8 @@ export class MapComponent implements OnInit, OnDestroy {
   private currentTargetIndex = 0;
 
   private lastLatLng: L.LatLng | null = null;
+  private currentTargetMarker!: L.Marker | null;
+
   constructor(
     private nextTargetService: NextTargetService,
     private currentTargetService: CurrentTargetService,
@@ -62,7 +64,8 @@ export class MapComponent implements OnInit, OnDestroy {
       this.target = this.targets[0]; // IMPORTANT
 
       this.initMap();
-      this.renderTargets();
+      //this.renderTargets();
+      this.renderCurrentTarget();
       this.renderTargetZone();
       this.startTracking();
     })
@@ -82,7 +85,25 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   // ================= TARGETS =================
-  private renderTargets() {
+  private renderCurrentTarget() {
+    if (!this.target || !this.map) return;
+
+    //const icon = this.createTargetIcon();
+    const icon = this.createAnimatedTargetIcon();
+
+    // Remove previous marker if exists
+    if (this.currentTargetMarker) {
+      this.map.removeLayer(this.currentTargetMarker);
+    }
+
+    this.currentTargetMarker = L.marker(
+      [this.target.location.lat, this.target.location.lng],
+      { icon }
+    )
+      .addTo(this.map)
+      .bindPopup(`🎯 Target ${this.target.id}`);
+  }
+ /*  private renderTargets() {
     const icon = this.createTargetIcon();
 
     this.targets.forEach(t => {
@@ -90,7 +111,7 @@ export class MapComponent implements OnInit, OnDestroy {
         .addTo(this.map)
         .bindPopup(`🎯 Target ${t.id}`);
     });
-  }
+  } */
 
   private renderTargetZone() {
     this.targetCircle = L.circle(
@@ -138,31 +159,32 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   // ================= USER =================
-  private updateUserMarker(lat: number, lng: number, icon: L.Icon) {
-    const newLatLng = L.latLng(lat, lng);
-    // First time → create marker
-    if (!this.userMarker) {
-      this.userMarker = L.marker(newLatLng, { icon })
-        .addTo(this.map)
-        .bindPopup('📍 You');
+private updateUserMarker(lat: number, lng: number, icon: L.Icon) {
+  const newLatLng = L.latLng(lat, lng);
 
-      this.lastLatLng = newLatLng;
-      this.map.setView(newLatLng, 15);
-      return;
-    }
-
-    // Smooth animation between last and new position
-    this.animateMarker(this.lastLatLng!, newLatLng);
-
-    // Smooth map follow (instead of instant pan)
-    this.map.panTo(newLatLng, {
-      animate: true,
-      duration: 0.6,
-      easeLinearity: 0.25
-    });
+  // First time → create marker
+  if (!this.userMarker) {
+    this.userMarker = L.marker(newLatLng, { icon })
+      .addTo(this.map)
+      .bindPopup('📍 You');
 
     this.lastLatLng = newLatLng;
+    this.map.setView(newLatLng, 15);
+    return;
   }
+
+  // Smooth animation between last and new position
+  this.animateMarker(this.lastLatLng!, newLatLng);
+
+  // Smooth map follow
+  this.map.panTo(newLatLng, {
+    animate: true,
+    duration: 0.6,
+    easeLinearity: 0.25
+  });
+
+  this.lastLatLng = newLatLng;
+}
 
  /*  private updateUserMarker(lat: number, lng: number, icon: L.Icon) {
 
@@ -283,7 +305,20 @@ export class MapComponent implements OnInit, OnDestroy {
     });
   }
 
-  private createTargetIcon(): L.Icon {
+
+  private createAnimatedTargetIcon(): L.DivIcon {
+    return L.divIcon({
+      className: 'target-marker',
+      html: `
+        <div class="pulse-ring"></div>
+        <div class="pulse-core"></div>
+      `,
+      iconSize: [40, 40],
+      iconAnchor: [20, 20]
+    });
+  }
+
+/*   private createTargetIcon(): L.Icon {
     return L.icon({
       iconUrl:
         'data:image/svg+xml;charset=UTF-8,' +
@@ -295,7 +330,7 @@ export class MapComponent implements OnInit, OnDestroy {
       iconSize: [32, 32],
       iconAnchor: [16, 16],
     });
-  }
+  } */
 
   private animateMarker(from: L.LatLng, to: L.LatLng, duration = 600) {
     const start = performance.now();
@@ -310,7 +345,6 @@ export class MapComponent implements OnInit, OnDestroy {
       const lng = from.lng + (to.lng - from.lng) * eased;
 
       this.userMarker.setLatLng([lat, lng]);
-
       if (progress < 1) {
         requestAnimationFrame(animate);
       }
