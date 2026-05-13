@@ -1,59 +1,41 @@
-###############################################
-# 1. BUILD STAGE
-# This stage compiles the Angular/Ionic app.
-# It uses Node.js because Angular CLI runs on Node.
-###############################################
-FROM node:20 AS builder
+# =========================
+# STAGE 1: BUILD ANGULAR APP
+# =========================
+FROM node:20-alpine AS build
 
-# Set working directory inside the container
+# Set working directory inside container
 WORKDIR /app
 
-# Copy only package files first (best caching)
-# If package.json doesn't change, npm install is cached.
+# Copy dependency files first (for caching optimization)
 COPY package*.json ./
 
-# RUN echo "----- package.json -----" && cat package.json | grep hono || echo "No hono in package.json"
-
-# Debug: check package-lock.json contents for hono
-# RUN echo "----- package-lock.json -----" && cat package-lock.json | grep hono || echo "No hono in package-lock.json"
-
-# Install dependencies
+# Install dependencies (clean & CI-safe)
 RUN npm install
 
-# Copy the rest of the client source code
+# Copy full project source code
 COPY . .
 
-# Build the Angular/Ionic app for production
-# This generates the "www" folder (Ionic) or "dist" folder (Angular)
+# Build Angular production bundle
 RUN npm run build -- --configuration production
-# orRUN ionic build --configuration production
 
 
+# =========================
+# STAGE 2: SERVE WITH NGINX
+# =========================
+FROM nginx:1.25-alpine
 
-
-###############################################
-# 2. RUNTIME STAGE
-# This stage serves the built app using NGINX.
-# It produces a very small, fast, production-ready image.
-###############################################
-FROM nginx:alpine
-
-# Remove default NGINX website
+# Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*
 
+# Copy Angular build output to nginx folder
+COPY --from=build /app/dist/geo-game/browser /usr/share/nginx/html
 
-# Copy the built app from the builder stage
-# Ionic outputs to: www/
-# Angular outputs to: dist/<project-name>/
-COPY --from=builder /app/www /usr/share/nginx/html
-
-# Copy your custom NGINX configuration to overwrite the default config
-# This lets you customize caching, routing, headers, etc.
-# Copy your custom NGINX config
+# Copy custom nginx config (IMPORTANT for Angular routing)
+# This enables SPA fallback (deep linking support)
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 3000 (or 80 if you prefer)
-EXPOSE 3000
+# Expose HTTP port
+EXPOSE 80
 
-# Start NGINX
+# Start nginx in foreground
 CMD ["nginx", "-g", "daemon off;"]
