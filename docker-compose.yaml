@@ -14,7 +14,7 @@ services:
 
     # Expose the frontend port
     ports:
-      - "3000:80"
+      - "3008:80"
     networks:
       - geo-game-network
 
