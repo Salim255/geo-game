@@ -236,6 +236,7 @@ private updateUserMarker(lat: number, lng: number, icon: L.DivIcon) {
     // Update current target
     this.currentTargetIndex++;
     this.target = this.targets[this.currentTargetIndex];
+    this.renderCurrentTarget();
   }
 
   // ================= VISUAL =================
