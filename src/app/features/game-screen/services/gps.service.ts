@@ -45,32 +45,43 @@ export class GpsService {
     // 🔹 1. Get fast initial position
     navigator.geolocation.getCurrentPosition(
       (pos) => {
+
         this.lastPosition = pos;
+        console.log(
+      "📍 Position mise à jour:",
+      "lat:", pos.coords.latitude.toFixed(6),
+      "lng:", pos.coords.longitude.toFixed(6),
+      "accuracy:", pos.coords.accuracy
+    );
         callback(pos);
       },
-      (err) => {
-        console.warn('Initial position failed', err);
-      },
+      (err) => console.warn(err),
       {
-        enableHighAccuracy: false,
-        timeout: 10000,
-        maximumAge: 10000
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 0
       }
     );
 
     // 🔹 2. Start watching for updates
-    this.watchId = navigator.geolocation.watchPosition(
+      this.watchId = navigator.geolocation.watchPosition(
       (pos) => {
         this.lastPosition = pos;
+        console.log(
+          "🚀 Position initiale:",
+          "lat:", pos.coords.latitude.toFixed(6),
+          "lng:", pos.coords.longitude.toFixed(6),
+          "accuracy:", pos.coords.accuracy
+        );
         callback(pos);
       },
       (err) => {
         this.handleError(err, callback);
       },
       {
-        enableHighAccuracy: false,
-        timeout: 15000,
-        maximumAge: 10000
+        enableHighAccuracy: true,   // 🔥 OBLIGATOIRE
+        timeout: 20000,             // laisse le GPS se réveiller
+        maximumAge: 0,              // jamais de cache
       }
     );
   }
