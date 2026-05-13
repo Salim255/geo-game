@@ -149,7 +149,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   }
 
-  private handlePosition(pos: GeolocationPosition, icon: L.Icon) {
+  private handlePosition(pos: GeolocationPosition, icon: L.DivIcon) {
 
     const lat = pos?.coords?.latitude;
     const lng = pos?.coords?.longitude;
@@ -159,7 +159,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   // ================= USER =================
-private updateUserMarker(lat: number, lng: number, icon: L.Icon) {
+private updateUserMarker(lat: number, lng: number, icon: L.DivIcon) {
   const newLatLng = L.latLng(lat, lng);
 
   // First time → create marker
@@ -290,21 +290,17 @@ private updateUserMarker(lat: number, lng: number, icon: L.Icon) {
   }
 
   // ================= ICONS =================
-  private createUserIcon(): L.Icon {
-    return L.icon({
-      iconUrl:
-        'data:image/svg+xml;charset=UTF-8,' +
-        encodeURIComponent(`
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-            <circle cx="20" cy="20" r="8" fill="#2b6cff"/>
-            <circle cx="20" cy="20" r="14" fill="none" stroke="#2b6cff" stroke-opacity="0.3" stroke-width="6"/>
-          </svg>
-        `),
-      iconSize: [80, 80],
-      iconAnchor: [40, 40],
+  private createUserIcon(): L.DivIcon {
+    return L.divIcon({
+      className: 'user-marker',
+      html: `
+        <div class="user-core"></div>
+        <div class="user-pulse"></div>
+      `,
+      iconSize: [40, 40],
+      iconAnchor: [20, 20]
     });
   }
-
 
   private createAnimatedTargetIcon(): L.DivIcon {
     return L.divIcon({
@@ -317,20 +313,6 @@ private updateUserMarker(lat: number, lng: number, icon: L.Icon) {
       iconAnchor: [20, 20]
     });
   }
-
-/*   private createTargetIcon(): L.Icon {
-    return L.icon({
-      iconUrl:
-        'data:image/svg+xml;charset=UTF-8,' +
-        encodeURIComponent(`
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
-            <circle cx="16" cy="16" r="10" fill="red"/>
-          </svg>
-        `),
-      iconSize: [32, 32],
-      iconAnchor: [16, 16],
-    });
-  } */
 
   private animateMarker(from: L.LatLng, to: L.LatLng, duration = 600) {
     const start = performance.now();
