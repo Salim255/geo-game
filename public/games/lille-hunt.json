@@ -94,8 +94,8 @@
       "order": 2,
       "name": "Quequetterie",
       "location": {
-        "lat": 50.63879,
-        "lng": 3.06113,
+        "lat": 50.638665,
+        "lng": 3.060424,
         "radius": 50
       },
       "nextTargetId": 3,
@@ -158,7 +158,17 @@
               "Car seul l’esprit le plus affûté saura désigner la bonne enveloppe… et révéler la suite de votre quête"
             ]
           },
-          "actions": [],
+          "actions": [
+            {
+              "name": "designation",
+              "header": "Avez-vous trouvé l’enveloppe qui vous est destinée ?",
+              "paragraphs": [
+                "Si oui, Laurène doit maintenant désigner celles qui auront l’honneur de réaliser ce défi. Les élues peuvent l'ouvrir et découvrir le défi qu’elle renferme.",
+                "",
+                "Une fois le défi accompli, validez votre progression en cliquant sur « C'est fait »."
+              ]
+            }
+          ],
           "question": {
             "text": [
               "On m’associe aux sentiments les plus sincères, je suis douce à regarder, mais gare à celui qui me prend sans précaution",
@@ -265,8 +275,8 @@
       "order": 5,
       "name": "Nocibé",
       "location": {
-        "lat": 50.6360,
-        "lng": 3.0547,
+        "lat": 50.634587,
+        "lng": 3.063927,
         "radius": 50
       },
       "nextTargetId": 6,
@@ -276,7 +286,7 @@
             "context": [
               "il est temps d’invoquer un nouveau défi ! Dans le coffre ancien reposent plusieurs enveloppes scellées.",
               "Une seule contient l’épreuve qui vous est destinée.",
-              "Pour la trouver, laissez-vous guider par le disque-clé qui est dans le sac, et percez l’énigme qu’il renferme."
+              "Pour la trouver, laissez-vous guider par le disque-clé qui est dans le sac, et percez l’énigme ci-dessous."
             ]
           },
           "actions": [],
@@ -297,7 +307,7 @@
               "Celle qui unit les cœurs au-delà du temps, celle qui transforme un instant en éternité.",
               "Pour révéler cet ultime ingrédient, vous devrez suivre les traces d’un voyage à venir…",
               "La carte du monde des voyages de Laurène et Kevin renferme un secret.",
-              "Observez-la attentivement, car elle dissimule le code qui vous ouvrira la voie vers le dernier lieu du rituel."
+              "Munissez vous des billets d'avion et observez-la attentivement, car elle dissimule le code qui vous ouvrira la voie vers le dernier lieu du rituel."
             ]
           },
           "actions": [],
@@ -315,8 +325,8 @@
       "order": 6,
       "name": "Bois d’Eldars",
       "location": {
-        "lat": 50.6328,
-        "lng": 3.0530,
+        "lat": 50.631074,
+        "lng": 3.058445,
         "radius": 50
       },
       "nextTargetId": 7,

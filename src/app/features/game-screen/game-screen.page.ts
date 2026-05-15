@@ -114,6 +114,17 @@ export class GameScreenPage implements OnInit, OnDestroy {
         }
         return;
       case 3:
+        if (state.getCurrentChallengeIndex() === 0 && action.getIsDone()){
+          const currentChallenge = this.currentTargetObject()?.challenges[1];
+          this.challengeService.setCurrentChallenge(currentChallenge!)
+
+          const currentTargeState = new CurrentTargetState();
+          currentTargeState.buildFromTarget(this.currentTargetObject()!, 1);
+          this.currentTargetService.setCurrentTargetState(currentTargeState);
+          queueMicrotask(() => {
+            this.currentTargetService.openTargetHandlerDialog('question');
+          });
+        }
         return;
       case 4:
         if(state.getCurrentChallengeIndex() === 0 && action.getIsDone()){
@@ -176,14 +187,11 @@ export class GameScreenPage implements OnInit, OnDestroy {
         return;
       case 3:
         if (challengeIndex === 0){
-          const currentChallenge = this.currentTargetObject()?.challenges[1];
-          this.challengeService.setCurrentChallenge(currentChallenge!)
-          this.currentTargetService.openTargetHandlerDialog('question');
-
-
-          const currentTargeState = new CurrentTargetState();
-          currentTargeState.buildFromTarget(this.currentTargetObject()!, 1);
-          this.currentTargetService.setCurrentTargetState(currentTargeState);
+           const challenges = this.currentTargetObject()!.challenges;
+          const currentAction = challenges[0]?.actions[0];
+          const currentActionState = new CurrentActionState(0, currentAction, true, false);
+          this.actionService.setCurrentActionState(currentActionState);
+          this.actionService.openActionModal('standard');
         }
         return;
       case 4:
