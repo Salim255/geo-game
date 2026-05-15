@@ -21,7 +21,7 @@ export class ActionService {
     this.modalCtr.open(
       component
         , {
-      disableClose: false,
+      disableClose: true,
       panelClass: 'dialog-wide',
       maxWidth: "96vw",
       maxHeight: "96vh",

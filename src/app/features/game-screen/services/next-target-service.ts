@@ -51,9 +51,9 @@ export class NextTargetService {
     this.setNextTarget(updated);
   }
 
-  getCurrentTargetId(): number | null {
-    const value = localStorage.getItem(this.STORAGE_KEY);
-    return value ? JSON.parse(value) : null;
+  getCurrentTargetId(): number {
+    const value = JSON.parse(localStorage.getItem(this.STORAGE_KEY) || '{}');
+    return value.nextTarget?.currentActionIndex || 0;
   }
 
   clearCurrentTargetId(): void {

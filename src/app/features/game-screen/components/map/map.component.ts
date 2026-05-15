@@ -46,7 +46,6 @@ export class MapComponent implements OnInit, OnDestroy {
 
   // ================= INIT =================
   ngOnInit() {
-
     this.subscribeToGameData();
     this.goToNextTarget()
   }
@@ -62,11 +61,12 @@ export class MapComponent implements OnInit, OnDestroy {
       this.setGameData(game);
       if (!this.targets.length) return;
 
-      this.target = this.targets[4]; // IMPORTANT
+      const currentTargetId: number = this.nextTargetService?.getCurrentTargetId();
+      this.target = this.targets[currentTargetId]; // IMPORTANT
 
       this.initMap();
       this.renderCurrentTarget();
-      this.renderTargetZone();
+      //this.renderTargetZone();
       this.startTracking();
     })
   }
@@ -91,17 +91,19 @@ export class MapComponent implements OnInit, OnDestroy {
     //const icon = this.createTargetIcon();
     const icon = this.createAnimatedTargetIcon();
 
+    console.log('🎯 Current Target:', this.currentTargetMarker);
     // Remove previous marker if exists
     if (this.currentTargetMarker) {
       this.map.removeLayer(this.currentTargetMarker);
+      this.currentTargetMarker = null;
     }
 
     this.currentTargetMarker = L.marker(
       [this.target.location.lat, this.target.location.lng],
       { icon }
     )
-      .addTo(this.map)
-      .bindPopup(`🎯 Target ${this.target.id}`);
+    .addTo(this.map)
+    .bindPopup(`🎯 Target ${this.target.id}`);
   }
 
   private renderTargetZone() {
@@ -200,14 +202,10 @@ private updateUserMarker(lat: number, lng: number, icon: L.DivIcon) {
 
   // ================= GAME EVENT =================
   private onEnterZone() {
-    //console.log('🎉 TARGET REACHED');
-    // 🔥 visual + audio feedback handled in service
-
     this.game.moveTargetAlongPath([], () => {}, () => {});
 
     this.animateTarget();
-    this.speak("Target reached. Well done!");
-
+    //this.speak("Target reached. Well done!");
     this.goToNextTarget();
   }
 
@@ -227,8 +225,9 @@ private updateUserMarker(lat: number, lng: number, icon: L.DivIcon) {
       id: this.target.id,
       name: this.target.name,
       reached: true,
-      currentActionIndex: 0
+      currentActionIndex: this.currentTargetIndex
     };
+
     this.nextTargetService.setNextTarget(nextTarget);
     const currentTargeState = new CurrentTargetState();
     currentTargeState.buildFromTarget(this.target);
@@ -264,11 +263,6 @@ private updateUserMarker(lat: number, lng: number, icon: L.DivIcon) {
     }, 80);
   }
 
-  private speak(text: string) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US'; // or fr-FR
-    speechSynthesis.speak(utterance);
-  }
 
   // ================= ICONS =================
   private createUserIcon(): L.DivIcon {

@@ -20,8 +20,9 @@
   <div class="action-countdown__middle">
 
     @if (showReady()) {
-      <button class="action-countdown__btn action-countdown__btn--primary"
-              (click)="startCountdown()">
+      <button
+        class="action-countdown__btn action-countdown__btn--primary"
+        (click)="startCountdown()">
         Je suis prêt
       </button>
     }
@@ -44,13 +45,15 @@
         </p>
 
         <div class="action-countdown__confirm-buttons">
-          <button class="action-countdown__btn action-countdown__btn--primary"
-                  (click)="confirmSuccess()">
+          <button
+            class="action-countdown__btn action-countdown__btn--primary"
+            (click)="confirmSuccess()">
             Oui
           </button>
 
-          <button class="action-countdown__btn action-countdown__btn--ghost"
-                  (click)="retry()">
+          <button
+            class="action-countdown__btn action-countdown__btn--ghost"
+            (click)="retry()">
             Non
           </button>
         </div>

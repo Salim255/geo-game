@@ -1,10 +1,13 @@
 // =========================
 // VARIABLES
 // =========================
-$gray-50: #f9fafb;
-$gray-100: #e5e7eb;
+$gray-50:   #f9fafb;
+$gray-100:  #e5e7eb;
 $slate-400: #94a3b8;
+
 $green-400: #4ade80;
+$green-500: #22c55e;
+
 $font-ui: "Inter", "SF Pro Text", system-ui, sans-serif;
 
 // =========================
@@ -24,7 +27,7 @@ $font-ui: "Inter", "SF Pro Text", system-ui, sans-serif;
 }
 
 @mixin btn-primary {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
+  background: linear-gradient(135deg, $green-500, #16a34a);
   color: #022c22;
 
   &:hover {
@@ -64,7 +67,9 @@ $font-ui: "Inter", "SF Pro Text", system-ui, sans-serif;
   font-family: $font-ui;
   text-align: center;
 
+  // =========================
   // TOP
+  // =========================
   &__top {
     height: 25%;
     @include flex-col;
@@ -97,6 +102,12 @@ $font-ui: "Inter", "SF Pro Text", system-ui, sans-serif;
     gap: 0.3rem;
   }
 
+  &__cry-label {
+    font-size: 1.1rem;
+    opacity: 0.7;
+    letter-spacing: 0.03em;
+  }
+
   &__cry-value {
     font-weight: 700;
     color: $green-400;
@@ -104,7 +115,9 @@ $font-ui: "Inter", "SF Pro Text", system-ui, sans-serif;
     margin-top: 1rem;
   }
 
+  // =========================
   // MIDDLE
+  // =========================
   &__middle {
     height: 45%;
     @include flex-col;
@@ -147,7 +160,9 @@ $font-ui: "Inter", "SF Pro Text", system-ui, sans-serif;
     display: block;
   }
 
+  // =========================
   // CONFIRMATION
+  // =========================
   &__confirm {
     @include flex-col;
     gap: 1.8rem;
@@ -165,11 +180,106 @@ $font-ui: "Inter", "SF Pro Text", system-ui, sans-serif;
     gap: 1.6rem;
   }
 
+  // =========================
   // BOTTOM
+  // =========================
   &__bottom {
     height: 10%;
     @include flex-center;
     opacity: 0.45;
     font-size: 0.9rem;
+  }
+}
+
+
+
+// =========================
+// GLOBAL MODAL SYSTEM
+// =========================
+
+$gray-50:   #f9fafb;
+$gray-100:  #e5e7eb;
+$slate-400: #94a3b8;
+
+$modal-bg: rgba(15, 23, 42, 0.85); // overlay
+$modal-surface: #0f172a;          // modal background
+
+// =========================
+// ANIMATIONS
+// =========================
+
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modal-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes modal-pop-in {
+  0%   { transform: scale(0.85) translateY(20px); opacity: 0; }
+  60%  { transform: scale(1.03) translateY(0); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@keyframes modal-pop-out {
+  from { transform: scale(1); opacity: 1; }
+  to   { transform: scale(0.9); opacity: 0; }
+}
+
+// =========================
+// MODAL BASE
+// =========================
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+  pointer-events: none;
+  animation: modal-fade-out 0.25s ease forwards;
+
+  // Overlay
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: $modal-bg;
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    animation: modal-fade-out 0.25s ease forwards;
+  }
+
+  // Modal content
+  &__content {
+    position: relative;
+    z-index: 10;
+    background: $modal-surface;
+    border: 1px solid rgba($slate-400, 0.25);
+    border-radius: 20px;
+    padding: 2.4rem;
+    width: 90%;
+    max-width: 480px;
+    opacity: 0;
+    transform: scale(0.9);
+    animation: modal-pop-out 0.25s ease forwards;
+  }
+
+  // When modal is open
+  &.is-open {
+    pointer-events: auto;
+    animation: modal-fade-in 0.25s ease forwards;
+
+    .modal__overlay {
+      animation: modal-fade-in 0.25s ease forwards;
+    }
+
+    .modal__content {
+      animation: modal-pop-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
   }
 }
