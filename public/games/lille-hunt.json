@@ -10,8 +10,8 @@
       "Mais attention : ce sortilège ne s’offre pas à n’importe qui. Il ne peut être accompli qu’en relevant des défis et en prouvant sa valeur.",
       "Aujourd’hui, Laurène… c’est à ton tour.",
       "Les ingrédients de ce rituel sont précieux : gourmandise, désir, séduction, apparence et magie. Pour les réunir, toi et ton équipe devrez résoudre des énigmes.",
-      "Vous disposez pour cela d’un sac rempli d’accessoires indispensables à votre quête. À l’intérieur se trouve également un coffre-fort contenant quatre enveloppes. Chacune d’elles renferme un gage. Sans en connaître le contenu, Laurène devra désigner à l’avance 2 à 3 participantes pour les réaliser.",
-      "Mais prends garde à tes choix, Laurène… car certains gages pourraient bien te concerner toi aussi.",
+      "Vous disposez pour cela d’un sac rempli d’accessoires indispensables à votre quête. À l’intérieur se trouve également un coffre-fort contenant quatre enveloppes. Chacune d’elles renferme un défi. Sans en connaître le contenu, Laurène devra désigner à l’avance 2 à 3 participantes pour les réaliser.",
+      "Mais prends garde à tes choix, Laurène… car certains défis pourraient bien te concerner toi aussi.",
       "Le temps vous est compté : vous avez 1h30 pour rassembler tous les ingrédients du rituel et ne pas manquer la prochaine étape de cette journée unique.",
       "Et surtout… n’oubliez pas d’immortaliser chaque instant de votre aventure."
     ]
@@ -152,7 +152,7 @@
             "context": [
               "Après la gourmandise vient le désir, cette force invisible qui attire, enflamme et rapproche les âmes.",
               "Mais le désir ne se révèle jamais sans épreuve.",
-              "Il est temps d’invoquer le destin… et de tirer un gage.",
+              "Il est temps d’invoquer le destin… et de tirer une épreuve.",
               "Dans le coffre ancien reposent plusieurs enveloppes scellées.",
               "Une seule contient l’épreuve qui vous est destinée.",
               "Pour la trouver, laissez-vous guider par le disque-clé, et percez l’énigme qu’il renferme.",
@@ -213,7 +213,7 @@
         {
           "story": {
             "context": [
-              "il est temps d’invoquer un nouveau gage ! Dans le coffre ancien reposent plusieurs enveloppes scellées.",
+              "il est temps d’invoquer un nouveau défi ! Dans le coffre ancien reposent plusieurs enveloppes scellées.",
               "Une seule contient l’épreuve qui vous est destinée.",
               "Pour la trouver, laissez-vous guider par le disque-clé, et percez l’énigme qu’il renferme."
             ]
@@ -223,8 +223,8 @@
               "name": "designation",
               "header": "Avez-vous trouvé l’enveloppe qui vous est destinée ?",
               "paragraphs": [
-                "Si oui, ouvrez-la ensemble et découvrez le gage qu’elle renferme.",
-                "Laurène doit maintenant désigner celles qui auront l’honneur de réaliser ce gage.",
+                "Si oui, ouvrez-la ensemble et découvrez le défi qu’elle renferme.",
+                "Laurène doit maintenant désigner celles qui auront l’honneur de réaliser ce défi.",
                 "Une fois le défi accompli, validez votre progression en cliquant sur « Suivant »."
               ]
             }
@@ -275,7 +275,7 @@
         {
           "story": {
             "context": [
-              "il est temps d’invoquer un nouveau gage ! Dans le coffre ancien reposent plusieurs enveloppes scellées.",
+              "il est temps d’invoquer un nouveau défi ! Dans le coffre ancien reposent plusieurs enveloppes scellées.",
               "Une seule contient l’épreuve qui vous est destinée.",
               "Pour la trouver, laissez-vous guider par le disque-clé, et percez l’énigme qu’il renferme."
             ]
@@ -325,7 +325,7 @@
         {
           "story": {
             "context": [
-              "Il est temps de distribuer le dernier gage.",
+              "Il est temps de distribuer le dernier défi.",
               "Vous avez traversé chaque épreuve, dévoilé chaque secret, et rassemblé les éléments du rituel.",
               "Ici, dans le Bois d’Eldars, les forces anciennes observent votre arrivée.",
               "Elles savent que vous êtes prête à accomplir l’ultime étape.",
@@ -334,17 +334,17 @@
           },
           "actions": [
             {
-              "name": "dernier-gage",
-              "header": "Le dernier gage vous attend…",
+              "name": "dernier-défi",
+              "header": "Le dernier défi vous attend…",
               "paragraphs": [
-                "Il est temps de distribuer le dernier gage.",
+                "Il est temps de distribuer le dernier défi.",
                 "Vous avez traversé chaque épreuve, dévoilé chaque secret, et rassemblé les éléments du rituel.",
                 "Ici, dans le Bois d’Eldars, les forces anciennes observent votre arrivée.",
                 "Elles savent que vous êtes prête à accomplir l’ultime étape.",
                 "Approchez… l’épilogue du rituel vous attend.",
                 "Ouvrez maintenant la dernière enveloppe restante.",
-                "Laurène désigne celles qui auront l’honneur de réaliser le gage qu’elle contient.",
-                "Une fois le gage accompli, validez votre progression en appuyant sur « C’est fait »."
+                "Laurène désigne celles qui auront l’honneur de réaliser le défi qu’elle contient.",
+                "Une fois le défi accompli, validez votre progression en appuyant sur « C’est fait »."
               ]
             }
           ],
