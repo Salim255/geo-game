@@ -47,7 +47,7 @@ export class MapComponent implements OnInit, OnDestroy {
   // ================= INIT =================
   ngOnInit() {
     this.subscribeToGameData();
-    this.goToNextTarget()
+    //this.goToNextTarget()
   }
 
   setGameData(gameData: GameConfig | null){
@@ -61,9 +61,8 @@ export class MapComponent implements OnInit, OnDestroy {
       this.setGameData(game);
       if (!this.targets.length) return;
 
-      //const currentTargetId: number = this.nextTargetService?.getCurrentTargetId();
-      //this.target = this.targets[currentTargetId]; // IMPORTANT
-      this.target = this.targets[1];
+      const currentTargetId: number = this.nextTargetService?.getCurrentTargetId();
+      this.target = this.targets[currentTargetId]; // IMPORTANT
 
       this.initMap();
       this.renderCurrentTarget();

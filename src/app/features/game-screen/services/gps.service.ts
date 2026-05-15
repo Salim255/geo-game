@@ -45,15 +45,8 @@ export class GpsService {
     // 🔹 1. Get fast initial position
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-
-        this.lastPosition = pos;
-        console.log(
-      "📍 Position mise à jour:",
-      "lat:", pos.coords.latitude.toFixed(6),
-      "lng:", pos.coords.longitude.toFixed(6),
-      "accuracy:", pos.coords.accuracy
-    );
-        callback(pos);
+      this.lastPosition = pos;
+      callback(pos);
       },
       (err) => console.warn(err),
       {
@@ -67,12 +60,6 @@ export class GpsService {
       this.watchId = navigator.geolocation.watchPosition(
       (pos) => {
         this.lastPosition = pos;
-        console.log(
-          "🚀 Position initiale:",
-          "lat:", pos.coords.latitude.toFixed(6),
-          "lng:", pos.coords.longitude.toFixed(6),
-          "accuracy:", pos.coords.accuracy
-        );
         callback(pos);
       },
       (err) => {

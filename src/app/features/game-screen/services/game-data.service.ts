@@ -16,7 +16,6 @@ export class GameDataService{
   loadGame(): Observable<GameConfig> {
     return this.http.get<GameConfig>('games/lille-hunt.json').pipe(
       tap((data: GameConfig) => {
-        console.log(data);
         this.setGame(data);
       })
     );
