@@ -63,7 +63,6 @@ export class MapComponent implements OnInit, OnDestroy {
 
       const currentTargetId: number = this.nextTargetService?.getCurrentTargetId();
       this.target = this.targets[currentTargetId]; // IMPORTANT
-
       this.initMap();
       this.renderCurrentTarget();
       //this.renderTargetZone();
@@ -103,17 +102,6 @@ export class MapComponent implements OnInit, OnDestroy {
     )
     .addTo(this.map)
     .bindPopup(`🎯 Target ${this.target.id}`);
-  }
-
-  private renderTargetZone() {
-    this.targetCircle = L.circle(
-      [this.target?.location?.lat, this.target?.location?.lng],
-      {
-        radius: this.target?.location?.radius,
-        color: 'red',
-        fillOpacity: 0.2
-      }
-    ).addTo(this.map);
   }
 
   private updateTargetZone() {
@@ -220,14 +208,7 @@ private updateUserMarker(lat: number, lng: number, icon: L.DivIcon) {
     //this.renderCurrentTarget();
     //return
     // Set
-    const nextTarget: NextTargetState = {
-      id: this.target.id,
-      name: this.target.name,
-      reached: true,
-      currentActionIndex: this.currentTargetIndex
-    };
 
-    this.nextTargetService.setNextTarget(nextTarget);
     const currentTargeState = new CurrentTargetState();
     currentTargeState.buildFromTarget(this.target);
     this.currentTargetService.setCurrentTargetState(currentTargeState);
@@ -238,6 +219,15 @@ private updateUserMarker(lat: number, lng: number, icon: L.DivIcon) {
     // Update current target
     this.currentTargetIndex++;
     this.target = this.targets[this.currentTargetIndex];
+
+    // Save next target state for persistence
+    const nextTarget: NextTargetState = {
+      id: this.target.id,
+      name: this.target.name,
+      reached: true,
+      currentActionIndex: this.currentTargetIndex
+    };
+    this.nextTargetService.setNextTarget(nextTarget);
     this.renderCurrentTarget();
   }
 

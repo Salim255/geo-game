@@ -56,7 +56,7 @@ export class NextTargetService {
     return value.nextTarget?.currentActionIndex || 0;
   }
 
-  clearCurrentTargetId(): void {
+  clearCurrentTarget(): void {
     localStorage.removeItem(this.STORAGE_KEY);
   }
 }
