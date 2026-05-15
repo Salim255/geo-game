@@ -32,7 +32,6 @@ export class GameScreenPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscribeToUserAction();
     this.subscribeToCurrentChallenge();
-    this.subscribeToTargetStat();
     this.subscribeToNextTarget();
     this.subscribeToUserAnswer();
   }
@@ -72,13 +71,6 @@ export class GameScreenPage implements OnInit, OnDestroy {
         this.challengeService.setCurrentChallenge(challenge!);
       }
     })
-  }
-
-  subscribeToTargetStat(){
-    this.currentTargetStatSubscription = this.currentTargetService
-    .getCurrentTargetState$.subscribe((state => {
-      if (!state || !this.currentTargetObject()) return;
-    }))
   }
 
   handleUserAction(action: CurrentActionState): void{

@@ -61,11 +61,14 @@ export class MapComponent implements OnInit, OnDestroy {
       this.setGameData(game);
       if (!this.targets.length) return;
 
-      const currentTargetId: number = this.nextTargetService?.getCurrentTargetId();
-      this.target = this.targets[currentTargetId]; // IMPORTANT
+      const currentTargetIndex: number = this.nextTargetService?.getCurrentTargetId();
+      this.target = this.targets[currentTargetIndex]; // IMPORTANT
+      this.currentTargetIndex = currentTargetIndex;
+      this.isInZone = false;
+      this.currentTargetMarker = null;
+
       this.initMap();
       this.renderCurrentTarget();
-      //this.renderTargetZone();
       this.startTracking();
     })
   }
@@ -208,7 +211,14 @@ private updateUserMarker(lat: number, lng: number, icon: L.DivIcon) {
     //this.renderCurrentTarget();
     //return
     // Set
+    const nextTarget: NextTargetState = {
+      id: this.target.id,
+      name: this.target.name,
+      reached: true,
+      currentActionIndex: this.currentTargetIndex
+    };
 
+    this.nextTargetService.setNextTarget(nextTarget);
     const currentTargeState = new CurrentTargetState();
     currentTargeState.buildFromTarget(this.target);
     this.currentTargetService.setCurrentTargetState(currentTargeState);
@@ -219,15 +229,6 @@ private updateUserMarker(lat: number, lng: number, icon: L.DivIcon) {
     // Update current target
     this.currentTargetIndex++;
     this.target = this.targets[this.currentTargetIndex];
-
-    // Save next target state for persistence
-    const nextTarget: NextTargetState = {
-      id: this.target.id,
-      name: this.target.name,
-      reached: true,
-      currentActionIndex: this.currentTargetIndex
-    };
-    this.nextTargetService.setNextTarget(nextTarget);
     this.renderCurrentTarget();
   }
 
