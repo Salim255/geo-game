@@ -289,7 +289,17 @@
               "Pour la trouver, laissez-vous guider par le disque-clé qui est dans le sac, et percez l’énigme ci-dessous."
             ]
           },
-          "actions": [],
+            "actions": [
+            {
+              "name": "designation",
+              "header": "Avez-vous trouvé l’enveloppe qui vous est destinée ?",
+              "paragraphs": [
+                "Si oui, Laurène doit maintenant désigner celles qui auront l’honneur de réaliser ce défi. Les élues peuvent l'ouvrir et découvrir le défi qu’elle renferme.",
+                "",
+                "Une fois le défi accompli, validez votre progression en cliquant sur « C'est fait »."
+              ]
+            }
+          ],
           "question": {
             "text": [
               "Du matin au soir, je tourne sans jamais me déplacer, guidé par quelque chose que je ne peux toucher.",

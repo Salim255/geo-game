@@ -62,7 +62,7 @@ export class MapComponent implements OnInit, OnDestroy {
       this.setGameData(game);
       if (!this.targets.length) return;
 
-      this.target = this.targets[2]; // IMPORTANT
+      this.target = this.targets[4]; // IMPORTANT
 
       this.initMap();
       this.renderCurrentTarget();

@@ -205,11 +205,11 @@ export class GameScreenPage implements OnInit, OnDestroy {
         return;
       case 5:
         if (challengeIndex === 0) {
-          const currentChallenge = this.currentTargetObject()?.challenges[1];
-          const currentTargeState = new CurrentTargetState();
-          currentTargeState.buildFromTarget(this.currentTargetObject()!, 1);
-          this.currentTargetService.setCurrentTargetState(currentTargeState);
-          this.challengeService.setCurrentChallenge(currentChallenge!);
+          const challenges = this.currentTargetObject()!.challenges;
+          const currentAction = challenges[0]?.actions[0];
+          const currentActionState = new CurrentActionState(0, currentAction, true, false);
+          this.actionService.setCurrentActionState(currentActionState);
+          this.actionService.openActionModal('standard');
         }
         return;
       case 6:
