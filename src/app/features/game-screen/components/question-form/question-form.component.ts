@@ -40,6 +40,7 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
     .getCurrentTarget$.subscribe((target: GameTarget| null) => {
       if(target){
         this.currentTargetName.set(target.name);
+        this.targetId.set(target.id);
       }
     })
   }
@@ -57,7 +58,7 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
       }
 
       if (this.userAnswer.toLowerCase().includes(this.currentChallenge()?.question?.answer!)) {
-        this.toastService.success("Bonne réponse, bien joué !");
+        this.toastService.success(`Bonne réponse, bien joué !`);
         this.onSuccess();
       } else {
         console.log('❌ Wrong answer');

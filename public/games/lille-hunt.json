@@ -12,7 +12,7 @@
       "Les ingrédients de ce rituel sont précieux : gourmandise, désir, séduction, apparence et magie. Pour les réunir, toi et ton équipe devrez résoudre des énigmes.",
       "Vous disposez pour cela d’un sac rempli d’accessoires indispensables à votre quête. À l’intérieur se trouve également un coffre-fort contenant quatre enveloppes. Chacune d’elles renferme un défi. Sans en connaître le contenu, Laurène devra désigner à l’avance 2 à 3 participantes pour les réaliser.",
       "Mais prends garde à tes choix, Laurène… car certains défis pourraient bien te concerner toi aussi.",
-      "Le temps vous est compté : vous avez 1h30 pour rassembler tous les ingrédients du rituel et ne pas manquer la prochaine étape de cette journée unique.",
+      "Le temps vous est compté : vous avez 2h00 pour rassembler tous les ingrédients du rituel et ne pas manquer la prochaine étape de cette journée unique.",
       "Et surtout… n’oubliez pas d’immortaliser chaque instant de votre aventure."
     ]
   },
@@ -94,8 +94,8 @@
       "order": 2,
       "name": "Quequetterie",
       "location": {
-        "lat": 50.6414,
-        "lng": 3.0582,
+        "lat": 50.63879,
+        "lng": 3.06113,
         "radius": 50
       },
       "nextTargetId": 3,
@@ -103,8 +103,7 @@
         {
           "story": {
             "context": [
-              "Avant de poursuivre votre quête vers un nouveau lieu, une étape vous attend…",
-              "Le coffre ancien, gardien des épreuves, doit être ouvert."
+              "Il est temps de poursuivre votre quête vers un nouveau lieu..."
             ]
           },
           "actions": [
@@ -141,8 +140,8 @@
       "order": 3,
       "name": "Passage du désir",
       "location": {
-        "lat": 50.6361,
-        "lng": 3.0644,
+        "lat": 50.63556,
+        "lng": 3.06611,
         "radius": 50
       },
       "nextTargetId": 4,
@@ -155,8 +154,8 @@
               "Il est temps d’invoquer le destin… et de tirer une épreuve.",
               "Dans le coffre ancien reposent plusieurs enveloppes scellées.",
               "Une seule contient l’épreuve qui vous est destinée.",
-              "Pour la trouver, laissez-vous guider par le disque-clé, et percez l’énigme qu’il renferme.",
-              "Car seul l’esprit le plus affûté saura désigner la bonne enveloppe… et réveiller la suite de votre quête"
+              "Pour la trouver, laissez-vous guider par le disque-clé qui est dans le sac, et percez l’énigme ci-dessous.",
+              "Car seul l’esprit le plus affûté saura désigner la bonne enveloppe… et révéler la suite de votre quête"
             ]
           },
           "actions": [],
@@ -183,7 +182,7 @@
               "Mais la séduction ne se dévoile jamais d’un seul regard.",
               "Elle se construit, pièce après pièce, dans un équilibre délicat.",
               "Pour découvrir le prochain lieu de votre quête, vous devrez reconstituer les fragments dispersés du mystère.",
-              "Assemblez le puzzle, et laissez apparaître le mot caché… Celui qui vous guidera vers la prochaine étape du rituel."
+              "Assemblez le puzzle qui se trouve dans le sac, et laissez apparaître le mot caché… Celui qui vous guidera vers la prochaine étape du rituel."
             ]
           },
           "actions": [],
@@ -204,8 +203,8 @@
       "order": 4,
       "name": "Darjeeling",
       "location": {
-        "lat": 50.6367,
-        "lng": 3.0628,
+        "lat": 50.63558,
+        "lng": 3.06423,
         "radius": 50
       },
       "nextTargetId": 5,
@@ -215,7 +214,7 @@
             "context": [
               "il est temps d’invoquer un nouveau défi ! Dans le coffre ancien reposent plusieurs enveloppes scellées.",
               "Une seule contient l’épreuve qui vous est destinée.",
-              "Pour la trouver, laissez-vous guider par le disque-clé, et percez l’énigme qu’il renferme."
+              "Pour la trouver, laissez-vous guider par le disque-clé qui est dans le sac, et percez l’énigme ci-dessous."
             ]
           },
           "actions": [
@@ -223,15 +222,15 @@
               "name": "designation",
               "header": "Avez-vous trouvé l’enveloppe qui vous est destinée ?",
               "paragraphs": [
-                "Si oui, ouvrez-la ensemble et découvrez le défi qu’elle renferme.",
-                "Laurène doit maintenant désigner celles qui auront l’honneur de réaliser ce défi.",
-                "Une fois le défi accompli, validez votre progression en cliquant sur « Suivant »."
+                "Si oui, Laurène doit maintenant désigner celles qui auront l’honneur de réaliser ce défi. Les élues peuvent l'ouvrir et découvrir le défi qu’elle renferme.",
+                "",
+                "Une fois le défi accompli, validez votre progression en cliquant sur « C'est fait »."
               ]
             }
           ],
           "question": {
             "text": [
-              "je peins des paysage entiers de couleurs parfaites alignées sous un ciel souvent capricieux",
+              "Je peins des paysage entiers de couleurs parfaites alignées sous un ciel souvent capricieux",
               "Cherchez moi dans les champs du pays des moulins à vent.",
               "Quelle fleur suis-je ?"],
             "type": "text",
@@ -241,11 +240,11 @@
         {
           "story": {
             "context": [
-              "Après la gourmandise, le désir et la séduction, vient la beauté — celle qui attire les regards, illumine les âmes et révèle l’éclat du lien sacré.",
+              "Après la gourmandise, le désir et la séduction, vient la beauté",
               "Mais la beauté véritable ne se montre pas à tous.",
               "Elle se cache dans les détails… et parfois, dans ce qui ne devrait pas être.",
               "Pour mettre la main sur cet ingrédient précieux, vous devrez découvrir le prochain lieu du rituel.",
-              "Observez attentivement la photo, et laissez la carte-indice vous guider.",
+              "Observez attentivement la photo qui se trouve dans grande enveloppe du sac, et laissez l'indice vous aider à résoudre l'énigme qu'elle renferme.",
               "Car certains éléments n’ont rien à faire là…et ce sont eux qui détiennent la clé"
             ]
           },
@@ -277,7 +276,7 @@
             "context": [
               "il est temps d’invoquer un nouveau défi ! Dans le coffre ancien reposent plusieurs enveloppes scellées.",
               "Une seule contient l’épreuve qui vous est destinée.",
-              "Pour la trouver, laissez-vous guider par le disque-clé, et percez l’énigme qu’il renferme."
+              "Pour la trouver, laissez-vous guider par le disque-clé qui est dans le sac, et percez l’énigme qu’il renferme."
             ]
           },
           "actions": [],

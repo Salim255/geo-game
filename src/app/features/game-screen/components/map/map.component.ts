@@ -46,7 +46,9 @@ export class MapComponent implements OnInit, OnDestroy {
 
   // ================= INIT =================
   ngOnInit() {
+
     this.subscribeToGameData();
+    this.goToNextTarget()
   }
 
   setGameData(gameData: GameConfig | null){
@@ -60,7 +62,7 @@ export class MapComponent implements OnInit, OnDestroy {
       this.setGameData(game);
       if (!this.targets.length) return;
 
-      this.target = this.targets[0]; // IMPORTANT
+      this.target = this.targets[3]; // IMPORTANT
 
       this.initMap();
       this.renderCurrentTarget();
@@ -217,7 +219,9 @@ private updateUserMarker(lat: number, lng: number, icon: L.DivIcon) {
     }
 
     // For debug
-    // this.target = this.targets[5];
+    //this.target = this.targets[3];
+    //this.renderCurrentTarget();
+    //return
     // Set
     const nextTarget: NextTargetState = {
       id: this.target.id,
