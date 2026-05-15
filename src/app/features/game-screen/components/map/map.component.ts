@@ -61,8 +61,9 @@ export class MapComponent implements OnInit, OnDestroy {
       this.setGameData(game);
       if (!this.targets.length) return;
 
-      const currentTargetId: number = this.nextTargetService?.getCurrentTargetId();
-      this.target = this.targets[currentTargetId]; // IMPORTANT
+      //const currentTargetId: number = this.nextTargetService?.getCurrentTargetId();
+      //this.target = this.targets[currentTargetId]; // IMPORTANT
+      this.target = this.targets[1];
 
       this.initMap();
       this.renderCurrentTarget();
@@ -91,7 +92,6 @@ export class MapComponent implements OnInit, OnDestroy {
     //const icon = this.createTargetIcon();
     const icon = this.createAnimatedTargetIcon();
 
-    console.log('🎯 Current Target:', this.currentTargetMarker);
     // Remove previous marker if exists
     if (this.currentTargetMarker) {
       this.map.removeLayer(this.currentTargetMarker);

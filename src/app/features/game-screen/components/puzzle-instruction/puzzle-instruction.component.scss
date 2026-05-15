@@ -141,28 +141,3 @@
   margin-top: 0.8rem;
 }
 
-.puzzle__btn {
-  padding: 0.55rem 1.4rem;
-  border-radius: 999px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  transition: 0.2s ease;
-  background: rgba(255, 255, 255, 0.08);
-  color: #f9fafb;
-  border: 1px solid rgba(148, 163, 184, 0.35);
-
-  &--yes {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    color: #022c22;
-  }
-
-  &--no:hover {
-    background: rgba(255, 255, 255, 0.15);
-  }
-
-  &:active {
-    transform: scale(0.96);
-  }
-}

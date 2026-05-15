@@ -53,17 +53,23 @@ export class QuestionFormComponent  implements OnInit, OnDestroy {
 
   validate() {
       if (!this.userAnswer) {
-        console.log('⚠️ No answer provided');
+        this.toastService.error("Veuillez entrer une réponse.");
         return;
       }
 
-      if (this.userAnswer.toLowerCase().includes(this.currentChallenge()?.question?.answer!)) {
+      const correctAnswer = this.currentChallenge()?.question?.answer.toLowerCase().trim();
+      const userAnswerNormalized = this.userAnswer.toLowerCase().trim();
+
+      if(correctAnswer === "" && this.targetId() == 1){
+        this.onSuccess();
+        return;
+      }
+
+      if (userAnswerNormalized === correctAnswer) {
         this.toastService.success(`Bonne réponse, bien joué !`);
         this.onSuccess();
       } else {
-        console.log('❌ Wrong answer');
         this.toastService.error("Mauvaise réponse. Essayez encore.");
-        //this.actionService.onClose();
       }
   }
 
