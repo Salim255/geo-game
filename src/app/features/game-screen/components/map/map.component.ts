@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { GameDataService } from '../../services/game-data.service';
 import { CurrentTargetState, GameConfig, GameTarget } from '../../interfaces/game.interface';
 import { CurrentTargetService } from '../../services/currentTarget.service';
-import { NextTargetService, NextTargetState } from '../../services/next-target-service';
+import { StoredTargetService, StoredTargetState } from '../../services/stored-target-service';
 
 
 
@@ -37,7 +37,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private currentTargetMarker!: L.Marker | null;
 
   constructor(
-    private nextTargetService: NextTargetService,
+    private storedTargetService: StoredTargetService,
     private currentTargetService: CurrentTargetService,
     private dataService: GameDataService,
     private gps: GpsService,
@@ -61,17 +61,14 @@ export class MapComponent implements OnInit, OnDestroy {
       this.setGameData(game);
       if (!this.targets.length) return;
 
-      const currentTargetIndex: number = this.nextTargetService?.getCurrentTargetId();
-      this.target = this.targets[currentTargetIndex]; // IMPORTANT
-      this.currentTargetIndex = currentTargetIndex;
-      this.isInZone = false;
-      this.currentTargetMarker = null;
-
+      this.onRefresh();
       this.initMap();
       this.renderCurrentTarget();
       this.startTracking();
     })
   }
+
+
 
   // ================= MAP =================
   private initMap() {
@@ -118,7 +115,7 @@ export class MapComponent implements OnInit, OnDestroy {
     const userIcon = this.createUserIcon();
 
     // 🧪 DEV MODE
-    /*  this.gps.startFakeTracking(
+     /*  this.gps.startFakeTracking(
       50.63061531074475,
       3.010675532644488,
       (pos) => this.handlePosition(pos, userIcon)
@@ -126,7 +123,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
     // 📍 PROD MODE
 
-     this.gps.startTracking((pos) =>
+   this.gps.startTracking((pos) =>
       this.handlePosition(pos, userIcon)
     );
 
@@ -199,6 +196,28 @@ private updateUserMarker(lat: number, lng: number, icon: L.DivIcon) {
     this.goToNextTarget();
   }
 
+  onRefresh(){
+    // 1 First load or refresh → check if we have a stored target
+    const storedTarget: StoredTargetState | null = this.storedTargetService?.getStoredTarget();
+    if(!storedTarget ) {
+      this.target = this.targets[0];
+      return;
+    }
+
+    // 2 We have a stored target → restore it
+    const currentTargetIndex = storedTarget.currentActionIndex || 0;
+     if (currentTargetIndex < this.targets.length) {
+      this.target = this.targets[currentTargetIndex];
+      this.currentTargetIndex = currentTargetIndex;
+
+      console.log('🔄 Restored target from storage:', this.target);
+      return;
+     }
+
+    // 3 Index out of bounds → fallback to first target
+    this.target = this.targets[0];
+  }
+
   // ================= NEXT TARGET =================
   private goToNextTarget() {
     if (this.currentTargetIndex >= this.targets.length) {
@@ -211,19 +230,19 @@ private updateUserMarker(lat: number, lng: number, icon: L.DivIcon) {
     //this.renderCurrentTarget();
     //return
     // Set
-    const nextTarget: NextTargetState = {
+    const currentTarget: StoredTargetState = {
       id: this.target.id,
       name: this.target.name,
+      done: false,
       reached: true,
       currentActionIndex: this.currentTargetIndex
     };
 
-    this.nextTargetService.setNextTarget(nextTarget);
+    this.storedTargetService.setNextTarget(currentTarget);
     const currentTargeState = new CurrentTargetState();
     currentTargeState.buildFromTarget(this.target);
     this.currentTargetService.setCurrentTargetState(currentTargeState);
     this.currentTargetService.setCurrentTarget(this.target);
-
 
     this.updateTargetZone();
     // Update current target

@@ -1,33 +1,33 @@
 import { Injectable } from "@angular/core";
 import { GameDataService } from "./game-data.service";
-import { CurrentTargetService } from "./currentTarget.service";
-import { CurrentTargetState } from "../interfaces/game.interface";
 
-export interface NextTargetState {
+
+export interface StoredTargetState {
   id: number;
   name: string;
   distance?: number;
   reached: boolean;
   startedAt?: number;
   attempts?: number;
+  done: boolean;
   currentActionIndex?: number;
 }
 
 
 @Injectable({providedIn: "root"})
-export class NextTargetService {
+export class StoredTargetService {
 
   private STORAGE_KEY = 'lille-hunt-current-target';
 
   constructor(private gameDataService: GameDataService){}
   // Save full object
-  setNextTarget(target: NextTargetState): void {
+  setNextTarget(target: StoredTargetState): void {
     this.gameDataService.setCurrentTarget(target.id);
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify({ nextTarget: target }));
   }
 
   // Get object
-  getNextTarget(): NextTargetState | null {
+  getStoredTarget(): StoredTargetState | null {
     const data = localStorage.getItem(this.STORAGE_KEY);
     if (!data) return null;
 
@@ -40,7 +40,7 @@ export class NextTargetService {
 
   // Update only reached status
   setTargetReached(reached: boolean): void {
-    const current = this.getNextTarget();
+    const current = this.getStoredTarget();
     if (!current) return;
 
     const updated = {

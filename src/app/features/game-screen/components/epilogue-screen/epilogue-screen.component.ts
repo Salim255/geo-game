@@ -4,7 +4,7 @@ import { CurrentTargetService } from "../../services/currentTarget.service";
 import { ChallengeService } from "../../services/challenge.service";
 import { Subscription } from "rxjs";
 import { GameChallenge } from "../../interfaces/game.interface";
-import { NextTargetService } from "../../services/next-target-service";
+import { StoredTargetService } from "../../services/stored-target-service";
 
 @Component({
   selector: "app-epilogue",
@@ -19,7 +19,7 @@ export class EpilogueScreenComponent implements OnInit {
   currentChallenge = signal<GameChallenge | null>(null);
 
   constructor(
-    private nextTargetService: NextTargetService,
+    private storedTargetService: StoredTargetService,
     private challengeService: ChallengeService,
     private currentTargetService: CurrentTargetService,
     private router: Router,
@@ -39,7 +39,7 @@ export class EpilogueScreenComponent implements OnInit {
     this.isClosing.set(true);
 
     setTimeout(() => {
-      this.nextTargetService.clearCurrentTarget();
+      this.storedTargetService.clearCurrentTarget();
       this.currentTargetService.setCurrentTarget(null);
       this.currentTargetService.onClose();
       this.router.navigate(['/home']);

@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Réinitialiser la partie</h2>
+
+<mat-dialog-content>
+  Cette action remettra la partie à son état initial.
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+  <button mat-button (click)="cancel()">
+    Annuler
+  </button>
+
+  <button mat-flat-button color="warn" (click)="confirm()">
+    Réinitialiser
+  </button>
+
+</mat-dialog-actions>

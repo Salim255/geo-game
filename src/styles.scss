@@ -301,3 +301,179 @@ $font-ui: "Inter", "SF Pro Text", system-ui, sans-serif;
   box-shadow: 0 0 18px rgba(239, 68, 68, 0.25);
 }
 
+
+
+/* =========================================================
+   PREMIUM GOLDEN MATERIAL DIALOG
+   Put this in: styles.scss
+========================================================= */
+
+.premium-dialog .mat-mdc-dialog-container {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 24px;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* DIALOG SURFACE */
+.premium-dialog .mdc-dialog__surface {
+
+  background: linear-gradient(
+    135deg,
+    #fff9f0 0%,
+    #fdf7ef 40%,
+    #f7e9d8 100%
+  ) !important;
+
+  color: #3d2f1f;
+
+  border-radius: 24px;
+
+  border: 1px solid rgba(255, 220, 180, 0.45);
+
+  backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.08),
+    0 0 40px rgba(255, 215, 160, 0.25);
+
+  padding: 2rem;
+
+  animation: premiumDialogIn 0.35s ease;
+
+  font-family: "Inter", sans-serif;
+}
+
+/* TITLE */
+.premium-dialog .mat-mdc-dialog-title {
+
+  margin: 0 0 1rem 0;
+
+  text-align: center;
+
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+
+  color: #2f2418;
+}
+
+/* CONTENT */
+.premium-dialog .mat-mdc-dialog-content {
+
+  margin: 0;
+  padding: 0;
+
+  text-align: center;
+
+  color: #4d3c2a;
+
+  font-size: 1.05rem;
+  line-height: 1.7;
+
+  overflow: hidden;
+}
+
+/* ACTIONS */
+.premium-dialog .mat-mdc-dialog-actions {
+
+  margin-top: 2rem;
+  padding: 0;
+
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* CANCEL BUTTON */
+.premium-dialog button[mat-button] {
+
+  min-width: 120px;
+
+  border-radius: 40px;
+
+  padding: 0.75rem 1.4rem;
+
+  font-weight: 600;
+  font-size: 0.95rem;
+
+  color: #6f5a45 !important;
+
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.45);
+  }
+}
+
+/* CONFIRM BUTTON */
+.premium-dialog button[mat-flat-button] {
+
+  min-width: 140px;
+
+  border-radius: 40px;
+
+  padding: 0.8rem 1.6rem;
+
+  border: none;
+
+  font-size: 0.98rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  background: linear-gradient(
+    135deg,
+    #f7c27a,
+    #e8a85c
+  ) !important;
+
+  color: #3a2a15 !important;
+
+  box-shadow:
+    0 6px 18px rgba(240, 180, 110, 0.35);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    opacity 0.25s ease;
+
+  &:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+      0 10px 26px rgba(240, 180, 110, 0.45);
+  }
+
+  &:active {
+    transform: scale(0.97);
+
+    box-shadow:
+      0 4px 12px rgba(240, 180, 110, 0.25);
+  }
+}
+
+/* BACKDROP */
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+
+  background:
+    rgba(30, 22, 14, 0.35);
+
+  backdrop-filter: blur(6px);
+}
+
+/* ANIMATION */
+@keyframes premiumDialogIn {
+
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
