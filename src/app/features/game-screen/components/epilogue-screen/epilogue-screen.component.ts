@@ -39,10 +39,13 @@ export class EpilogueScreenComponent implements OnInit {
     this.isClosing.set(true);
 
     setTimeout(() => {
+      this.challengeService.setCurrentChallenge(null);
       this.storedTargetService.clearCurrentTarget();
       this.currentTargetService.setCurrentTarget(null);
       this.currentTargetService.onClose();
-      this.router.navigate(['/home']);
+      queueMicrotask(() => {
+        this.router.navigate(['/home']);
+      });
     }, 1000);
   }
 

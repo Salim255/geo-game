@@ -6,6 +6,7 @@ import { StoredTargetService} from "../../../features/game-screen/services/store
 import { CurrentTargetService } from "../../../features/game-screen/services/currentTarget.service";
 import { ConfirmDialogComponent } from "../../../shared/components/confirm-dialog/confirm-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
+import { ChallengeService } from "../../../features/game-screen/services/challenge.service";
 
 @Component({
   selector: "app-header",
@@ -19,6 +20,7 @@ export class HeaderComponent {
      private dialog: MatDialog,
     private currentTargetService: CurrentTargetService,
     private storedTargetService: StoredTargetService,
+    private challengeService: ChallengeService,
     private actionService: ActionService,
     private instructionService: InstructionService,
     private router: Router,
@@ -44,6 +46,7 @@ export class HeaderComponent {
         if (!confirmed) return;
 
         setTimeout(() => {
+          this.challengeService.setCurrentChallenge(null);
           this.storedTargetService.clearCurrentTarget();
           this.currentTargetService.setCurrentTarget(null);
           this.currentTargetService.onClose();

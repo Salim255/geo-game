@@ -115,18 +115,18 @@ export class MapComponent implements OnInit, OnDestroy {
     const userIcon = this.createUserIcon();
 
     // 🧪 DEV MODE
-     /*  this.gps.startFakeTracking(
+       this.gps.startFakeTracking(
       50.63061531074475,
       3.010675532644488,
       (pos) => this.handlePosition(pos, userIcon)
-    ); */
+    );
 
     // 📍 PROD MODE
 
-   this.gps.startTracking((pos) =>
+  /*  this.gps.startTracking((pos) =>
       this.handlePosition(pos, userIcon)
     );
-
+ */
   }
 
   private handlePosition(pos: GeolocationPosition, icon: L.DivIcon) {
@@ -207,8 +207,8 @@ private updateUserMarker(lat: number, lng: number, icon: L.DivIcon) {
     // 2 We have a stored target → restore it
     const currentTargetIndex = storedTarget.currentActionIndex || 0;
      if (currentTargetIndex < this.targets.length) {
-      this.target = this.targets[currentTargetIndex];
-      this.currentTargetIndex = currentTargetIndex;
+      this.target = this.targets[currentTargetIndex+1];
+      this.currentTargetIndex = currentTargetIndex+1;
 
       console.log('🔄 Restored target from storage:', this.target);
       return;

@@ -11,7 +11,7 @@ export class ChallengeService {
   constructor(private modalCtr: MatDialog){}
 
 
-  setCurrentChallenge(challenge: GameChallenge ){
+  setCurrentChallenge(challenge: GameChallenge | null ){
     this.currentChallengeSubject.next(challenge);
   }
 
