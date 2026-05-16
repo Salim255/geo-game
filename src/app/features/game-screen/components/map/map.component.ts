@@ -115,7 +115,7 @@ export class MapComponent implements OnInit, OnDestroy {
     const userIcon = this.createUserIcon();
 
     // 🧪 DEV MODE
-    /*    this.gps.startFakeTracking(
+     /*   this.gps.startFakeTracking(
       50.63061531074475,
       3.010675532644488,
       (pos) => this.handlePosition(pos, userIcon)

@@ -46,6 +46,7 @@ export class HeaderComponent {
         if (!confirmed) return;
 
         setTimeout(() => {
+          this.actionService.setCurrentActionState(null);
           this.challengeService.setCurrentChallenge(null);
           this.storedTargetService.clearCurrentTarget();
           this.currentTargetService.setCurrentTarget(null);

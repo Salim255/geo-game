@@ -5,6 +5,7 @@ import { ChallengeService } from "../../services/challenge.service";
 import { Subscription } from "rxjs";
 import { GameChallenge } from "../../interfaces/game.interface";
 import { StoredTargetService } from "../../services/stored-target-service";
+import { ActionService } from "../../services/action.service";
 
 @Component({
   selector: "app-epilogue",
@@ -19,6 +20,7 @@ export class EpilogueScreenComponent implements OnInit {
   currentChallenge = signal<GameChallenge | null>(null);
 
   constructor(
+    private actionService: ActionService,
     private storedTargetService: StoredTargetService,
     private challengeService: ChallengeService,
     private currentTargetService: CurrentTargetService,
@@ -31,6 +33,11 @@ export class EpilogueScreenComponent implements OnInit {
   subscribeToCurrentChallenge(){
     this.currentChallengeSubscription = this.challengeService
     .getCurrentChallenge$.subscribe((challenge: GameChallenge | null) => {
+      if(!challenge) {
+        // If no epilogue, navigate to next screen immediately
+        this.onFinalPhraseClick();
+        return;
+      }
       this.currentChallenge.set(challenge);
     })
   }
@@ -39,6 +46,7 @@ export class EpilogueScreenComponent implements OnInit {
     this.isClosing.set(true);
 
     setTimeout(() => {
+      this.actionService.setCurrentActionState(null);
       this.challengeService.setCurrentChallenge(null);
       this.storedTargetService.clearCurrentTarget();
       this.currentTargetService.setCurrentTarget(null);
@@ -50,7 +58,6 @@ export class EpilogueScreenComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-
     this.currentChallengeSubscription?.unsubscribe();
   }
 }
